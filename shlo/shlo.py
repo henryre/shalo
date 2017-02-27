@@ -11,20 +11,24 @@ class SHLOModel(TFModel):
     def __init__(self, embedding_file=None, save_file=None, name='SHLOModel',
                  n_threads=None):
         # Super constructor
-        super(TFModel, self).__init__(save_file, name, n_threads)
+        super(SHLOModel, self).__init__(save_file, name, n_threads)
         # Get embedding file
         if embedding_file is not None:
             with open(embedding_file, 'rb') as f:
                 self.embedding_words, self.embeddings = cPickle.load(f)
+        else:
+            self.embedding_words, self.embeddings = None, None
 
     def _preprocess_data(self, sentence_data, init=True):
         raise NotImplementedError()
 
     def _create_placeholders(self):
         """Define placeholders and return input, input_lengths, labels"""
-        self.input         = tf.placeholder(tf.int32, [None, self.mx_len])
-        self.input_lengths = tf.placeholder(tf.int32, [None])
-        self.y             = tf.placeholder(tf.float32, [None])
+        self.input         = tf.placeholder(
+            tf.int32, [None, self.mx_len], name='input'
+        )
+        self.input_lengths = tf.placeholder(tf.int32, [None], name='input_lens')
+        self.y             = tf.placeholder(tf.float32, [None], name='labels')
         return self.input, self.input_lengths, self.y
 
     def _get_embedding(self):
@@ -44,12 +48,14 @@ class SHLOModel(TFModel):
 
     def _get_loss(self, logits, labels):
         """Return loss and prediction function"""
-        if self.loss.lower() == 'log':
-            return tf.nn.sigmoid_cross_entropy_with_logits(
+        if self.loss_function.lower() == 'log':
+            return tf.reduce_sum(tf.nn.sigmoid_cross_entropy_with_logits(
                 logits=logits, labels=labels
-            ), tf.sigmoid(logits)
-        if self.loss.lower() == 'hinge':
-            return tf.losses.hinge_loss(logits=logits, labels=labels), None
+            )), tf.sigmoid(logits)
+        if self.loss_function.lower() == 'hinge':
+            return tf.reduce_sum(tf.losses.hinge_loss(
+                logits=logits, labels=labels
+            )), None
         raise Exception("Unknown loss <{0}>".format(self.loss))
 
     def _get_save_dict(self, **kwargs):
@@ -59,6 +65,7 @@ class SHLOModel(TFModel):
         assert(self.d is not None)
         assert(self.lr is not None)
         assert(self.l2_penalty is not None)
+        assert(self.loss_function is not None)
         # Get input placeholders
         self.input, self.input_lengths, self.y = self._create_placeholders()
         # Generate sentence features
@@ -69,7 +76,7 @@ class SHLOModel(TFModel):
         s1, s2 = self.seed, (self.seed + 1 if self.seed is not None else None)
         w = tf.Variable(tf.random_normal((self.d, 1), stddev=0.1, seed=s1))
         b = tf.Variable(tf.random_normal((1, 1), stddev=0.1, seed=s2))
-        h = tf.matmul(sentence_feats, w) + b
+        h = tf.squeeze(tf.matmul(sentence_feats, w) + b)
         # Define training procedure
         self.loss, self.prediction = self._get_loss(h, self.y)
         self.loss += self.l2_penalty * tf.nn.l2_loss(w)
@@ -82,7 +89,7 @@ class SHLOModel(TFModel):
     def _get_feed(self, x_batch, len_batch, y_batch=None):
         feed = {self.input: x_batch, self.input_lengths: len_batch}
         if y_batch is not None:
-            feed[self.labels] = y_batch
+            feed[self.y] = y_batch
         return feed
 
     def _get_data_batch(self, x_batch):
@@ -95,24 +102,30 @@ class SHLOModel(TFModel):
             len_batch[j]         = t
         return x_batch_array, len_batch
 
-    def train(self, sentence_data, sentence_labels, n_epochs=10, lr=0.01,
-              dim=50, batch_size=100, l2_penalty=0.0, max_sentence_length=None,
-              print_freq=5, seed=None):
-        # Build model
+    def train(self, sentence_data, sentence_labels, loss_function='log',
+              n_epochs=20, lr=0.01, dim=50, batch_size=100, l2_penalty=0.0,
+              rebalance=False, max_sentence_length=None, print_freq=5,
+              seed=None):
         verbose = print_freq > 0
         if verbose:
             print("[{0}] dim={1} lr={2} l2={3}".format(
                 self.name, dim, lr, l2_penalty
             ))
             print("[{0}] Building model".format(self.name))
-        self.d          = dim
-        self.lr         = lr
-        self.l2_penalty = l2_penalty
-        self.seed       = seed
-        self._build()
         # Get training data
         train_data = self._preprocess_data(sentence_data, init=True)
         self.mx_len = max_sentence_length or max(map(len, train_data))
+        # Build model
+        if self.embeddings is not None:
+            assert(self.embeddings.shape[1] == dim)
+        self.d             = dim
+        self.lr            = lr
+        self.l2_penalty    = l2_penalty
+        self.seed          = seed
+        self.loss_function = loss_function
+        self._build()
+        # Get training indices
+        np.random.seed(self.seed)
         train_idxs = LabelBalancer(sentence_labels).get_train_idxs(rebalance)
         X_train = [train_data[i] for i in train_idxs]
         y_train = np.ravel(sentence_labels)[train_idxs]
@@ -131,14 +144,13 @@ class SHLOModel(TFModel):
             for i in range(0, n, batch_size):
                 r = min(n-1, i+batch_size)
                 x_batch_array, len_batch = self._get_data_batch(X_train[i:r])
-                y_batch = y_train[i:r].reshape((r-i, 1))
                 loss, _ = self.session.run(
                     [self.loss, self.train_fn],
-                    self._get_feed(x_batch_array, len_batch, y_batch)
+                    self._get_feed(x_batch_array, len_batch, y_train[i:r])
                 )
                 epoch_loss += loss
             # Print training stats
-            if verbose and (t % print_freq == 0 or t in [0, (n_epochs-1)]):
+            if verbose and ((t+1) % print_freq == 0 or t in [0, (n_epochs-1)]):
                 msg = "[{0}] Epoch {1} ({2:.2f}s)\tAvg. loss={3:.6f}"
                 print(msg.format(self.name, t+1, time()-st, epoch_loss/n))
         if verbose:
@@ -146,7 +158,11 @@ class SHLOModel(TFModel):
 
     def predict(self, test_sentence_data):
         test_data = self._preprocess_data(test_sentence_data, init=False)
-        test_array, test_len = self._get_data_batch(test_data[i:r])
+        is_unknown = [w == 1 for s in test_data for w in s]
+        print "[{0}] Test set unknown token percentage: {1:.2f}%".format(
+            self.name, 100. * float(sum(is_unknown)) / len(is_unknown)
+        )
+        test_array, test_len = self._get_data_batch(test_data)
         return np.ravel(self.session.run(
             self.prediction, self._get_feed(test_array, test_len, y_batch=None)
         ))
@@ -156,9 +172,10 @@ class SHLOModel(TFModel):
         y    = np.ravel(test_labels)
         assert((yhat >= 0).all() and (yhat <= 1).all())
         assert((y >= 0).all() and (y <= 1).all())
-        yhat_hard = y_hat > b
+        assert(len(y) == len(yhat))
+        yhat_hard = yhat > b
         y_hard    = y > b
-        return np.mean(yhat == y)
+        return np.mean(yhat_hard == y_hard)
 
     def save_info(self, model_name):
         with open('{0}.info'.format(model_name), 'wb') as f:
@@ -204,7 +221,7 @@ class LinearModel(SHLOModel):
     def _embed_sentences(self, word_features, lengths):
         """Mean of word vectors"""
         s = tf.reduce_sum(word_features, axis=1)
-        return s / tf.reshape(lengths, (-1, 1))
+        return s / tf.to_float(tf.reshape(lengths, (-1, 1)))
 
 
 class fastText(SHLOModel):
@@ -229,13 +246,14 @@ class fastText(SHLOModel):
         Row 0 is 0 vector for no token
         Initialize random embedding for UNKNOWN and all words
         """
-        zero  = tf.constant(tf.zeros((1, self.d)))
+        zero  = tf.constant(0.0, dtype=tf.float32, shape=(1, self.d))
+        s = self.seed-1
         embed = tf.Variable(tf.random_normal(
-            (self.word_dict.num_words() + 1, self.d), stddev=0.1
+            (self.word_dict.num_words() + 1, self.d), stddev=0.1, seed=s
         ))
         return tf.concat([zero, embed], axis=0, name='embedding_matrix')
 
     def _embed_sentences(self, word_features, lengths):
         """Mean of word vectors"""
         s = tf.reduce_sum(word_features, axis=1)
-        return s / tf.reshape(lengths, (-1, 1))
+        return s / tf.to_float(tf.reshape(lengths, (-1, 1)))
