@@ -7,7 +7,13 @@ from utils import LabelBalancer
 
 
 class SHLOModel(object):
-
+    """Base class for a shallow text classification model
+    Trains a Tensorflow model with a linear layer over an arbitrary sentence
+    featurization
+    Child classes need to define
+        @_preprocess_data: method for processing tokenized text
+        @_embed_sentences: Tensorflow featurization of a sentence
+    """
     def __init__(self, embedding_file=None, save_file=None, name='SHLOModel',
                  n_threads=None):
         # Super constructor
@@ -107,6 +113,22 @@ class SHLOModel(object):
               n_epochs=20, lr=0.01, dim=50, batch_size=100, l2_penalty=0.0,
               rebalance=False, max_sentence_length=None, dev_sentence_data=None,
               dev_labels=None, print_freq=5, seed=None):
+        """Train SHLO model
+            @sentence_data: list of lists of words representing sentences
+            @sentence_labels: labels for sentences in [0, 1]
+            @loss_function: loss function to use in ['log', 'hinge']
+            @n_epochs: number of training epochs
+            @lr: learning rate
+            @dim: embedding dimension
+            @batch_size: number of examples in each mini-batch
+            @l2_penalty: L2 regularization strength
+            @rebalance: rebalance training set?
+            @max_sentence_length: if None, max in training set
+            @dev_sentence_data: same as @sentence_data for dev set
+            @dev_labels: same as @sentence_labels for dev set
+            @print_freq: print stats after this many epochs
+            @seed: random seed
+        """
         verbose = print_freq > 0
         if verbose:
             print("[{0}] dim={1} lr={2} l2={3}".format(
@@ -162,6 +184,7 @@ class SHLOModel(object):
             print("[{0}] Training done ({1:.2f}s)".format(self.name, time()-st))
 
     def predict(self, test_sentence_data, verbose=True):
+        """Predict labels for test data"""
         test_data = self._preprocess_data(test_sentence_data, init=False)
         if verbose:
             is_unknown = [w == 1 for s in test_data for w in s]
@@ -174,6 +197,7 @@ class SHLOModel(object):
         ))
 
     def score(self, test_sentence_data, test_labels, b=0.5, verbose=True):
+        """Score predictions on test data against gold labels"""
         yhat = self.predict(test_sentence_data, verbose)
         y    = np.ravel(test_labels)
         assert((yhat >= 0).all() and (yhat <= 1).all())

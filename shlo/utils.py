@@ -8,6 +8,7 @@ DATA_DIR = 'data/'
 
 
 def senna(vector_f='embeddings.txt', words_f ='words.lst', out_f='senna.pkl'):
+    """Process raw Senna word vectors"""
     with open(DATA_DIR + words_f, 'rb') as f:
         words = [line.strip() for line in f]
     M = np.loadtxt(DATA_DIR + vector_f)
@@ -18,6 +19,7 @@ def senna(vector_f='embeddings.txt', words_f ='words.lst', out_f='senna.pkl'):
 
 
 def dep_w2v(data_fname='deps.words', out_fname='depw2v.pkl'):
+    """Process raw dependency word2vec data from Levy & Goldberg '14"""
     M = np.loadtxt(DATA_DIR + data_fname, converters={0: lambda x: 0})
     M = M[:, 1:]
     print "Loaded {0}x{1} word vector matrix".format(*M.shape)
@@ -28,6 +30,7 @@ def dep_w2v(data_fname='deps.words', out_fname='depw2v.pkl'):
 
 
 def scrub(text):
+    """Clean text and force utf-8 encoding"""
     text = ''.join(c for c in text.lower() if ord(c) < 128)
     if isinstance(text, unicode):
         return text.encode('utf8')
@@ -39,6 +42,7 @@ def symbol_embedding(U):
 
 
 class FeatureHasher(object):
+    """Simple implementation of the hashing trick"""
 
     def __init__(self, id_range=32000):
         self.id_range = id_range
@@ -48,12 +52,13 @@ class FeatureHasher(object):
 
 
 class LabelBalancer(object):
+    """Utility class to rebalance training labels
+    For example, to get the indices of a training set
+    with labels y and around 90 percent negative examples,
+        LabelBalancer(y).get_train_idxs(rebalance=0.1)
+    """
+
     def __init__(self, y):
-        """Utility class to rebalance training labels
-        For example, to get the indices of a training set
-        with labels y and around 90 percent negative examples,
-            LabelBalancer(y).get_train_idxs(rebalance=0.1)
-        """
         self.y = np.ravel(y)
     
     def _get_pos(self, split):
@@ -94,6 +99,7 @@ class LabelBalancer(object):
 
 class SymbolTable:
     """Wrapper for dict to encode unknown symbols"""
+
     def __init__(self, starting_symbol=2, unknown_symbol=1): 
         self.s       = starting_symbol
         self.unknown = unknown_symbol

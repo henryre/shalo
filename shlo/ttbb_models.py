@@ -8,7 +8,10 @@ from utils import scrub, symbol_embedding, SymbolTable
 
 
 class TTBB(SHLOModel):
-
+    """Implementation of A Simple but Tough-to-Beat-Baseline for Sent. Embedding
+    In the basic model, the common component vector is computed before all
+    computations. The embeddings are static, so no updates are made.
+    """
     def __init__(self, embedding_file, a=0.01, save_file=None, name='TTBB',
                  n_threads=None):
         assert(embedding_file is not None)
@@ -18,6 +21,11 @@ class TTBB(SHLOModel):
         self.a = a
 
     def _static_common_component(self, tokens, U, p):
+        """Compute the common component vector
+            @tokens: list of lists of token ids representing sentences
+            @U: matrix of word embeddings
+            @p: marginal probability estimates for each word
+        """
         X = []
         for t in tokens:
             if len(t) == 0:
@@ -83,7 +91,7 @@ class TTBB(SHLOModel):
         return tf.constant(self.ccx, dtype=tf.float32)
 
     def _embed_sentences(self):
-        """Based on Arora et. al '17"""
+        """Tensorflow version of @_static_common_component"""
         # Get word features
         word_embeddings = self._get_embedding()
         word_feats      = tf.nn.embedding_lookup(word_embeddings, self.input)
@@ -103,7 +111,7 @@ class TTBB(SHLOModel):
 
 
 class TTBBTune(TTBB):
-
+    """TTBB model with common component updated via gradient descent"""
     def __init__(self, embedding_file, a=0.01, save_file=None, name='TTBBTune',
                  n_threads=None):
         super(TTBBTune, self).__init__(
@@ -126,7 +134,9 @@ class TTBBTune(TTBB):
 
 
 class TTBBTuneLazy(TTBB):
-
+    """TTBB model with exact common component updates
+    Common component vector updated after every epoch
+    """
     def __init__(self, embedding_file, a=0.01, save_file=None,
                  name='TTBBTuneLazy', n_threads=None):
         super(TTBBTuneLazy, self).__init__(

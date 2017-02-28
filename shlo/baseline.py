@@ -7,7 +7,7 @@ from utils import scrub, symbol_embedding, SymbolTable
 
 
 class SparseLinearModel(SHLOModel):
-
+    """Sparse linear model over BOW indicator vector"""
     def __init__(self, save_file=None, name='SparseLM', n_threads=None):
         super(SparseLinearModel, self).__init__(
             None, save_file, name, n_threads
@@ -92,6 +92,7 @@ class SparseLinearModel(SHLOModel):
 
 
 def get_rnn_output(output, dim, lengths):
+    """Get last output of RNN"""
     batch_size = tf.shape(output)[0]
     max_length = tf.shape(output)[1]
     index = tf.range(0, batch_size) * max_length + (lengths - 1)
@@ -101,7 +102,7 @@ def get_rnn_output(output, dim, lengths):
 
 
 class LSTM(SHLOModel):
-
+    """Simple LSTM for sequence classification"""
     def __init__(self, save_file=None, name='LSTM', n_threads=None):
         super(LSTM, self).__init__(None, save_file, name, n_threads)
 
@@ -130,7 +131,7 @@ class LSTM(SHLOModel):
         return tf.concat([zero, embed], axis=0, name='embedding_matrix')
 
     def _embed_sentences(self):
-        """LSTM"""
+        """Embed sentences via the last output cell of an LSTM"""
         word_embeddings = self._get_embedding()
         word_feats      = tf.nn.embedding_lookup(word_embeddings, self.input)
         batch_size      = tf.shape(self.input)[0]

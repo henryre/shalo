@@ -6,7 +6,7 @@ from utils import scrub, symbol_embedding, SymbolTable
 
 
 class VectorMeanSHLOModel(SHLOModel):
-
+    """Base class for models with sentence embedding as mean of word vectors"""
     def _get_embedding(self):
         raise NotImplementedError()
 
@@ -19,7 +19,7 @@ class VectorMeanSHLOModel(SHLOModel):
 
 
 class LinearModel(VectorMeanSHLOModel):
-
+    """Linear model over pretrained embeddings"""
     def __init__(self, embedding_file, save_file=None, name='LinearModel',
                  n_threads=None):
         assert(embedding_file is not None)
@@ -52,7 +52,7 @@ class LinearModel(VectorMeanSHLOModel):
 
 
 class fastText(VectorMeanSHLOModel):
-
+    """Linear model over backprop-trained embeddings"""
     def __init__(self, save_file=None, name='fastText', n_threads=None):
         super(fastText, self).__init__(None, save_file, name, n_threads)
 
@@ -82,7 +82,7 @@ class fastText(VectorMeanSHLOModel):
 
 
 class fastTextPreTrain(VectorMeanSHLOModel):
-
+    """Linear model over backprop-trained embeddings init. from pretrained"""
     def __init__(self, embedding_file, save_file=None, name='fastTextPreTrain',
                  n_threads=None):
         assert(embedding_file is not None)
