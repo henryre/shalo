@@ -65,6 +65,7 @@ class TTBB(SHLOModel):
         self.ccx = self._static_common_component(
             tokens, symbol_embedding(self.embeddings), self.marginals
         )
+        self.train_tokens = tokens
         return tokens
 
     def _get_embedding(self):
@@ -122,3 +123,45 @@ class TTBBTune(TTBB):
 
     def _get_common_component(self):
         return tf.Variable(self.ccx, dtype=tf.float32)
+
+
+class TTBBTuneLazy(TTBB):
+
+    def __init__(self, embedding_file, a=0.01, save_file=None,
+                 name='TTBBTuneLazy', n_threads=None):
+        super(TTBBTuneLazy, self).__init__(
+            embedding_file, a, save_file, name, n_threads
+        )
+
+    def _get_feed(self, x_batch, len_batch, y_batch=None):
+        feed = {
+            self.input:           x_batch, 
+            self.input_lengths:   len_batch,
+            self.ccx_placeholder: self.ccx,
+        }
+        if y_batch is not None:
+            feed[self.y] = y_batch
+        return feed
+
+    def _epoch_post_process(self, t):
+        # Update the common component
+        U = self.session.run(self.U)
+        self.ccx = self._static_common_component(
+            self.train_tokens, U, self.marginals
+        )
+
+    def _get_embedding(self):
+        """
+        Row 0 is 0 vector for no token
+        Row 1 is 0 vector for unknown token
+        Remaining rows are constant at pretrained emebdding
+        """
+        self.U = tf.Variable(
+            symbol_embedding(self.embeddings),
+            dtype=tf.float32, name='embedding_matrix'
+        )
+        return self.U
+
+    def _get_common_component(self):
+        self.ccx_placeholder = tf.placeholder(tf.float32, name='common_comp')
+        return self.ccx_placeholder

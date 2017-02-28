@@ -1,8 +1,9 @@
 import numpy as np
 
 from shlo import (
-    fastText, fastTextPreTrain, LinearModel, TTBB, TTBBTune, # SHLO models
-    LSTM, SparseLinearModel,                                 # Baseline models
+    fastText, fastTextPreTrain, LinearModel, # Vector mean models
+    TTBB, TTBBTune, TTBBTuneLazy,            # TTBB models
+    LSTM, SparseLinearModel,                 # Baseline models
 )
 
 
@@ -38,10 +39,11 @@ if __name__ == '__main__':
     train, train_y = get_data_from_file('data/train.txt')
     test, test_y   = get_data_from_file('data/test.txt')
     # Run test
-    test_model(LSTM, train, train_y, test, test_y)
-    test_model(SparseLinearModel, train, train_y, test, test_y)
+    test_model(TTBBTuneLazy, train, train_y, test, test_y, SENNA)
     test_model(TTBBTune, train, train_y, test, test_y, SENNA)
     test_model(TTBB, train, train_y, test, test_y, SENNA)
     test_model(fastTextPreTrain, train, train_y, test, test_y, SENNA)
     test_model(fastText, train, train_y, test, test_y)
     test_model(LinearModel, train, train_y, test, test_y, SENNA)
+    test_model(LSTM, train, train_y, test, test_y)
+    test_model(SparseLinearModel, train, train_y, test, test_y)

@@ -41,7 +41,6 @@ class SHLOModel(object):
         )
         self.input_lengths = tf.placeholder(tf.int32, [None], name='input_lens')
         self.y             = tf.placeholder(tf.float32, [None], name='labels')
-        return self.input, self.input_lengths, self.y
 
     def _embed_sentences(self):
         """
@@ -71,7 +70,7 @@ class SHLOModel(object):
         assert(self.l2_penalty is not None)
         assert(self.loss_function is not None)
         # Get input placeholders and sentence features
-        self.input, self.input_lengths, self.y = self._create_placeholders()
+        self._create_placeholders()
         sentence_feats = self._embed_sentences()
         # Define linear model
         s1, s2 = self.seed, (self.seed + 1 if self.seed is not None else None)
@@ -100,6 +99,9 @@ class SHLOModel(object):
             x_batch_array[j, :t] = x[:t]
             len_batch[j]         = t
         return x_batch_array, len_batch
+
+    def _epoch_post_process(self, t):
+        pass
 
     def train(self, sentence_data, sentence_labels, loss_function='log',
               n_epochs=20, lr=0.01, dim=50, batch_size=100, l2_penalty=0.0,
@@ -148,6 +150,7 @@ class SHLOModel(object):
                     self._get_feed(x_batch_array, len_batch, y_train[i:r])
                 )
                 epoch_loss += loss
+            self._epoch_post_process(t)
             # Print training stats
             if verbose and ((t+1) % print_freq == 0 or t in [0, (n_epochs-1)]):
                 msg = "[{0}] Epoch {1} ({2:.2f}s)\tAvg. loss = {3:.6f}"

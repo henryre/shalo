@@ -26,6 +26,7 @@ def dep_w2v(data_fname='deps.words', out_fname='depw2v.pkl'):
     with open(DATA_DIR + out_fname, 'wb') as f:
         cPickle.dump((words, M), f)
 
+
 def scrub(text):
     text = ''.join(c for c in text.lower() if ord(c) < 128)
     if isinstance(text, unicode):
@@ -44,7 +45,6 @@ class FeatureHasher(object):
 
     def hash(self, token):
         return zlib.adler32(scrub(token)) % self.id_range
-
 
 
 class LabelBalancer(object):
