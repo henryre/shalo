@@ -3,15 +3,27 @@ import numpy as np
 import tensorflow as tf
 
 from time import time
-from utils import LabelBalancer, TFModel
+from utils import LabelBalancer
 
 
-class SHLOModel(TFModel):
+class SHLOModel(object):
 
     def __init__(self, embedding_file=None, save_file=None, name='SHLOModel',
                  n_threads=None):
         # Super constructor
-        super(SHLOModel, self).__init__(save_file, name, n_threads)
+        self.name       = name
+        self.train_fn   = None
+        self.loss       = None
+        self.prediction = None
+        self.save_dict  = None
+        self.session    = tf.Session(
+            config=tf.ConfigProto(
+                intra_op_parallelism_threads=n_threads,
+                inter_op_parallelism_threads=n_threads
+            )
+        ) if n_threads is not None else tf.Session()
+        if save_file is not None:
+            self.load(save_file)
         # Get embedding file
         if embedding_file is not None:
             with open(embedding_file, 'rb') as f:
@@ -166,7 +178,10 @@ class SHLOModel(TFModel):
         assert(len(y) == len(yhat))
         yhat_hard = yhat > b
         y_hard    = y > b
-        return np.mean(yhat_hard == y_hard)
+        acc = np.mean(yhat_hard == y_hard)
+        if verbose:
+            print "[{0}] Accuracy: {1:.2f}%".format(self.name, 100. * acc)
+        return acc
 
     def save_info(self, model_name):
         with open('{0}.info'.format(model_name), 'wb') as f:
@@ -175,3 +190,37 @@ class SHLOModel(TFModel):
     def load_info(self, model_name):
         with open('{0}.info'.format(model_name), 'rb') as f:
             self.d, self.lr, self.l2_penalty, self.mx_len = cPickle.load(f)
+
+    def save(self, model_name=None, verbose=True):
+        """Save current TensorFlow model
+            @model_name: save file names
+            @verbose: be talkative?
+        """
+        model_name = model_name or self.name
+        self.save_info(model_name)
+        save_dict = self.save_dict or tf.global_variables()
+        saver = tf.train.Saver(save_dict)
+        saver.save(self.session, './' + model_name, global_step=0)
+        if verbose:
+            print("[{0}] Model saved. To load, use name\n\t\t{1}".format(
+                self.name, model_name
+            ))
+
+    def load(self, model_name, verbose=True):
+        """Load TensorFlow model from file
+            @model_name: save file names
+            @verbose: be talkative?
+        """
+        self.load_info(model_name)
+        self._build()
+        load_dict = self.save_dict or tf.global_variables()
+        saver = tf.train.Saver(load_dict)
+        ckpt = tf.train.get_checkpoint_state('./')
+        if ckpt and ckpt.model_checkpoint_path:
+            saver.restore(self.session, ckpt.model_checkpoint_path)
+            if verbose:
+                print("[{0}] Loaded model <{1}>".format(self.name, model_name))
+        else:
+            raise Exception("[{0}] No model found at <{1}>".format(
+                self.name, model_name
+            ))
