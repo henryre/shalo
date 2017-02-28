@@ -9,11 +9,11 @@ Shallow baseline models for text.
 * fastText with pretrained embeddings
 * Simple but tough-to-beat-baseline for sentence embeddings (TTBB)
 * TTBB with tuned embeddings and gradient-tuned common component
+* LSTM baseline
+* BOW one-hot baseline
 
 ## TODO model implementations
 
-* LSTM baseline
-* BOW one-hot baseline
 * TTBB with rank-one exact update
 * TTBB with lazily updated common component
 * Sequence models
