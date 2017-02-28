@@ -30,6 +30,7 @@ Shallow baseline models for text.
 ```
 data/get_senna.sh
 data/get_polarity.sh
+data/get_movie_reviews.sh
 ```
 
 ### Run tests for simple models
@@ -37,3 +38,6 @@ data/get_polarity.sh
 ```
 python shlo_test.py
 ```
+
+## TODO
+[Dan] Add http://nlp.stanford.edu/sentiment/trainDevTestTrees_PTB.zip dataset
