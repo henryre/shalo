@@ -76,7 +76,7 @@ class fastText(VectorMeanSHLOModel):
         Initialize random embedding for UNKNOWN and all words
         """
         zero  = tf.constant(0.0, dtype=tf.float32, shape=(1, self.d))
-        s = self.seed-1
+        s = self.seed - 1
         embed = tf.Variable(tf.random_normal(
             (self.word_dict.num_words() + 1, self.d), stddev=0.1, seed=s
         ))
@@ -114,7 +114,7 @@ class fastTextPreTrain(VectorMeanSHLOModel):
         Remaining rows are random initialization
         """
         zero = tf.constant(0.0, dtype=tf.float32, shape=(1, self.d))
-        s = self.seed-1
+        s = self.seed - 1
         unk = tf.Variable(tf.random_normal((1, self.d), stddev=0.1, seed=s))
         pretrain = tf.Variable(self.embeddings, dtype=tf.float32)
         rem = tf.Variable(tf.random_normal(
@@ -136,6 +136,23 @@ class TTBB(SHLOModel):
         )
         self.a = a
 
+    def _static_common_component(self, tokens, U, p):
+        X = []
+        for t in tokens:
+            if len(t) == 0:
+                X.append(np.zeros(U.shape[1]))
+                continue
+            # Normalizer
+            z = 1.0 / len(t)
+            # Embed sentence
+            q = (self.a / (self.a + p[t])).reshape((len(t), 1))
+            X.append(z * np.sum(q * U[t, :], axis=0))
+        # Compute first principal component
+        X = np.array(X)
+        pca = PCA(n_components=1, whiten=False, svd_solver='randomized')
+        pca.fit(X)
+        return np.ravel(pca.components_)
+
     def _preprocess_data(self, sentence_data, init=True):
         # Initialize word table and populate with embeddings
         if init:
@@ -143,12 +160,14 @@ class TTBB(SHLOModel):
             for word in self.embedding_words:
                 self.word_dict.get(word)
         # Process data
+        # Just map tokens if not initializing
         if not init:
             return [
                 np.ravel([
                     self.word_dict.lookup(scrub(w.lower())) for w in s
                 ]) for s in sentence_data
             ]
+        # If initializing, get marginal estimates and common component
         marginal_counts = defaultdict(int)
         tokens = []
         for s in sentence_data:
@@ -162,22 +181,9 @@ class TTBB(SHLOModel):
             self.marginals[k] = float(v)
         self.marginals /= sum(marginal_counts.values())
         # Compute sentence embeddings
-        X = []
-        U = symbol_embedding(self.embeddings)
-        for t in tokens:
-            if len(t) == 0:
-                X.append(np.zeros(U.shape[1]))
-                continue
-            # Normalizer
-            z = 1.0 / len(t)
-            # Embed sentence
-            q = (self.a / (self.a + self.marginals[t])).reshape((len(t), 1))
-            X.append(z * np.sum(q * U[t, :], axis=0))
-        # Compute first principal component
-        X = np.array(X)
-        pca = PCA(n_components=1, whiten=False, svd_solver='randomized')
-        pca.fit(X)
-        self.nonsense_projector = np.ravel(pca.components_)
+        self.ccx = self._static_common_component(
+            tokens, symbol_embedding(self.embeddings), self.marginals
+        )
         return tokens
 
     def _get_embedding(self):
@@ -192,7 +198,7 @@ class TTBB(SHLOModel):
         )
 
     def _get_common_component(self):
-        return tf.constant(self.nonsense_projector, dtype=tf.float32)
+        return tf.constant(self.ccx, dtype=tf.float32)
 
     def _embed_sentences(self):
         """Based on Arora et. al '17"""
@@ -234,4 +240,4 @@ class TTBBTune(TTBB):
         )
 
     def _get_common_component(self):
-        return tf.Variable(self.nonsense_projector, dtype=tf.float32)
+        return tf.Variable(self.ccx, dtype=tf.float32)

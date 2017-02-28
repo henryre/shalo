@@ -17,6 +17,15 @@ def senna(vector_f='embeddings.txt', words_f ='words.lst', out_f='senna.pkl'):
         cPickle.dump((words, M), f)
 
 
+def dep_w2v(data_fname='deps.words', out_fname='depw2v.pkl'):
+    M = np.loadtxt(DATA_DIR + data_fname, converters={0: lambda x: 0})
+    M = M[:, 1:]
+    print "Loaded {0}x{1} word vector matrix".format(*M.shape)
+    with open(DATA_DIR + data_fname, 'rb') as f:
+        words = [line.split()[0] for line in f]
+    with open(DATA_DIR + out_fname, 'wb') as f:
+        cPickle.dump((words, M), f)
+
 def scrub(text):
     text = ''.join(c for c in text.lower() if ord(c) < 128)
     if isinstance(text, unicode):

@@ -6,11 +6,16 @@ Shallow baseline models for text.
 
 * Linear model over pretrained embeddings
 * fastText
+* fastText with pretrained embeddings
+* Simple but tough-to-beat-baseline for sentence embeddings (TTBB)
+* TTBB with tuned embeddings and gradient-tuned common component
 
 ## TODO model implementations
 
-* fastText with pretrained embeddings
-* Sentence embedding baseline models
+* LSTM baseline
+* BOW one-hot baseline
+* TTBB with rank-one exact update
+* TTBB with lazily updated common component
 * Sequence models
 
 ## Getting started
@@ -23,8 +28,8 @@ Shallow baseline models for text.
 ### Get data
 
 ```
-./get_senna.sh
-./get_polarity.sh
+data/get_senna.sh
+data/get_polarity.sh
 ```
 
 ### Run tests for simple models

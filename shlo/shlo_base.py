@@ -43,11 +43,11 @@ class SHLOModel(TFModel):
         if self.loss_function.lower() == 'log':
             return tf.reduce_sum(tf.nn.sigmoid_cross_entropy_with_logits(
                 logits=logits, labels=labels
-            )), tf.sigmoid(logits)
+            ))
         if self.loss_function.lower() == 'hinge':
             return tf.reduce_sum(tf.losses.hinge_loss(
                 logits=logits, labels=labels
-            )), None
+            ))
         raise Exception("Unknown loss <{0}>".format(self.loss))
 
     def _get_save_dict(self, **kwargs):
@@ -67,13 +67,11 @@ class SHLOModel(TFModel):
         b = tf.Variable(tf.random_normal((1, 1), stddev=0.1, seed=s2))
         h = tf.squeeze(tf.matmul(sentence_feats, w) + b)
         # Define training procedure
-        self.loss, self.prediction = self._get_loss(h, self.y)
-        self.loss += self.l2_penalty * tf.nn.l2_loss(w)
-        self.train_fn = tf.train.AdamOptimizer(self.lr).minimize(self.loss)
-        assert(self.loss is not None)
-        assert(self.prediction is not None)
-        assert(self.train_fn is not None)
-        self.save_dict = self._get_save_dict(w=w, b=b)
+        self.loss       = self._get_loss(h, self.y)
+        self.loss      += self.l2_penalty * tf.nn.l2_loss(w)
+        self.prediction = tf.sigmoid(h)
+        self.train_fn   = tf.train.AdamOptimizer(self.lr).minimize(self.loss)
+        self.save_dict  = self._get_save_dict(w=w, b=b)
 
     def _get_feed(self, x_batch, len_batch, y_batch=None):
         feed = {self.input: x_batch, self.input_lengths: len_batch}
@@ -140,10 +138,10 @@ class SHLOModel(TFModel):
                 epoch_loss += loss
             # Print training stats
             if verbose and ((t+1) % print_freq == 0 or t in [0, (n_epochs-1)]):
-                msg = "[{0}] Epoch {1} ({2:.2f}s)\tAvg. loss={3:.4f}"
+                msg = "[{0}] Epoch {1} ({2:.2f}s)\tAvg. loss = {3:.6f}"
                 if dev_sentence_data is not None and dev_labels is not None:
                     acc = self.score(dev_sentence_data, dev_labels, 0.5, False)
-                    msg += "\tDev acc.={0:.2f}%".format(100. * acc)
+                    msg += "\tDev acc. = {0:.2f}%".format(100. * acc)
                 print(msg.format(self.name, t+1, time()-st, epoch_loss/n))
         if verbose:
             print("[{0}] Training done ({1:.2f}s)".format(self.name, time()-st))
