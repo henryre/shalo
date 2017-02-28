@@ -24,6 +24,10 @@ def scrub(text):
     return unicode(text, 'utf8', errors='strict').encode('utf8')
 
 
+def symbol_embedding(U):
+    return np.vstack([np.zeros((2, U.shape[1])), U])
+
+
 class FeatureHasher(object):
 
     def __init__(self, id_range=32000):
