@@ -1,4 +1,5 @@
 import numpy as np
+import os
 
 from shalo import (
     fastText, fastTextPreTrain, LinearModel, # Vector mean models
@@ -34,10 +35,11 @@ def test_model(model, train, train_y, test, test_y, U=None, p=None):
         kwargs['marginals_file'] = p
     F = model(**kwargs)
     print "\n\nRunning test with [{0}]".format(F.name)
-    k = 1 if model in [LSTM, TTBB, TTBBTune, TTBBTuneLazy] else 2
+    ngrams   = 1 if model in [LSTM, TTBB, TTBBTune, TTBBTuneLazy] else 2
+    n_epochs = 3 if 'CI' in os.environ else 20
     F.train(
         train, train_y, 
-        n_epochs=10, dim=DIM, ngrams=k,
+        n_epochs=n_epochs, dim=DIM, ngrams=ngrams,
         dev_sentence_data=test, dev_labels=test_y,
         seed=1701
     )
