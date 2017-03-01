@@ -20,8 +20,7 @@ class SparseLinearModel(SHLOModel):
         # Process data
         retrieve_fn = self.word_dict.get if init else self.word_dict.lookup
         tokens = [
-            [retrieve_fn(scrub(word.lower())) for word in sentence]
-            for sentence in sentence_data
+            map_words_to_symbols(s, mapper, self.ngrams) for s in sentence_data
         ]
         if init:
             self.td = self.word_dict.num_symbols()

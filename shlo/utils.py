@@ -41,6 +41,17 @@ def symbol_embedding(U):
     return np.vstack([np.zeros((2, U.shape[1])), U])
 
 
+def map_words_to_symbols(words, mapper, ngrams=1):
+    scrubbed_words = [scrub(word.lower()) for word in words]
+    tokens, n = [], len(scrubbed_words)
+    for i in xrange(n):
+        for k in xrange(ngrams):
+            if i + k + 1 > n:
+                break
+            tokens.append(mapper('~~'.join(scrubbed_words[i : i+k+1])))
+
+
+
 class FeatureHasher(object):
     """Simple implementation of the hashing trick"""
 
