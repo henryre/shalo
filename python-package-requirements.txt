@@ -2,4 +2,3 @@ numpy>=1.11
 scipy>=0.18
 sklearn>=0.18
 tensorflow>=1.0
-wordfreq>=1.5.1

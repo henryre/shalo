@@ -25,7 +25,8 @@ class LinearModel(VectorMeanSHLOModel):
                  n_threads=None):
         assert(embedding_file is not None)
         super(LinearModel, self).__init__(
-            name, embedding_file, save_file, n_threads
+            name=name, embedding_file=embedding_file, save_file=save_file,
+            n_thread=n_threads
         )
 
     def _preprocess_data(self, sentence_data, init=True):
@@ -55,7 +56,9 @@ class LinearModel(VectorMeanSHLOModel):
 class fastText(VectorMeanSHLOModel):
     """Linear model over backprop-trained embeddings"""
     def __init__(self, name='fastText', save_file=None, n_threads=None):
-        super(fastText, self).__init__(name, None, save_file, n_threads)
+        super(fastText, self).__init__(
+            name=name, save_file=save_file, n_threads=n_threads
+        )
 
     def _preprocess_data(self, sentence_data, init=True):
         # Initialize word table and populate with embeddings
@@ -87,7 +90,8 @@ class fastTextPreTrain(VectorMeanSHLOModel):
                  n_threads=None):
         assert(embedding_file is not None)
         super(fastTextPreTrain, self).__init__(
-            name, embedding_file, save_file, n_threads
+            name=name, embedding_file=embedding_file, save_file=save_file,
+            n_threads=n_threads
         )
 
     def _preprocess_data(self, sentence_data, init=True):

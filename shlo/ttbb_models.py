@@ -1,6 +1,5 @@
 import numpy as np
 import tensorflow as tf
-import wordfreq
 
 from collections import defaultdict
 from sklearn.decomposition import PCA
@@ -15,12 +14,19 @@ class TTBB(SHLOModel):
     In the basic model, the common component vector is computed before all
     computations. The embeddings are static, so no updates are made.
     """
-    def __init__(self, embedding_file, name='TTBB', save_file=None,
-                 n_threads=None):
+    def __init__(self, embedding_file, marginals_file=None, name='TTBB',
+                 save_file=None, n_threads=None):
         assert(embedding_file is not None)
         super(TTBB, self).__init__(
-            name, embedding_file, save_file, n_threads
+            name=name, embedding_file=embedding_file, save_file=save_file,
+            n_threads=n_threads
         )
+        # Get marginals file
+        if marginals_file is not None:
+            with open(marginals_file, 'rb') as f:
+                self.word_freq = cPickle.load(f)
+        else:
+            self.word_freq = None
 
     def _static_common_component(self, tokens, U, p):
         """Compute the common component vector
@@ -60,20 +66,23 @@ class TTBB(SHLOModel):
                 ) for s in sentence_data
             ]
         # If initializing, get marginal estimates and common component
-        marginal_counts = defaultdict(int)
-        tokens = []
-        for s in sentence_data:
-            t = np.ravel(
-                map_words_to_symbols(s, self.word_dict.lookup, self.ngrams)
-            )
-            tokens.append(t)
-            for x in t:
-                marginal_counts[x] += 1
-        # Estimate marginals
-        self.marginals = np.zeros(self.word_dict.num_symbols())
-        for k, v in marginal_counts.iteritems():
-            self.marginals[k] = float(v)
-        self.marginals /= sum(marginal_counts.values())
+        if self.word_freq is None:
+            marginal_counts = defaultdict(int)
+            tokens = []
+            for s in sentence_data:
+                t = np.ravel(
+                    map_words_to_symbols(s, self.word_dict.lookup, self.ngrams)
+                )
+                tokens.append(t)
+                for x in t:
+                    marginal_counts[x] += 1
+            # Estimate marginals
+            self.marginals = np.zeros(self.word_dict.num_symbols())
+            for k, v in marginal_counts.iteritems():
+                self.marginals[k] = float(v)
+            self.marginals /= sum(marginal_counts.values())
+        else:
+
         # Compute sentence embeddings
         if debug:
             orig_a = self.train_kwargs.get('a')
@@ -136,10 +145,11 @@ class TTBB(SHLOModel):
 
 class TTBBTune(TTBB):
     """TTBB model with common component updated via gradient descent"""
-    def __init__(self, embedding_file, name='TTBBTune', save_file=None,
-                 n_threads=None):
+    def __init__(self, embedding_file, marginals_file=None, name='TTBBTune',
+                 save_file=None, n_threads=None):
         super(TTBBTune, self).__init__(
-            embedding_file, name, save_file, n_threads
+            embedding_file=embedding_file, marginals_file=marginals_file,
+            name=name, save_file=save_file, n_threads=n_threads
         )
 
     def _get_embedding(self):
@@ -164,10 +174,11 @@ class TTBBTuneLazy(TTBB):
     """TTBB model with exact common component updates
     Common component vector updated after every epoch
     """
-    def __init__(self, embedding_file, name='TTBBTuneLazy', save_file=None,
-                 n_threads=None):
+    def __init__(self, embedding_file, marginals_file=None, name='TTBBTuneLazy',
+                 save_file=None, n_threads=None):
         super(TTBBTuneLazy, self).__init__(
-            embedding_file, name, save_file, n_threads
+            embedding_file=embedding_file, marginals_file=marginals_file,
+            name=name, save_file=save_file, n_threads=n_threads
         )
 
     def _get_feed(self, x_batch, len_batch, y_batch=None):

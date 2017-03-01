@@ -9,7 +9,9 @@ from utils import map_words_to_symbols, symbol_embedding, SymbolTable
 class SparseLM(SHLOModel):
     """Sparse linear model over BOW indicator vector"""
     def __init__(self, name='SparseLM', save_file=None, n_threads=None):
-        super(SparseLM, self).__init__(name, None, save_file, n_threads)
+        super(SparseLM, self).__init__(
+            name=name, save_file=save_file, n_threads=n_threads
+        )
 
     def _preprocess_data(self, sentence_data, init=True):
         # Initialize word table and populate with embeddings
@@ -101,7 +103,9 @@ def get_rnn_output(output, dim, lengths):
 class LSTM(SHLOModel):
     """Simple LSTM for sequence classification"""
     def __init__(self, name='LSTM', save_file=None, n_threads=None):
-        super(LSTM, self).__init__(name, None, save_file, n_threads)
+        super(LSTM, self).__init__(
+            name=name, save_file=save_file, n_threads=n_threads
+        )
 
     def _preprocess_data(self, sentence_data, init=True):
         # Initialize word table and populate with embeddings

@@ -14,9 +14,11 @@ class SHLOModel(object):
         @_preprocess_data: method for processing tokenized text
         @_embed_sentences: Tensorflow featurization of a sentence
     """
-    def __init__(self, name='SHLOModel', embedding_file=None, save_file=None,
-                 n_threads=None):
+    def __init__(self, _sentinal=None, name='SHLOModel', save_file=None,
+                 n_threads=None, embedding_file=None):
         # Super constructor
+        if _sentinal is not None:
+            raise Exception("Keyword arguments only for SHLOModel")
         self.name       = name
         self.train_fn   = None
         self.loss       = None
