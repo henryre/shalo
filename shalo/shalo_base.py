@@ -6,7 +6,7 @@ from time import time
 from utils import LabelBalancer
 
 
-class SHLOModel(object):
+class SHALOModel(object):
     """Base class for a shallow text classification model
     Trains a Tensorflow model with a linear layer over an arbitrary sentence
     featurization
@@ -14,11 +14,11 @@ class SHLOModel(object):
         @_preprocess_data: method for processing tokenized text
         @_embed_sentences: Tensorflow featurization of a sentence
     """
-    def __init__(self, _sentinal=None, name='SHLOModel', save_file=None,
+    def __init__(self, _sentinal=None, name='SHALOModel', save_file=None,
                  n_threads=None, embedding_file=None):
         # Super constructor
         if _sentinal is not None:
-            raise Exception("Keyword arguments only for SHLOModel")
+            raise Exception("Keyword arguments only for SHALOModel")
         self.name       = name
         self.train_fn   = None
         self.loss       = None
@@ -121,7 +121,7 @@ class SHLOModel(object):
               ngrams=1, rebalance=False, max_sentence_length=None,
               dev_sentence_data=None, dev_labels=None, print_freq=5,
               seed=None, **kwargs):
-        """Train SHLO model
+        """Train SHALO model
             @sentence_data: list of lists of words representing sentences
             @sentence_labels: labels for sentences in [0, 1]
             @loss_function: loss function to use in ['log', 'hinge']

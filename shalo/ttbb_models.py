@@ -3,14 +3,14 @@ import numpy as np
 import tensorflow as tf
 
 from collections import Counter
+from shalo import SHALOModel
 from sklearn.decomposition import PCA
-from shlo_base import SHLOModel
 from utils import (
     map_words_to_symbols, symbol_embedding, SymbolTable, top_similarity
 )
 
 
-class TTBB(SHLOModel):
+class TTBB(SHALOModel):
     """Implementation of A Simple but Tough-to-Beat-Baseline for Sent. Embedding
     In the basic model, the common component vector is computed before all
     computations. The embeddings are static, so no updates are made.

@@ -1,4 +1,4 @@
-# SHLO
+# SHALO
 
 Shallow baseline models for text in Tensorflow
 
@@ -37,7 +37,7 @@ scripts/get_polarity.sh
 ### Run tests for simple models
 
 ```
-python shlo_test.py
+python shalo_test.py
 ```
 
 ## TODO

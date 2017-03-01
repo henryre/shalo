@@ -2,11 +2,11 @@ import numpy as np
 import scipy.sparse as sparse
 import tensorflow as tf
 
-from shlo_base import SHLOModel
+from shalo import SHALOModel
 from utils import map_words_to_symbols, symbol_embedding, SymbolTable
 
 
-class SparseLM(SHLOModel):
+class SparseLM(SHALOModel):
     """Sparse linear model over BOW indicator vector"""
     def __init__(self, name='SparseLM', save_file=None, n_threads=None):
         super(SparseLM, self).__init__(
@@ -100,7 +100,7 @@ def get_rnn_output(output, dim, lengths):
     return h
 
 
-class LSTM(SHLOModel):
+class LSTM(SHALOModel):
     """Simple LSTM for sequence classification"""
     def __init__(self, name='LSTM', save_file=None, n_threads=None):
         super(LSTM, self).__init__(
