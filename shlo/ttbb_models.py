@@ -1,7 +1,8 @@
+import cPickle
 import numpy as np
 import tensorflow as tf
 
-from collections import defaultdict
+from collections import Counter
 from sklearn.decomposition import PCA
 from shlo_base import SHLOModel
 from utils import (
@@ -28,13 +29,12 @@ class TTBB(SHLOModel):
         else:
             self.word_freq = None
 
-    def _static_common_component(self, tokens, U, p):
+    def _static_common_component(self, tokens, U, p, a):
         """Compute the common component vector
             @tokens: list of lists of token ids representing sentences
             @U: matrix of word embeddings
             @p: marginal probability estimates for each word
         """
-        self.a = self.train_kwargs.get('a', 0.01)
         X = []
         for t in tokens:
             if len(t) == 0:
@@ -43,13 +43,27 @@ class TTBB(SHLOModel):
             # Normalizer
             z = 1.0 / len(t)
             # Embed sentence
-            q = (self.a / (self.a + p[t])).reshape((len(t), 1))
+            q = (a / (a + p[t])).reshape((len(t), 1))
             X.append(z * np.sum(q * U[t, :], axis=0))
         # Compute first principal component
         X = np.array(X)
         pca = PCA(n_components=1, whiten=False, svd_solver='randomized')
         pca.fit(X)
         return np.ravel(pca.components_)
+
+
+    def explore_common_component(self, tokens):
+        for a in np.logspace(-8, 2, num=21):
+            msg = '== a={0} =='.format(a)
+            print '\n{0}\n{1}\n{0}'.format('='*len(msg), msg)
+            ccx = self._static_common_component(
+                tokens, symbol_embedding(self.embeddings), self.marginals, a
+            )
+            top_similarity(
+                symbol_embedding(self.embeddings),
+                self.word_dict.reverse(), 15, ccx
+            )
+
 
     def _preprocess_data(self, sentence_data, init=True, debug=False):
         # Initialize word table and populate with embeddings
@@ -58,50 +72,33 @@ class TTBB(SHLOModel):
             for word in self.embedding_words:
                 self.word_dict.get(word)
         # Process data
-        # Just map tokens if not initializing
+        # Map tokens and return if not initializing
+        tokens = [
+            np.ravel(
+                map_words_to_symbols(s, self.word_dict.lookup, self.ngrams)
+            ) for s in sentence_data
+        ]
+        self.train_tokens = tokens
         if not init:
-            return [
-                np.ravel(
-                    map_words_to_symbols(s, self.word_dict.lookup, self.ngrams)
-                ) for s in sentence_data
-            ]
-        # If initializing, get marginal estimates and common component
+            return tokens
+        # If initializing, get marginal estimates 
         if self.word_freq is None:
-            marginal_counts = defaultdict(int)
-            tokens = []
-            for s in sentence_data:
-                t = np.ravel(
-                    map_words_to_symbols(s, self.word_dict.lookup, self.ngrams)
-                )
-                tokens.append(t)
-                for x in t:
-                    marginal_counts[x] += 1
-            # Estimate marginals
+            marginal_counts = Counter([w for t in tokens for w in t])
             self.marginals = np.zeros(self.word_dict.num_symbols())
             for k, v in marginal_counts.iteritems():
                 self.marginals[k] = float(v)
             self.marginals /= sum(marginal_counts.values())
         else:
-
-        # Compute sentence embeddings
+            self.marginals = np.zeros(self.word_dict.num_symbols())
+            for word, idx in self.word_dict.d.iteritems():
+                self.marginals[idx] = self.word_freq.get(word, 0.0)
+        # Compute common component
         if debug:
-            orig_a = self.train_kwargs.get('a')
-            for a in np.logspace(-8, 2, num=21):
-                self.train_kwargs['a'] = a
-                msg = '== a={0} =='.format(a)
-                print '\n{0}\n{1}\n{0}'.format('='*len(msg), msg)
-                ccx = self._static_common_component(
-                    tokens, symbol_embedding(self.embeddings), self.marginals
-                )
-                top_similarity(
-                    symbol_embedding(self.embeddings),
-                    self.word_dict.reverse(), 15, ccx
-                )
-            if orig_a is not None: self.train_kwargs['a'] = orig_a
+            self.explore_common_component(tokens)
+        self.a = self.train_kwargs.get('a', 0.01)
         self.ccx = self._static_common_component(
-            tokens, symbol_embedding(self.embeddings), self.marginals
+            tokens, symbol_embedding(self.embeddings), self.marginals, self.a
         )
-        self.train_tokens = tokens
         return tokens
 
     def _get_embedding(self):
@@ -194,8 +191,9 @@ class TTBBTuneLazy(TTBB):
     def _epoch_post_process(self, t):
         # Update the common component
         U = self.session.run(self.U)
+        a = self.session.run(self.a_var)
         self.ccx = self._static_common_component(
-            self.train_tokens, U, self.marginals
+            self.train_tokens, U, self.marginals, a
         )
 
     def _get_embedding(self):
@@ -211,7 +209,8 @@ class TTBBTuneLazy(TTBB):
         return self.U
 
     def _get_a(self):
-        return tf.Variable(self.a, dtype=tf.float32)
+        self.a_var = tf.Variable(self.a, dtype=tf.float32)
+        return self.a_var
 
     def _get_common_component(self):
         self.ccx_placeholder = tf.placeholder(tf.float32, name='common_comp')

@@ -141,8 +141,8 @@ class SHLOModel(object):
         self.train_kwargs = kwargs
         verbose = print_freq > 0
         if verbose:
-            print("[{0}] dim={1} lr={2} l2={3}".format(
-                self.name, dim, lr, l2_penalty
+            print("[{0}] dim={1} lr={2} l2={3} ngram={4}".format(
+                self.name, dim, lr, l2_penalty, ngrams
             ))
             print("[{0}] Building model".format(self.name))
         # Get training data
@@ -172,6 +172,8 @@ class SHLOModel(object):
             print("[{0}] #examples={1}  #epochs={2}  batch size={3}".format(
                 self.name, n, n_epochs, batch_size
             ))
+            if dev_sentence_data is not None and dev_labels is not None:
+                print("[{0}] Found dev set for intra-training evaluation")
         self.session.run(tf.global_variables_initializer())
         for t in xrange(n_epochs):
             epoch_loss = 0.0

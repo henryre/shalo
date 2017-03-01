@@ -26,7 +26,7 @@ class LinearModel(VectorMeanSHLOModel):
         assert(embedding_file is not None)
         super(LinearModel, self).__init__(
             name=name, embedding_file=embedding_file, save_file=save_file,
-            n_thread=n_threads
+            n_threads=n_threads
         )
 
     def _preprocess_data(self, sentence_data, init=True):
