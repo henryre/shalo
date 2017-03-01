@@ -2,7 +2,7 @@ import numpy as np
 import scipy.sparse as sparse
 import tensorflow as tf
 
-from shalo_base import SHALOModel
+from shalo_base import SHALOModel, SHALOModelRandInit
 from utils import map_words_to_symbols, symbol_embedding, SymbolTable
 
 
@@ -100,7 +100,7 @@ def get_rnn_output(output, dim, lengths):
     return h
 
 
-class LSTM(SHALOModel):
+class LSTM(SHALOModelRandInit):
     """Simple LSTM for sequence classification"""
     def __init__(self, name='LSTM', save_file=None, n_threads=None):
         super(LSTM, self).__init__(
@@ -114,21 +114,8 @@ class LSTM(SHALOModel):
         # Process data
         mapper = self.word_dict.get if init else self.word_dict.lookup
         return [
-            map_words_to_symbols(s, mapper, 1, 0) for s in sentence_data
+            map_words_to_symbols(s, mapper, 1, 0, {}) for s in sentence_data
         ]
-
-    def _get_embedding(self):
-        """
-        Return embedding tensor (either constant or variable)
-        Row 0 is 0 vector for no token
-        Initialize random embedding for UNKNOWN and all words
-        """
-        zero  = tf.constant(0.0, dtype=tf.float32, shape=(1, self.d))
-        s = self.seed - 1
-        embed = tf.Variable(tf.random_normal(
-            (self.word_dict.num_words() + 1, self.d), stddev=0.1, seed=s
-        ))
-        return tf.concat([zero, embed], axis=0, name='embedding_matrix')
 
     def _get_save_dict(self, **kwargs):
         return None

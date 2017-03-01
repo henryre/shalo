@@ -3,14 +3,14 @@ import numpy as np
 import tensorflow as tf
 
 from collections import Counter
-from shalo_base import SHALOModel
+from shalo_base import SD, SHALOModel, SHALOModelFixed, SHALOModelPreTrain
 from sklearn.decomposition import PCA
 from utils import (
     map_words_to_symbols, symbol_embedding, SymbolTable, top_similarity
 )
 
 
-class TTBB(SHALOModel):
+class TTBB(SHALOModelFixed):
     """Implementation of A Simple but Tough-to-Beat-Baseline for Sent. Embedding
     In the basic model, the common component vector is computed before all
     computations. The embeddings are static, so no updates are made.
@@ -51,7 +51,6 @@ class TTBB(SHALOModel):
         pca.fit(X)
         return np.ravel(pca.components_)
 
-
     def explore_common_component(self, tokens):
         for a in np.logspace(-8, 2, num=21):
             msg = '== a={0} =='.format(a)
@@ -63,7 +62,6 @@ class TTBB(SHALOModel):
                 symbol_embedding(self.embeddings),
                 self.word_dict.reverse(), 15, ccx
             )
-
 
     def _preprocess_data(self, sentence_data, init=True, debug=False):
         # Initialize word table and populate with embeddings
@@ -101,17 +99,6 @@ class TTBB(SHALOModel):
         )
         return tokens
 
-    def _get_embedding(self):
-        """
-        Row 0 is 0 vector for no token
-        Row 1 is 0 vector for unknown token
-        Remaining rows are constant at pretrained emebdding
-        """
-        return tf.constant(
-            symbol_embedding(self.embeddings),
-            dtype=tf.float32, name='embedding_matrix'
-        )
-
     def _get_a(self):
         return tf.constant(self.a, dtype=tf.float32)
 
@@ -140,24 +127,13 @@ class TTBB(SHALOModel):
         return S - tf.matmul(S, ccx * tf.transpose(ccx)), sv
 
 
-class TTBBTune(TTBB):
+class TTBBTune(SHALOModelPreTrain, TTBB):
     """TTBB model with common component updated via gradient descent"""
     def __init__(self, embedding_file, marginals_file=None, name='TTBBTune',
                  save_file=None, n_threads=None):
         super(TTBBTune, self).__init__(
             embedding_file=embedding_file, marginals_file=marginals_file,
             name=name, save_file=save_file, n_threads=n_threads
-        )
-
-    def _get_embedding(self):
-        """
-        Row 0 is 0 vector for no token
-        Row 1 is 0 vector for unknown token
-        Remaining rows are constant at pretrained emebdding
-        """
-        return tf.Variable(
-            symbol_embedding(self.embeddings),
-            dtype=tf.float32, name='embedding_matrix'
         )
 
     def _get_a(self):
@@ -167,7 +143,7 @@ class TTBBTune(TTBB):
         return tf.Variable(self.ccx, dtype=tf.float32)
 
 
-class TTBBTuneLazy(TTBB):
+class TTBBTuneLazy(SHALOModelPreTrain, TTBB):
     """TTBB model with exact common component updates
     Common component vector updated after every epoch
     """
@@ -195,18 +171,6 @@ class TTBBTuneLazy(TTBB):
         self.ccx = self._static_common_component(
             self.train_tokens, U, self.marginals, a
         )
-
-    def _get_embedding(self):
-        """
-        Row 0 is 0 vector for no token
-        Row 1 is 0 vector for unknown token
-        Remaining rows are constant at pretrained emebdding
-        """
-        self.U = tf.Variable(
-            symbol_embedding(self.embeddings),
-            dtype=tf.float32, name='embedding_matrix'
-        )
-        return self.U
 
     def _get_a(self):
         self.a_var = tf.Variable(self.a, dtype=tf.float32)

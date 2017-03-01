@@ -3,7 +3,10 @@ import numpy as np
 import tensorflow as tf
 
 from time import time
-from utils import LabelBalancer
+from utils import LabelBalancer, symbol_embedding
+
+
+SD = 0.1
 
 
 class SHALOModel(object):
@@ -24,6 +27,7 @@ class SHALOModel(object):
         self.loss       = None
         self.prediction = None
         self.save_dict  = None
+        self.word_dict  = None
         self.session    = tf.Session(
             config=tf.ConfigProto(
                 intra_op_parallelism_threads=n_threads,
@@ -87,8 +91,8 @@ class SHALOModel(object):
         sentence_feats, save_kwargs = self._embed_sentences()
         # Define linear model
         s1, s2 = self.seed, (self.seed + 1 if self.seed is not None else None)
-        w = tf.Variable(tf.random_normal((self.d, 1), stddev=0.1, seed=s1))
-        b = tf.Variable(tf.random_normal((1, 1), stddev=0.1, seed=s2))
+        w = tf.Variable(tf.random_normal((self.d, 1), stddev=SD, seed=s1))
+        b = tf.Variable(tf.random_normal((1, 1), stddev=SD, seed=s2))
         h = tf.squeeze(tf.matmul(sentence_feats, w) + b)
         # Define training procedure
         self.loss       = self._get_loss(h, self.y)
@@ -109,8 +113,8 @@ class SHALOModel(object):
         len_batch = np.zeros(m).astype(int)
         for j, x in enumerate(x_batch):
             t = min(self.mx_len, len(x))
-            x_batch_array[j, :t] = x[:t]
-            len_batch[j]         = t
+            x_batch_array[j, :t] = x[:t] if t > 0 else [self.word_dict.unknown]
+            len_batch[j]         = max(t, 1)
         return x_batch_array, len_batch
 
     def _epoch_post_process(self, t):
@@ -200,9 +204,9 @@ class SHALOModel(object):
         """Predict labels for test data"""
         test_data = self._preprocess_data(test_sentence_data, init=False)
         if verbose:
-            is_unknown = [w == 1 for s in test_data for w in s]
+            is_unk = [w == self.word_dict.unknown for s in test_data for w in s]
             print "[{0}] Test set unknown token percentage: {1:.2f}%".format(
-                self.name, 100. * float(sum(is_unknown)) / len(is_unknown)
+                self.name, 100. * float(sum(is_unk)) / len(is_unk)
             )
         test_array, test_len = self._get_data_batch(test_data)
         return np.ravel(self.session.run(
@@ -213,6 +217,7 @@ class SHALOModel(object):
         """Score predictions on test data against gold labels"""
         yhat = self.predict(test_sentence_data, verbose)
         y    = np.ravel(test_labels)
+        print np.sum(np.isnan(yhat))
         assert((yhat >= 0).all() and (yhat <= 1).all())
         assert((y >= 0).all() and (y <= 1).all())
         assert(len(y) == len(yhat))
@@ -272,3 +277,58 @@ class SHALOModel(object):
             raise Exception("[{0}] No model found at <{1}>".format(
                 self.name, model_name
             ))
+
+
+class SHALOModelFixed(SHALOModel):
+
+    def _get_embedding(self):
+        """
+        Row 0 is 0 vector for no token
+        Row 1 is 0 vector for unknown token
+        Remaining rows are constant at pretrained emebdding
+        """
+        self.U = tf.constant(
+            symbol_embedding(self.embeddings),
+            dtype=tf.float32, name='embedding_matrix'
+        )
+        return self.U
+
+
+class SHALOModelPreTrain(SHALOModel):
+
+    def _get_embedding(self):
+        """
+        Return embedding tensor (either constant or variable)
+        Row 0 is 0 vector for no token
+        Row 1 is random initialization for UNKNOWN
+        Rows 2 : 2 + len(self.embedding_words) are pretrained initialization
+        Remaining rows are random initialization
+        """
+        zero = tf.constant(0.0, dtype=tf.float32, shape=(1, self.d))
+        s = self.seed - 1
+        unk = tf.Variable(tf.random_normal((1, self.d), stddev=SD, seed=s))
+        pretrain = tf.Variable(self.embeddings, dtype=tf.float32)
+        vecs = [zero, unk, pretrain]
+        n_r = self.word_dict.num_words() - len(self.embedding_words)
+        if n_r > 0:
+            r = tf.Variable(tf.random_normal((n_r, self.d), stddev=SD, seed=s))
+            vecs.append(r)
+        self.U = tf.concat(vecs, axis=0, name='embedding_matrix')
+        return self.U
+
+
+class SHALOModelRandInit(SHALOModel):
+
+    def _get_embedding(self):
+        """
+        Return embedding tensor (either constant or variable)
+        Row 0 is 0 vector for no token
+        Initialize random embedding for UNKNOWN and all words
+        """
+        zero  = tf.constant(0.0, dtype=tf.float32, shape=(1, self.d))
+        s = self.seed - 1
+        embed = tf.Variable(tf.random_normal(
+            (self.word_dict.num_words() + 1, self.d), stddev=SD, seed=s
+        ))
+        self.U = tf.concat([zero, embed], axis=0, name='embedding_matrix')
+        return self.U

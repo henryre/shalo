@@ -15,7 +15,7 @@ def symbol_embedding(U):
     return np.vstack([np.zeros((2, U.shape[1])), U])
 
 
-def map_words_to_symbols(words, mapper, ngrams=1, min_len=2):
+def map_words_to_symbols(words, mapper, ngrams=1, min_len=2, token_filter={1}):
     scrubbed_words = [scrub(word.lower()) for word in words]
     scrubbed_words = filter(lambda w: len(w) >= min_len, scrubbed_words)
     tokens, n = [], len(scrubbed_words)
@@ -24,6 +24,7 @@ def map_words_to_symbols(words, mapper, ngrams=1, min_len=2):
             if i + k + 1 > n:
                 break
             tokens.append(mapper('~~'.join(scrubbed_words[i : i+k+1])))
+    tokens = filter(lambda w: w not in token_filter, tokens)
     return tokens
 
 
