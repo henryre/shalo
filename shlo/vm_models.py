@@ -2,7 +2,7 @@ import numpy as np
 import tensorflow as tf
 
 from shlo_base import SHLOModel
-from utils import scrub, symbol_embedding, SymbolTable
+from utils import map_words_to_symbols, symbol_embedding, SymbolTable
 
 
 class VectorMeanSHLOModel(SHLOModel):
@@ -15,16 +15,18 @@ class VectorMeanSHLOModel(SHLOModel):
         word_embeddings = self._get_embedding()
         word_feats      = tf.nn.embedding_lookup(word_embeddings, self.input)
         s               = tf.reduce_sum(word_feats, axis=1)
-        return s / tf.to_float(tf.reshape(self.input_lengths, (-1, 1)))
+        sv              = {'embeddings': word_embeddings}
+        return s / tf.to_float(tf.reshape(self.input_lengths, (-1, 1))), sv
 
 
 class LinearModel(VectorMeanSHLOModel):
     """Linear model over pretrained embeddings"""
-    def __init__(self, embedding_file, save_file=None, name='LinearModel',
+    def __init__(self, embedding_file, name='LinearModel', save_file=None,
                  n_threads=None):
         assert(embedding_file is not None)
         super(LinearModel, self).__init__(
-            embedding_file, save_file, name, n_threads
+            name=name, embedding_file=embedding_file, save_file=save_file,
+            n_threads=n_threads
         )
 
     def _preprocess_data(self, sentence_data, init=True):
@@ -35,8 +37,8 @@ class LinearModel(VectorMeanSHLOModel):
                 self.word_dict.get(word)
         # Process data
         return [
-            [self.word_dict.lookup(scrub(word.lower())) for word in sentence]
-            for sentence in sentence_data
+            map_words_to_symbols(s, self.word_dict.lookup, self.ngrams)
+            for s in sentence_data
         ]
 
     def _get_embedding(self):
@@ -53,18 +55,19 @@ class LinearModel(VectorMeanSHLOModel):
 
 class fastText(VectorMeanSHLOModel):
     """Linear model over backprop-trained embeddings"""
-    def __init__(self, save_file=None, name='fastText', n_threads=None):
-        super(fastText, self).__init__(None, save_file, name, n_threads)
+    def __init__(self, name='fastText', save_file=None, n_threads=None):
+        super(fastText, self).__init__(
+            name=name, save_file=save_file, n_threads=n_threads
+        )
 
     def _preprocess_data(self, sentence_data, init=True):
         # Initialize word table and populate with embeddings
         if init:
             self.word_dict = SymbolTable()
         # Process data
-        retrieve_fn = self.word_dict.get if init else self.word_dict.lookup
+        mapper = self.word_dict.get if init else self.word_dict.lookup
         return [
-            [retrieve_fn(scrub(word.lower())) for word in sentence]
-            for sentence in sentence_data
+            map_words_to_symbols(s, mapper, self.ngrams) for s in sentence_data
         ]
 
     def _get_embedding(self):
@@ -83,11 +86,12 @@ class fastText(VectorMeanSHLOModel):
 
 class fastTextPreTrain(VectorMeanSHLOModel):
     """Linear model over backprop-trained embeddings init. from pretrained"""
-    def __init__(self, embedding_file, save_file=None, name='fastTextPreTrain',
+    def __init__(self, embedding_file, name='fastTextPreTrain', save_file=None,
                  n_threads=None):
         assert(embedding_file is not None)
         super(fastTextPreTrain, self).__init__(
-            embedding_file, save_file, name, n_threads
+            name=name, embedding_file=embedding_file, save_file=save_file,
+            n_threads=n_threads
         )
 
     def _preprocess_data(self, sentence_data, init=True):
@@ -97,10 +101,9 @@ class fastTextPreTrain(VectorMeanSHLOModel):
             for word in self.embedding_words:
                 self.word_dict.get(word)
         # Process data
-        retrieve_fn = self.word_dict.get if init else self.word_dict.lookup
+        mapper = self.word_dict.get if init else self.word_dict.lookup
         return [
-            [retrieve_fn(scrub(word.lower())) for word in sentence]
-            for sentence in sentence_data
+            map_words_to_symbols(s, mapper, self.ngrams) for s in sentence_data
         ]
 
     def _get_embedding(self):

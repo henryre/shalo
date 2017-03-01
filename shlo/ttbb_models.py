@@ -1,10 +1,13 @@
+import cPickle
 import numpy as np
 import tensorflow as tf
 
-from collections import defaultdict
+from collections import Counter
 from sklearn.decomposition import PCA
 from shlo_base import SHLOModel
-from utils import scrub, symbol_embedding, SymbolTable
+from utils import (
+    map_words_to_symbols, symbol_embedding, SymbolTable, top_similarity
+)
 
 
 class TTBB(SHLOModel):
@@ -12,15 +15,21 @@ class TTBB(SHLOModel):
     In the basic model, the common component vector is computed before all
     computations. The embeddings are static, so no updates are made.
     """
-    def __init__(self, embedding_file, a=0.01, save_file=None, name='TTBB',
-                 n_threads=None):
+    def __init__(self, embedding_file, marginals_file=None, name='TTBB',
+                 save_file=None, n_threads=None):
         assert(embedding_file is not None)
         super(TTBB, self).__init__(
-            embedding_file, save_file, name, n_threads
+            name=name, embedding_file=embedding_file, save_file=save_file,
+            n_threads=n_threads
         )
-        self.a = a
+        # Get marginals file
+        if marginals_file is not None:
+            with open(marginals_file, 'rb') as f:
+                self.word_freq = cPickle.load(f)
+        else:
+            self.word_freq = None
 
-    def _static_common_component(self, tokens, U, p):
+    def _static_common_component(self, tokens, U, p, a):
         """Compute the common component vector
             @tokens: list of lists of token ids representing sentences
             @U: matrix of word embeddings
@@ -34,7 +43,7 @@ class TTBB(SHLOModel):
             # Normalizer
             z = 1.0 / len(t)
             # Embed sentence
-            q = (self.a / (self.a + p[t])).reshape((len(t), 1))
+            q = (a / (a + p[t])).reshape((len(t), 1))
             X.append(z * np.sum(q * U[t, :], axis=0))
         # Compute first principal component
         X = np.array(X)
@@ -42,38 +51,54 @@ class TTBB(SHLOModel):
         pca.fit(X)
         return np.ravel(pca.components_)
 
-    def _preprocess_data(self, sentence_data, init=True):
+
+    def explore_common_component(self, tokens):
+        for a in np.logspace(-8, 2, num=21):
+            msg = '== a={0} =='.format(a)
+            print '\n{0}\n{1}\n{0}'.format('='*len(msg), msg)
+            ccx = self._static_common_component(
+                tokens, symbol_embedding(self.embeddings), self.marginals, a
+            )
+            top_similarity(
+                symbol_embedding(self.embeddings),
+                self.word_dict.reverse(), 15, ccx
+            )
+
+
+    def _preprocess_data(self, sentence_data, init=True, debug=False):
         # Initialize word table and populate with embeddings
         if init:
             self.word_dict = SymbolTable()
             for word in self.embedding_words:
                 self.word_dict.get(word)
         # Process data
-        # Just map tokens if not initializing
-        if not init:
-            return [
-                np.ravel([
-                    self.word_dict.lookup(scrub(w.lower())) for w in s
-                ]) for s in sentence_data
-            ]
-        # If initializing, get marginal estimates and common component
-        marginal_counts = defaultdict(int)
-        tokens = []
-        for s in sentence_data:
-            t = np.ravel([self.word_dict.lookup(scrub(w.lower())) for w in s])
-            tokens.append(t)
-            for x in t:
-                marginal_counts[x] += 1
-        # Estimate marginals
-        self.marginals = np.zeros(self.word_dict.num_symbols())
-        for k, v in marginal_counts.iteritems():
-            self.marginals[k] = float(v)
-        self.marginals /= sum(marginal_counts.values())
-        # Compute sentence embeddings
-        self.ccx = self._static_common_component(
-            tokens, symbol_embedding(self.embeddings), self.marginals
-        )
+        # Map tokens and return if not initializing
+        tokens = [
+            np.ravel(
+                map_words_to_symbols(s, self.word_dict.lookup, self.ngrams)
+            ) for s in sentence_data
+        ]
         self.train_tokens = tokens
+        if not init:
+            return tokens
+        # If initializing, get marginal estimates 
+        if self.word_freq is None:
+            marginal_counts = Counter([w for t in tokens for w in t])
+            self.marginals = np.zeros(self.word_dict.num_symbols())
+            for k, v in marginal_counts.iteritems():
+                self.marginals[k] = float(v)
+            self.marginals /= sum(marginal_counts.values())
+        else:
+            self.marginals = np.zeros(self.word_dict.num_symbols())
+            for word, idx in self.word_dict.d.iteritems():
+                self.marginals[idx] = self.word_freq.get(word, 0.0)
+        # Compute common component
+        if debug:
+            self.explore_common_component(tokens)
+        self.a = self.train_kwargs.get('a', 0.01)
+        self.ccx = self._static_common_component(
+            tokens, symbol_embedding(self.embeddings), self.marginals, self.a
+        )
         return tokens
 
     def _get_embedding(self):
@@ -87,6 +112,9 @@ class TTBB(SHLOModel):
             dtype=tf.float32, name='embedding_matrix'
         )
 
+    def _get_a(self):
+        return tf.constant(self.a, dtype=tf.float32)
+
     def _get_common_component(self):
         return tf.constant(self.ccx, dtype=tf.float32)
 
@@ -97,9 +125,10 @@ class TTBB(SHLOModel):
         word_feats      = tf.nn.embedding_lookup(word_embeddings, self.input)
         # Get marginal estimates and scaling term
         batch_size = tf.shape(word_feats)[0]
+        a = self._get_a()
         p = tf.constant(self.marginals, dtype=tf.float32, name='marginals')
         q = tf.reshape(
-            self.a / (self.a + tf.nn.embedding_lookup(p, self.input)),
+            a / (a + tf.nn.embedding_lookup(p, self.input)),
             (batch_size, self.mx_len, 1)
         )
         # Compute initial sentence embedding
@@ -107,15 +136,17 @@ class TTBB(SHLOModel):
         S = z * tf.reduce_sum(q * word_feats, axis=1)
         # Common component removal
         ccx = tf.reshape(self._get_common_component(), (1, self.d))
-        return S - tf.matmul(S, ccx * tf.transpose(ccx))
+        sv = {'embeddings': word_embeddings, 'a': a, 'p': p, 'ccx': ccx}
+        return S - tf.matmul(S, ccx * tf.transpose(ccx)), sv
 
 
 class TTBBTune(TTBB):
     """TTBB model with common component updated via gradient descent"""
-    def __init__(self, embedding_file, a=0.01, save_file=None, name='TTBBTune',
-                 n_threads=None):
+    def __init__(self, embedding_file, marginals_file=None, name='TTBBTune',
+                 save_file=None, n_threads=None):
         super(TTBBTune, self).__init__(
-            embedding_file, a, save_file, name, n_threads
+            embedding_file=embedding_file, marginals_file=marginals_file,
+            name=name, save_file=save_file, n_threads=n_threads
         )
 
     def _get_embedding(self):
@@ -129,6 +160,9 @@ class TTBBTune(TTBB):
             dtype=tf.float32, name='embedding_matrix'
         )
 
+    def _get_a(self):
+        return tf.Variable(self.a, dtype=tf.float32)
+
     def _get_common_component(self):
         return tf.Variable(self.ccx, dtype=tf.float32)
 
@@ -137,10 +171,11 @@ class TTBBTuneLazy(TTBB):
     """TTBB model with exact common component updates
     Common component vector updated after every epoch
     """
-    def __init__(self, embedding_file, a=0.01, save_file=None,
-                 name='TTBBTuneLazy', n_threads=None):
+    def __init__(self, embedding_file, marginals_file=None, name='TTBBTuneLazy',
+                 save_file=None, n_threads=None):
         super(TTBBTuneLazy, self).__init__(
-            embedding_file, a, save_file, name, n_threads
+            embedding_file=embedding_file, marginals_file=marginals_file,
+            name=name, save_file=save_file, n_threads=n_threads
         )
 
     def _get_feed(self, x_batch, len_batch, y_batch=None):
@@ -156,8 +191,9 @@ class TTBBTuneLazy(TTBB):
     def _epoch_post_process(self, t):
         # Update the common component
         U = self.session.run(self.U)
+        a = self.session.run(self.a_var)
         self.ccx = self._static_common_component(
-            self.train_tokens, U, self.marginals
+            self.train_tokens, U, self.marginals, a
         )
 
     def _get_embedding(self):
@@ -171,6 +207,10 @@ class TTBBTuneLazy(TTBB):
             dtype=tf.float32, name='embedding_matrix'
         )
         return self.U
+
+    def _get_a(self):
+        self.a_var = tf.Variable(self.a, dtype=tf.float32)
+        return self.a_var
 
     def _get_common_component(self):
         self.ccx_placeholder = tf.placeholder(tf.float32, name='common_comp')

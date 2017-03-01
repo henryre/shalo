@@ -14,9 +14,11 @@ class SHLOModel(object):
         @_preprocess_data: method for processing tokenized text
         @_embed_sentences: Tensorflow featurization of a sentence
     """
-    def __init__(self, embedding_file=None, save_file=None, name='SHLOModel',
-                 n_threads=None):
+    def __init__(self, _sentinal=None, name='SHLOModel', save_file=None,
+                 n_threads=None, embedding_file=None):
         # Super constructor
+        if _sentinal is not None:
+            raise Exception("Keyword arguments only for SHLOModel")
         self.name       = name
         self.train_fn   = None
         self.loss       = None
@@ -38,6 +40,10 @@ class SHLOModel(object):
             self.embedding_words, self.embeddings = None, None
 
     def _preprocess_data(self, sentence_data, init=True):
+        """Data preprocessor
+            @sentence_data: list of lists of words representing sentences
+            @init: True if initializing (training) model, False for test
+        """
         raise NotImplementedError()
 
     def _create_placeholders(self):
@@ -49,9 +55,10 @@ class SHLOModel(object):
         self.y             = tf.placeholder(tf.float32, [None], name='labels')
 
     def _embed_sentences(self):
-        """
-        Convert word features and sentence lengths to sentence embeddings
-        Returns tensor with shape [batch_size x dim]
+        """Convert word features and sentence lengths to sentence embeddings
+        Returns a tuple of a tensor with shape [batch_size x dim] representing 
+        the sentence features and a dictionary of variables needed to save the
+        graph
         """
         raise NotImplementedError()
 
@@ -77,7 +84,7 @@ class SHLOModel(object):
         assert(self.loss_function is not None)
         # Get input placeholders and sentence features
         self._create_placeholders()
-        sentence_feats = self._embed_sentences()
+        sentence_feats, save_kwargs = self._embed_sentences()
         # Define linear model
         s1, s2 = self.seed, (self.seed + 1 if self.seed is not None else None)
         w = tf.Variable(tf.random_normal((self.d, 1), stddev=0.1, seed=s1))
@@ -88,7 +95,7 @@ class SHLOModel(object):
         self.loss      += self.l2_penalty * tf.nn.l2_loss(w)
         self.prediction = tf.sigmoid(h)
         self.train_fn   = tf.train.AdamOptimizer(self.lr).minimize(self.loss)
-        self.save_dict  = self._get_save_dict(w=w, b=b)
+        self.save_dict  = self._get_save_dict(w=w, b=b, **save_kwargs)
 
     def _get_feed(self, x_batch, len_batch, y_batch=None):
         feed = {self.input: x_batch, self.input_lengths: len_batch}
@@ -111,8 +118,9 @@ class SHLOModel(object):
 
     def train(self, sentence_data, sentence_labels, loss_function='log',
               n_epochs=20, lr=0.01, dim=50, batch_size=100, l2_penalty=0.0,
-              rebalance=False, max_sentence_length=None, dev_sentence_data=None,
-              dev_labels=None, print_freq=5, seed=None):
+              ngrams=1, rebalance=False, max_sentence_length=None,
+              dev_sentence_data=None, dev_labels=None, print_freq=5,
+              seed=None, **kwargs):
         """Train SHLO model
             @sentence_data: list of lists of words representing sentences
             @sentence_labels: labels for sentences in [0, 1]
@@ -128,15 +136,18 @@ class SHLOModel(object):
             @dev_labels: same as @sentence_labels for dev set
             @print_freq: print stats after this many epochs
             @seed: random seed
+            @kwargs: additional kwargs for child classes
         """
+        self.train_kwargs = kwargs
         verbose = print_freq > 0
         if verbose:
-            print("[{0}] dim={1} lr={2} l2={3}".format(
-                self.name, dim, lr, l2_penalty
+            print("[{0}] dim={1} lr={2} l2={3} ngram={4}".format(
+                self.name, dim, lr, l2_penalty, ngrams
             ))
             print("[{0}] Building model".format(self.name))
         # Get training data
-        train_data = self._preprocess_data(sentence_data, init=True)
+        self.ngrams = ngrams
+        train_data  = self._preprocess_data(sentence_data, init=True)
         self.mx_len = max_sentence_length or max(map(len, train_data))
         # Build model
         if self.embeddings is not None:
@@ -161,6 +172,8 @@ class SHLOModel(object):
             print("[{0}] #examples={1}  #epochs={2}  batch size={3}".format(
                 self.name, n, n_epochs, batch_size
             ))
+            if dev_sentence_data is not None and dev_labels is not None:
+                print("[{0}] Found dev set for intra-training evaluation")
         self.session.run(tf.global_variables_initializer())
         for t in xrange(n_epochs):
             epoch_loss = 0.0
@@ -211,12 +224,20 @@ class SHLOModel(object):
         return acc
 
     def save_info(self, model_name):
+        sv = (
+            self.d, self.lr, self.l2_penalty, self.mx_len, self.ngrams,
+            self.train_kwargs
+        )
         with open('{0}.info'.format(model_name), 'wb') as f:
-            cPickle.dump((self.d, self.lr, self.l2_penalty, self.mx_len), f)
+            cPickle.dump(sv, f)
 
     def load_info(self, model_name):
+        sv = (
+            self.d, self.lr, self.l2_penalty, self.mx_len, self.ngrams,
+            self.train_kwargs
+        )
         with open('{0}.info'.format(model_name), 'rb') as f:
-            self.d, self.lr, self.l2_penalty, self.mx_len = cPickle.load(f)
+            sv = cPickle.load(f)
 
     def save(self, model_name=None, verbose=True):
         """Save current TensorFlow model
