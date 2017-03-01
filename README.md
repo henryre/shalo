@@ -9,27 +9,29 @@ Shallow baseline models for text.
 * fastText with pretrained embeddings
 * Simple but tough-to-beat-baseline for sentence embeddings (TTBB)
 * TTBB with tuned embeddings and gradient-tuned common component
+* TTBB with lazily updated common component (bad)
 * LSTM baseline
 * BOW one-hot baseline
 
 ## TODO model implementations
 
-* TTBB with rank-one exact update
-* TTBB with lazily updated common component
 * Sequence models
 
 ## Getting started
 
 ### Install dependencies
 
-* numpy
-* tensorflow>=1.0
+```
+pip install --requirement python-package-requirements.txt
+```
 
 ### Get data
 
 ```
-data/get_senna.sh
-data/get_polarity.sh
+chmod +x scripts/get_senna.sh
+scripts/get_senna.sh
+chmod +x scripts/get_polarity.sh
+scripts/get_polarity.sh
 ```
 
 ### Run tests for simple models

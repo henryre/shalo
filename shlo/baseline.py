@@ -3,22 +3,20 @@ import scipy.sparse as sparse
 import tensorflow as tf
 
 from shlo_base import SHLOModel
-from utils import scrub, symbol_embedding, SymbolTable
+from utils import map_words_to_symbols, symbol_embedding, SymbolTable
 
 
-class SparseLinearModel(SHLOModel):
+class SparseLM(SHLOModel):
     """Sparse linear model over BOW indicator vector"""
-    def __init__(self, save_file=None, name='SparseLM', n_threads=None):
-        super(SparseLinearModel, self).__init__(
-            None, save_file, name, n_threads
-        )
+    def __init__(self, name='SparseLM', save_file=None, n_threads=None):
+        super(SparseLM, self).__init__(name, None, save_file, n_threads)
 
     def _preprocess_data(self, sentence_data, init=True):
         # Initialize word table and populate with embeddings
         if init:
             self.word_dict = SymbolTable()
         # Process data
-        retrieve_fn = self.word_dict.get if init else self.word_dict.lookup
+        mapper = self.word_dict.get if init else self.word_dict.lookup
         tokens = [
             map_words_to_symbols(s, mapper, self.ngrams) for s in sentence_data
         ]
@@ -102,18 +100,17 @@ def get_rnn_output(output, dim, lengths):
 
 class LSTM(SHLOModel):
     """Simple LSTM for sequence classification"""
-    def __init__(self, save_file=None, name='LSTM', n_threads=None):
-        super(LSTM, self).__init__(None, save_file, name, n_threads)
+    def __init__(self, name='LSTM', save_file=None, n_threads=None):
+        super(LSTM, self).__init__(name, None, save_file, n_threads)
 
     def _preprocess_data(self, sentence_data, init=True):
         # Initialize word table and populate with embeddings
         if init:
             self.word_dict = SymbolTable()
         # Process data
-        retrieve_fn = self.word_dict.get if init else self.word_dict.lookup
+        mapper = self.word_dict.get if init else self.word_dict.lookup
         return [
-            [retrieve_fn(scrub(word.lower())) for word in sentence]
-            for sentence in sentence_data
+            map_words_to_symbols(s, mapper, 1, 0) for s in sentence_data
         ]
 
     def _get_embedding(self):
@@ -128,6 +125,9 @@ class LSTM(SHLOModel):
             (self.word_dict.num_words() + 1, self.d), stddev=0.1, seed=s
         ))
         return tf.concat([zero, embed], axis=0, name='embedding_matrix')
+
+    def _get_save_dict(self, **kwargs):
+        return None
 
     def _embed_sentences(self):
         """Embed sentences via the last output cell of an LSTM"""
@@ -145,4 +145,4 @@ class LSTM(SHLOModel):
                 initial_state=initial_state, time_major=False               
             )
         # Get potentials
-        return get_rnn_output(rnn_out, self.d, self.input_lengths)
+        return get_rnn_output(rnn_out, self.d, self.input_lengths), {}

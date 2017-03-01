@@ -18,6 +18,25 @@ def senna(vector_f='embeddings.txt', words_f ='words.lst', out_f='senna.pkl'):
         cPickle.dump((words, M), f)
 
 
+def glove(data_fname='glove.840B.300d.txt', out_fname='glove.pkl'):
+    """Process raw dependency GloVe data from Socher '13"""
+    words, U, dim = [], [], None
+    with open(DATA_DIR + data_fname, 'rb') as f:
+        for j, line in enumerate(f):
+            line = line.strip()
+            x = line.split()
+            word, vector, d = x[0], np.ravel(x[1:]), len(x) - 1
+            if dim is None: dim = d
+            elif d != dim:  raise Exception('{0}: {1}!={2}'.format(j, dim, d))
+            U.append(vector)
+            words.append(word)
+    U = np.array(U)
+    print "Found {0} words".format(len(words))
+    print "Found {0}x{1} embedding matrix".format(*U.shape)
+    with open(DATA_DIR + out_fname, 'wb') as f:
+        cPickle.dump((words, U), f)
+
+
 def dep_w2v(data_fname='deps.words', out_fname='depw2v.pkl'):
     """Process raw dependency word2vec data from Levy & Goldberg '14"""
     M = np.loadtxt(DATA_DIR + data_fname, converters={0: lambda x: 0})
@@ -41,15 +60,35 @@ def symbol_embedding(U):
     return np.vstack([np.zeros((2, U.shape[1])), U])
 
 
-def map_words_to_symbols(words, mapper, ngrams=1):
+def map_words_to_symbols(words, mapper, ngrams=1, min_len=2):
     scrubbed_words = [scrub(word.lower()) for word in words]
+    scrubbed_words = filter(lambda w: len(w) >= min_len, scrubbed_words)
     tokens, n = [], len(scrubbed_words)
     for i in xrange(n):
         for k in xrange(ngrams):
             if i + k + 1 > n:
                 break
             tokens.append(mapper('~~'.join(scrubbed_words[i : i+k+1])))
+    return tokens
 
+
+def cos_sim(x, y, epsilon=1e-32):
+    return np.dot(x, y) / (epsilon + np.linalg.norm(x) * np.linalg.norm(y))
+
+
+def top_similarity(U, id2token, k, query_vector):
+    sims = {}
+    for i in xrange(U.shape[0]):
+        sims[id2token[i]] = cos_sim(U[i, :], query_vector)
+    top = sorted(((v, k) for k, v in sims.iteritems()), reverse=True)[:k]
+    cut, title = 100, 'Most similar terms'
+    top = [(x, y[:cut] + (len(y) > cut) * '...') for x, y in top]
+    t = max(len(y) for x, y in top + [(0, title)]) + 5
+    print "=" * 100
+    print "{0}cos. sim.".format(title.ljust(t))
+    print (len(title) * '-').ljust(t-1), '---------'
+    print "\n".join("{0}{1:.4f}".format(y.ljust(t), x) for x, y in top)
+    print "=" * 100
 
 
 class FeatureHasher(object):
@@ -126,7 +165,9 @@ class SymbolTable:
         return self.d[w] if strict else self.d.get(w, self.unknown)
 
     def reverse(self):
-        return {v: k for k, v in self.d.iteritems()}
+        r = {v: k for k, v in self.d.iteritems()}
+        r[0], r[1] = '~~NONE~~', '~~UNKNOWN~~'
+        return r
 
     def num_words(self):
         return len(self.d)
