@@ -173,7 +173,7 @@ class SHALOModel(object):
                 self.name, n, n_epochs, batch_size
             ))
             if dev_sentence_data is not None and dev_labels is not None:
-                print("[{0}] Found dev set for intra-training evaluation")
+                print("[{0}] Found dev set for training eval".format(self.name))
         self.session.run(tf.global_variables_initializer())
         for t in xrange(n_epochs):
             epoch_loss = 0.0

@@ -3,7 +3,7 @@ import numpy as np
 import tensorflow as tf
 
 from collections import Counter
-from shalo import SHALOModel
+from shalo_base import SHALOModel
 from sklearn.decomposition import PCA
 from utils import (
     map_words_to_symbols, symbol_embedding, SymbolTable, top_similarity
