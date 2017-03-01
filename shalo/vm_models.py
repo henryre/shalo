@@ -1,11 +1,11 @@
 import numpy as np
 import tensorflow as tf
 
-from shlo_base import SHLOModel
+from shalo import SHALOModel
 from utils import map_words_to_symbols, symbol_embedding, SymbolTable
 
 
-class VectorMeanSHLOModel(SHLOModel):
+class VectorMeanSHALOModel(SHALOModel):
     """Base class for models with sentence embedding as mean of word vectors"""
     def _get_embedding(self):
         raise NotImplementedError()
@@ -19,7 +19,7 @@ class VectorMeanSHLOModel(SHLOModel):
         return s / tf.to_float(tf.reshape(self.input_lengths, (-1, 1))), sv
 
 
-class LinearModel(VectorMeanSHLOModel):
+class LinearModel(VectorMeanSHALOModel):
     """Linear model over pretrained embeddings"""
     def __init__(self, embedding_file, name='LinearModel', save_file=None,
                  n_threads=None):
@@ -53,7 +53,7 @@ class LinearModel(VectorMeanSHLOModel):
         )
 
 
-class fastText(VectorMeanSHLOModel):
+class fastText(VectorMeanSHALOModel):
     """Linear model over backprop-trained embeddings"""
     def __init__(self, name='fastText', save_file=None, n_threads=None):
         super(fastText, self).__init__(
@@ -84,7 +84,7 @@ class fastText(VectorMeanSHLOModel):
         return tf.concat([zero, embed], axis=0, name='embedding_matrix')
 
 
-class fastTextPreTrain(VectorMeanSHLOModel):
+class fastTextPreTrain(VectorMeanSHALOModel):
     """Linear model over backprop-trained embeddings init. from pretrained"""
     def __init__(self, embedding_file, name='fastTextPreTrain', save_file=None,
                  n_threads=None):

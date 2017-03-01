@@ -1,6 +1,6 @@
 import numpy as np
 
-from shlo import (
+from shalo import (
     fastText, fastTextPreTrain, LinearModel, # Vector mean models
     TTBB, TTBBTune, TTBBTuneLazy,            # TTBB models
     LSTM, SparseLM,                 # Baseline models
