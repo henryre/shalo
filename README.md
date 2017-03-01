@@ -41,4 +41,9 @@ python shlo_test.py
 ```
 
 ## TODO
-[Dan] Add http://nlp.stanford.edu/sentiment/trainDevTestTrees_PTB.zip dataset
+
+* **Dan**
+ * Add http://nlp.stanford.edu/sentiment/trainDevTestTrees_PTB.zip dataset
+* **Henry**
+ * Verify text processing
+ * Verify common component calculations
