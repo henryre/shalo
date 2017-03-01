@@ -1,21 +1,17 @@
 # SHLO
 
-Shallow baseline models for text.
+Shallow baseline models for text implemented in Tensorflow
 
 ## Implemented models
 
-* Linear model over pretrained embeddings
-* fastText
-* fastText with pretrained embeddings
-* Simple but tough-to-beat-baseline for sentence embeddings (TTBB)
-* TTBB with tuned embeddings and gradient-tuned common component
-* TTBB with lazily updated common component (bad)
-* LSTM baseline
-* BOW one-hot baseline
-
-## TODO model implementations
-
-* Sequence models
+* `LinearModel`: Linear model over pretrained embeddings
+* `fastText`: [Implementation of fastText in Tensorflow](https://github.com/facebookresearch/fastText)
+* `fastTextPreTrained`: fastText initialized with pretrained embeddings
+* `TTBB`: [Simple but tough-to-beat-baseline for sentence embeddings](https://openreview.net/pdf?id=SyK00v5xx)
+* `TTBBTune`: `TTBB` with tuned embeddings and gradient-tuned common component/smoothing parameter
+* `TTBBTuneLazy`: TTBB with tuend embeddings and lazily updated common component (bad)
+* `LSTM`: Long short-term memory model
+* `SparseLM`: Linear model trained over sparse bag-of-words representation
 
 ## Getting started
 
