@@ -1,21 +1,17 @@
 # SHALO
 
-Shallow baseline models for text.
+Shallow baseline models for text in Tensorflow
 
 ## Implemented models
 
-* Linear model over pretrained embeddings
-* fastText
-* fastText with pretrained embeddings
-* Simple but tough-to-beat-baseline for sentence embeddings (TTBB)
-* TTBB with tuned embeddings and gradient-tuned common component
-* TTBB with lazily updated common component (bad)
-* LSTM baseline
-* BOW one-hot baseline
-
-## TODO model implementations
-
-* Sequence models
+* `LinearModel`: Linear model over pretrained embeddings
+* `fastText`: Implementation of [fastText](https://github.com/facebookresearch/fastText) in Tensorflow
+* `fastTextPreTrained`: fastText initialized with pretrained embeddings
+* `TTBB`: [Simple but tough-to-beat-baseline for sentence embeddings](https://openreview.net/pdf?id=SyK00v5xx)
+* `TTBBTune`: `TTBB` with tuned embeddings and gradient-tuned common component/smoothing parameter
+* `TTBBTuneLazy`: TTBB with tuend embeddings and lazily updated common component (bad)
+* `LSTM`: Long short-term memory model
+* `SparseLM`: Linear model trained over sparse bag-of-words representation
 
 ## Getting started
 
@@ -45,4 +41,9 @@ python shalo_test.py
 ```
 
 ## TODO
-[Dan] Add http://nlp.stanford.edu/sentiment/trainDevTestTrees_PTB.zip dataset
+
+* **Dan**
+ * Add http://nlp.stanford.edu/sentiment/trainDevTestTrees_PTB.zip dataset
+* **Henry**
+ * Verify text processing: unknowns, min length
+ * Verify common component calculations
