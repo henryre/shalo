@@ -1,11 +1,11 @@
 # SHLO
 
-Shallow baseline models for text implemented in Tensorflow
+Shallow baseline models for text in Tensorflow
 
 ## Implemented models
 
 * `LinearModel`: Linear model over pretrained embeddings
-* `fastText`: [Implementation of fastText in Tensorflow](https://github.com/facebookresearch/fastText)
+* `fastText`: Implementation of [fastText](https://github.com/facebookresearch/fastText) in Tensorflow
 * `fastTextPreTrained`: fastText initialized with pretrained embeddings
 * `TTBB`: [Simple but tough-to-beat-baseline for sentence embeddings](https://openreview.net/pdf?id=SyK00v5xx)
 * `TTBBTune`: `TTBB` with tuned embeddings and gradient-tuned common component/smoothing parameter
@@ -45,5 +45,5 @@ python shlo_test.py
 * **Dan**
  * Add http://nlp.stanford.edu/sentiment/trainDevTestTrees_PTB.zip dataset
 * **Henry**
- * Verify text processing
+ * Verify text processing: unknowns, min length
  * Verify common component calculations
