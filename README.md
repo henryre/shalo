@@ -47,5 +47,6 @@ python shalo_test.py
 * **Dan**
  * Add http://nlp.stanford.edu/sentiment/trainDevTestTrees_PTB.zip dataset
 * **Henry**
- * Verify text processing: unknowns, min length
- * Verify common component calculations
+ * Verify text processing: min length
+ * Full gradient step TTBB
+ * TTBB ngrams
