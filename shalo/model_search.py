@@ -1,4 +1,5 @@
 import numpy as np
+import pandas as pd
 
 
 class Hyperparameter(object):
@@ -104,7 +105,7 @@ class GridSearch(object):
         # Set optimal parameter in the learner model
         self.model.load(opt_model)
         # Return DataFrame of scores
-        self.results = DataFrame.from_records(
+        self.results = pd.DataFrame.from_records(
             run_stats, columns=self.param_names + ['Accuracy']
         ).sort_values(by='Accuracy', ascending=False)
         return self.results
