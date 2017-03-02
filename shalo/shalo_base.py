@@ -71,9 +71,6 @@ class SHALOModel(object):
             ))
         raise Exception("Unknown loss <{0}>".format(self.loss))
 
-    def _get_save_dict(self, **kwargs):
-        return kwargs
-
     def _build(self):
         assert(self.d is not None)
         assert(self.lr is not None)
@@ -92,7 +89,7 @@ class SHALOModel(object):
         self.loss      += self.l2_penalty * tf.nn.l2_loss(w)
         self.prediction = tf.sigmoid(h)
         self.train_fn   = tf.train.AdamOptimizer(self.lr).minimize(self.loss)
-        self.save_dict  = self._get_save_dict(w=w, b=b, **save_kwargs)
+        self.save_dict  = save_kwargs.update({'w': w, 'b': b})
 
     def _get_feed(self, x_batch, len_batch, y_batch=None):
         feed = {self.input: x_batch, self.input_lengths: len_batch}
