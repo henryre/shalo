@@ -1,6 +1,8 @@
 # SHALO
 
-Shallow baseline models for text in Tensorflow
+*Shallow baseline models for text in Tensorflow*
+
+[![Build Status](https://travis-ci.org/henryre/shalo.svg?branch=master)](https://travis-ci.org/henryre/shalo)
 
 ## Implemented models
 
