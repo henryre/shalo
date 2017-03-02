@@ -6,12 +6,10 @@ from shalo_base import SHALOModel, SHALOModelRandInit
 from utils import map_words_to_symbols, symbol_embedding, SymbolTable
 
 
-class SparseLM(SHALOModel):
+class SparseLinearModel(SHALOModelRandInit):
     """Sparse linear model over BOW indicator vector"""
-    def __init__(self, name='SparseLM', save_file=None, n_threads=None):
-        super(SparseLM, self).__init__(
-            name=name, save_file=save_file, n_threads=n_threads
-        )
+
+    name = 'SparseLinearModel'
 
     def _preprocess_data(self, sentence_data, init=True):
         # Initialize word table and populate with embeddings
@@ -102,10 +100,8 @@ def get_rnn_output(output, dim, lengths):
 
 class LSTM(SHALOModelRandInit):
     """Simple LSTM for sequence classification"""
-    def __init__(self, name='LSTM', save_file=None, n_threads=None):
-        super(LSTM, self).__init__(
-            name=name, save_file=save_file, n_threads=n_threads
-        )
+
+    name = "LSTM"
 
     def _preprocess_data(self, sentence_data, init=True):
         # Initialize word table and populate with embeddings
@@ -118,6 +114,7 @@ class LSTM(SHALOModelRandInit):
         ]
 
     def _get_save_dict(self, **kwargs):
+        # Will default to saving all global variables
         return None
 
     def _embed_sentences(self):

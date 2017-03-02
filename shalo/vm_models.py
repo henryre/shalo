@@ -7,8 +7,10 @@ from shalo_base import (
 from utils import map_words_to_symbols, symbol_embedding, SymbolTable
 
 
-class VectorMeanSHALOModel(SHALOModel):
+class SHALOModelVectorMean(SHALOModel):
     """Base class for models with sentence embedding as mean of word vectors"""
+
+    name = 'SHALOModelVectorMean'
 
     def _embed_sentences(self):
         """Mean of word vectors"""
@@ -19,15 +21,10 @@ class VectorMeanSHALOModel(SHALOModel):
         return s / tf.to_float(tf.reshape(self.input_lengths, (-1, 1))), sv
 
 
-class LinearModel(VectorMeanSHALOModel, SHALOModelFixed):
+class LinearModel(SHALOModelVectorMean, SHALOModelFixed):
     """Linear model over pretrained embeddings"""
-    def __init__(self, embedding_file, name='LinearModel', save_file=None,
-                 n_threads=None):
-        assert(embedding_file is not None)
-        super(LinearModel, self).__init__(
-            name=name, embedding_file=embedding_file, save_file=save_file,
-            n_threads=n_threads
-        )
+
+    name = 'LinearModel'
 
     def _preprocess_data(self, sentence_data, init=True):
         # Initialize word table and populate with embeddings
@@ -42,12 +39,10 @@ class LinearModel(VectorMeanSHALOModel, SHALOModelFixed):
         ]
 
 
-class fastText(VectorMeanSHALOModel, SHALOModelRandInit):
+class fastText(SHALOModelVectorMean, SHALOModelRandInit):
     """Linear model over backprop-trained embeddings"""
-    def __init__(self, name='fastText', save_file=None, n_threads=None):
-        super(fastText, self).__init__(
-            name=name, save_file=save_file, n_threads=n_threads
-        )
+
+    name = 'fastText'
 
     def _preprocess_data(self, sentence_data, init=True):
         # Initialize word table
@@ -60,15 +55,10 @@ class fastText(VectorMeanSHALOModel, SHALOModelRandInit):
         ]
 
 
-class fastTextPreTrain(VectorMeanSHALOModel, SHALOModelPreTrain):
+class fastTextPreTrain(SHALOModelVectorMean, SHALOModelPreTrain):
     """Linear model over backprop-trained embeddings init. from pretrained"""
-    def __init__(self, embedding_file, name='fastTextPreTrain', save_file=None,
-                 n_threads=None):
-        assert(embedding_file is not None)
-        super(fastTextPreTrain, self).__init__(
-            name=name, embedding_file=embedding_file, save_file=save_file,
-            n_threads=n_threads
-        )
+
+    name = 'fastTextPreTrain'
 
     def _preprocess_data(self, sentence_data, init=True):
         # Initialize word table and populate with embeddings

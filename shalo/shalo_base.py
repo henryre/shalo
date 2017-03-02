@@ -17,12 +17,11 @@ class SHALOModel(object):
         @_preprocess_data: method for processing tokenized text
         @_embed_sentences: Tensorflow featurization of a sentence
     """
-    def __init__(self, _sentinal=None, name='SHALOModel', save_file=None,
-                 n_threads=None, embedding_file=None):
+
+    name = 'SHALOModel'
+
+    def __init__(self, save_file=None, n_threads=None):
         # Super constructor
-        if _sentinal is not None:
-            raise Exception("Keyword arguments only for SHALOModel")
-        self.name       = name
         self.train_fn   = None
         self.loss       = None
         self.prediction = None
@@ -36,12 +35,6 @@ class SHALOModel(object):
         ) if n_threads is not None else tf.Session()
         if save_file is not None:
             self.load(save_file)
-        # Get embedding file
-        if embedding_file is not None:
-            with open(embedding_file, 'rb') as f:
-                self.embedding_words, self.embeddings = cPickle.load(f)
-        else:
-            self.embedding_words, self.embeddings = None, None
 
     def _preprocess_data(self, sentence_data, init=True):
         """Data preprocessor
@@ -154,7 +147,7 @@ class SHALOModel(object):
         train_data  = self._preprocess_data(sentence_data, init=True)
         self.mx_len = max_sentence_length or max(map(len, train_data))
         # Build model
-        if self.embeddings is not None:
+        if hasattr(self, 'embeddings'):
             assert(self.embeddings.shape[1] == dim)
         self.d             = dim
         self.lr            = lr
@@ -280,6 +273,13 @@ class SHALOModel(object):
 
 class SHALOModelFixed(SHALOModel):
 
+    name = 'SHALOModelFixed'
+
+    def __init__(self, embedding_file, save_file=None, n_threads=None):
+        SHALOModel.__init__(self, save_file, n_threads)
+        with open(embedding_file, 'rb') as f:
+            self.embedding_words, self.embeddings = cPickle.load(f)
+
     def _get_embedding(self):
         """
         Row 0 is 0 vector for no token
@@ -294,6 +294,13 @@ class SHALOModelFixed(SHALOModel):
 
 
 class SHALOModelPreTrain(SHALOModel):
+
+    name = 'SHALOModelPreTrain'
+
+    def __init__(self, embedding_file, save_file=None, n_threads=None):
+        SHALOModel.__init__(self, save_file, n_threads)
+        with open(embedding_file, 'rb') as f:
+            self.embedding_words, self.embeddings = cPickle.load(f)
 
     def _get_embedding(self):
         """
@@ -317,6 +324,11 @@ class SHALOModelPreTrain(SHALOModel):
 
 
 class SHALOModelRandInit(SHALOModel):
+
+    name = 'SHALOModelRandInit'
+
+    def __init__(self, save_file=None, n_threads=None):
+        SHALOModel.__init__(self, save_file, n_threads)
 
     def _get_embedding(self):
         """

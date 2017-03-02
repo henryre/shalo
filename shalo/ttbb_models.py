@@ -15,19 +15,20 @@ class TTBB(SHALOModelFixed):
     In the basic model, the common component vector is computed before all
     computations. The embeddings are static, so no updates are made.
     """
-    def __init__(self, embedding_file, marginals_file=None, name='TTBB',
-                 save_file=None, n_threads=None):
-        assert(embedding_file is not None)
-        super(TTBB, self).__init__(
-            name=name, embedding_file=embedding_file, save_file=save_file,
-            n_threads=n_threads
-        )
+
+    name = 'TTBB'
+
+    def __init__(self, embedding_file, word_freq_file=None, save_file=None,
+                 n_threads=None):
+        SHALOModelFixed.__init__(self, embedding_file, save_file, n_threads)
         # Get marginals file
-        if marginals_file is not None:
-            with open(marginals_file, 'rb') as f:
+        self._get_word_freq(word_freq_file)
+
+    def _get_word_freq(self, fname):
+        self.word_freq = None
+        if fname is not None:
+            with open(fname, 'rb') as f:
                 self.word_freq = cPickle.load(f)
-        else:
-            self.word_freq = None
 
     def _static_common_component(self, tokens, U, p, a):
         """Compute the common component vector
@@ -129,12 +130,14 @@ class TTBB(SHALOModelFixed):
 
 class TTBBTune(SHALOModelPreTrain, TTBB):
     """TTBB model with common component updated via gradient descent"""
-    def __init__(self, embedding_file, marginals_file=None, name='TTBBTune',
-                 save_file=None, n_threads=None):
-        super(TTBBTune, self).__init__(
-            embedding_file=embedding_file, marginals_file=marginals_file,
-            name=name, save_file=save_file, n_threads=n_threads
-        )
+
+    name = 'TTBBTune'
+
+    def __init__(self, embedding_file, word_freq_file=None, save_file=None,
+                 n_threads=None):
+        SHALOModelPreTrain.__init__(self, embedding_file, save_file, n_threads)
+        # Get marginals file
+        self._get_word_freq(word_freq_file)
 
     def _epoch_post_process(self, t, debug=False):
         # Update the common component
@@ -159,12 +162,14 @@ class TTBBTuneLazy(SHALOModelPreTrain, TTBB):
     """TTBB model with exact common component updates
     Common component vector updated after every epoch
     """
-    def __init__(self, embedding_file, marginals_file=None, name='TTBBTuneLazy',
-                 save_file=None, n_threads=None):
-        super(TTBBTuneLazy, self).__init__(
-            embedding_file=embedding_file, marginals_file=marginals_file,
-            name=name, save_file=save_file, n_threads=n_threads
-        )
+
+    name = 'TTBBTuneLazy'
+
+    def __init__(self, embedding_file, word_freq_file=None, save_file=None,
+                 n_threads=None):
+        SHALOModelPreTrain.__init__(self, embedding_file, save_file, n_threads)
+        # Get marginals file
+        self._get_word_freq(word_freq_file)
 
     def _get_feed(self, x_batch, len_batch, y_batch=None):
         feed = {

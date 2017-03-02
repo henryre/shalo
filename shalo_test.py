@@ -14,7 +14,8 @@ DIM    = 50 if EMB is SENNA else 300
 
 
 MODELS = OrderedDict([
-    ('sparselm', SparseLM), ('lstm', LSTM), ('linearmodel', LinearModel), 
+    ('sparselm', SparseLinearModel), ('lstm', LSTM),
+    ('linearmodel', LinearModel), 
     ('fasttext', fastText), ('fasttextpretrain', fastTextPreTrain),
     ('ttbb', TTBB), ('ttbbtune', TTBBTune), ('ttbbtunelazy', TTBBTuneLazy),
 ])
@@ -37,7 +38,7 @@ def test_model(model, train, train_y, test, test_y):
     if model in [LinearModel, fastTextPreTrain, TTBB, TTBBTune, TTBBTuneLazy]:
         kwargs['embedding_file'] = EMB
     if model in [TTBB, TTBBTune, TTBBTuneLazy]:
-        kwargs['marginals_file'] = FREQ
+        kwargs['word_freq_file'] = FREQ
     F = model(**kwargs)
     print "\n\nRunning test with [{0}]".format(F.name)
     ngrams   = 1 if model in [LSTM, TTBB, TTBBTune, TTBBTuneLazy] else 2
