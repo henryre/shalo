@@ -217,7 +217,6 @@ class SHALOModel(object):
         """Score predictions on test data against gold labels"""
         yhat = self.predict(test_sentence_data, verbose)
         y    = np.ravel(test_labels)
-        print np.sum(np.isnan(yhat))
         assert((yhat >= 0).all() and (yhat <= 1).all())
         assert((y >= 0).all() and (y <= 1).all())
         assert(len(y) == len(yhat))

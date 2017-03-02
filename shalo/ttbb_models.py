@@ -51,8 +51,8 @@ class TTBB(SHALOModelFixed):
         pca.fit(X)
         return np.ravel(pca.components_)
 
-    def explore_common_component(self, tokens):
-        for a in np.logspace(-8, 2, num=21):
+    def explore_common_component(self, tokens, a_rng=None):
+        for a in (a_rng or np.logspace(-8, 2, num=21)):
             msg = '== a={0} =='.format(a)
             print '\n{0}\n{1}\n{0}'.format('='*len(msg), msg)
             ccx = self._static_common_component(
@@ -136,11 +136,23 @@ class TTBBTune(SHALOModelPreTrain, TTBB):
             name=name, save_file=save_file, n_threads=n_threads
         )
 
+    def _epoch_post_process(self, t, debug=False):
+        # Update the common component
+        if debug and ((t+1) % 5 == 0):
+            a, ccx = self.session.run([self.a_var, self.ccx_var])
+            print a
+            top_similarity(
+                symbol_embedding(self.embeddings),
+                self.word_dict.reverse(), 15, ccx
+            )
+
     def _get_a(self):
-        return tf.Variable(self.a, dtype=tf.float32)
+        self.a_var = tf.Variable(self.a, dtype=tf.float32)
+        return self.a_var
 
     def _get_common_component(self):
-        return tf.Variable(self.ccx, dtype=tf.float32)
+        self.ccx_var = tf.Variable(self.ccx, dtype=tf.float32)
+        return self.ccx_var
 
 
 class TTBBTuneLazy(SHALOModelPreTrain, TTBB):
