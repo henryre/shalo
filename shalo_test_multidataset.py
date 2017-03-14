@@ -1,29 +1,52 @@
 import numpy as np
-from utils.parse_data import *
+import os
+import sys
 import argparse
 
-
-from shalo import (
-    fastText, fastTextPreTrain, LinearModel, # Vector mean models
-    TTBB, TTBBTune, TTBBTuneLazy,            # TTBB models
-    LSTM, SparseLinearModel,                 # Baseline models
-)
+from collections import OrderedDict
+from shalo import *
 
 
-SENNA = 'data/senna.pkl'
+SENNA  = 'data/senna.pkl'
+DEPW2V = 'data/depw2v.pkl'
+FREQ   = 'data/word_freq.pkl'
+EMB    = SENNA if 'CI' in os.environ else DEPW2V
+DIM    = 50 if EMB is SENNA else 300
 
-data_files = {
-    'polarity':[get_data_from_file_polarity, 'data/train.txt', 'data/test.txt'],
-    'imdb':[get_data_from_file_imdb, 'data/aclImdb/train/', 'data/aclImdb/test/']
-}
+
+MODELS = OrderedDict([
+    ('sparselm', SparseLinearModel), ('lstm', LSTM),
+    ('linearmodel', LinearModel), 
+    ('fasttext', fastText), ('fasttextpretrain', fastTextPreTrain),
+    ('ttbb', TTBB), ('ttbbtune', TTBBTune), ('ttbbtunelazy', TTBBTuneLazy),
+])
 
 
-def test_model(model, train, train_y, test, test_y, embedding=None):
-    F = model(embedding) if embedding is not None else model()
+def get_data_from_file(fname):
+    labels, sentences = [], []
+    with open(fname, 'rb') as f:
+        for line in f:
+            label, text = line.strip().split(' ', 1)
+            text = text.split(' ')
+            labels.append((int(label) + 1) / 2)
+            sentences.append(text)
+    labels = np.ravel(labels)
+    return sentences, labels
+
+
+def test_model(model, train, train_y, test, test_y):
+    kwargs = {}
+    if model in [LinearModel, fastTextPreTrain, TTBB, TTBBTune, TTBBTuneLazy]:
+        kwargs['embedding_file'] = EMB
+    if model in [TTBB, TTBBTune, TTBBTuneLazy]:
+        kwargs['word_freq_file'] = FREQ
+    F = model(**kwargs)
     print "\n\nRunning test with [{0}]".format(F.name)
+    ngrams   = 1 if model in [LSTM, TTBB, TTBBTune, TTBBTuneLazy] else 2
+    n_epochs = 3 if 'CI' in os.environ else 20
     F.train(
         train, train_y, 
-        n_epochs=10,
+        n_epochs=n_epochs, dim=DIM, ngrams=ngrams,
         dev_sentence_data=test, dev_labels=test_y,
         seed=1701
     )
@@ -33,23 +56,24 @@ def test_model(model, train, train_y, test, test_y, embedding=None):
 if __name__ == '__main__':
     # Parse args
     parser = argparse.ArgumentParser(description='Process some integers.')
-    parser.add_argument('dataset', type=str, 
+    parser.add_argument('--dataset', type=str, default='polarity',
                     help='What dataset do you want to use [imdb, polarity]')
+    parser.add_argument('--model', type=str, default=None,
+                    help='What model do you want to use %s' % MODELS.keys())
     args = parser.parse_args()
 
-    if args.dataset not in data_files.keys():
-        print "Dataset must be one of ... [imdb, polarity]"
-        exit()
+    dataset = args.dataset
+    model = args.model
+    print model
+    print dataset
+    exit()
 
     # Get data
-    train, train_y = data_files[args.dataset][0](data_files[args.dataset][1])
-    test, test_y   = data_files[args.dataset][0](data_files[args.dataset][2])
+    train, train_y = get_data_from_file('data/train.txt')
+    test, test_y   = get_data_from_file('data/test.txt')
     # Run test
-    #test_model(TTBBTuneLazy, train, train_y, test, test_y, SENNA)
-    test_model(TTBBTune, train, train_y, test, test_y, SENNA)
-    # test_model(TTBB, train, train_y, test, test_y, SENNA)
-    # test_model(fastTextPreTrain, train, train_y, test, test_y, SENNA)
-    # test_model(fastText, train, train_y, test, test_y)
-    # test_model(LinearModel, train, train_y, test, test_y, SENNA)
-    # test_model(LSTM, train, train_y, test, test_y)
-    # test_model(SparseLinearModel, train, train_y, test, test_y)
+    if len(sys.argv) == 1:
+        for model in MODELS.values():
+            test_model(model, train, train_y, test, test_y)
+    elif sys.argv[1].lower() in MODELS:
+        test_model(MODELS[sys.argv[1].lower()], train, train_y, test, test_y)
