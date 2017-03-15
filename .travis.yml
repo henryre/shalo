@@ -40,4 +40,4 @@ script:
   - scripts/get_word_freq.sh
   # Run test
   #- python shalo_test.py
-  - python fit_model.py fasttext config/polarity.json
+  - python fit_model.py fasttext configs/polarity.json
