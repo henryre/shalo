@@ -1,6 +1,8 @@
 import numpy as np
 import pandas as pd
 
+from itertools import product
+
 
 class Hyperparameter(object):
     """Base class for a grid search parameter"""
@@ -85,8 +87,8 @@ class GridSearch(object):
                 model_hyperparams[pn] = pv
             print "=" * 80
             print "[%d] Testing %s" % (k+1, ', '.join([
-                "%s = %0.2e" % (pn,pv)
-                for pn,pv in zip(self.param_names, param_vals)
+                "{0} = {1}".format(pn, pv)
+                for pn, pv in zip(self.param_names, param_vals)
             ]))
             print "=" * 80
             # Train the model
@@ -119,7 +121,7 @@ class RandomSearch(GridSearch):
             model, train_data, train_labels, parameters
         )
         print "Initialized RandomSearch search of size {0} / {1}".format(
-            self.n, len(product(p.get_all_values() for p in self.params))
+            self.n, np.product(len(w) for w in GridSearch.search_space(self))
         )
         
     def search_space(self):

@@ -93,3 +93,11 @@ data
 
 # Utils
 shalo/clean
+
+# TF
+*.index
+*.meta
+*.info
+*.data-*
+checkpoint
+
