@@ -39,6 +39,7 @@ def run(model, config, embedding=None, word_freq=None, n_threads=None):
 	# Load data
 	train_X, train_y = load_data(config['train_data'], config['train_labels'])
 	dev_X, dev_y     = load_data(config['dev_data'], config['dev_labels'])
+
 	# Define search
 	parameters = [
 		ListParameter(k, v) for k, v in config['search_parameters'].iteritems()

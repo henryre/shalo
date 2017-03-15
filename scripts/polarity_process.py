@@ -1,6 +1,6 @@
 import cPickle
 import numpy as np
-
+import os
 
 def get_data_from_file(fname):
     labels, sentences = [], []
@@ -23,6 +23,7 @@ def dump_data(fname, out_fname):
 
 
 if __name__ == '__main__':
-
-    dump_data('train.txt', 'polarity/train')
-    dump_data('test.txt', 'polarity/test')
+    if not os.path.isdir('../data/polarity'):
+        os.makedirs('../data/polarity')
+    dump_data('../data/train.txt', '../data/polarity/train')
+    dump_data('../data/test.txt', '../data/polarity/test')
