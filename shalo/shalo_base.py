@@ -110,6 +110,10 @@ class SHALOModel(object):
     def _epoch_post_process(self, t):
         pass
 
+    def _get_save_dict(self, **kwargs):
+        # Will default to saving all global variables
+        return None
+
     def train(self, sentence_data, sentence_labels, loss_function='log',
               n_epochs=20, lr=0.01, dim=50, batch_size=100, l2_penalty=0.0,
               ngrams=1, rebalance=False, max_sentence_length=None,
