@@ -25,7 +25,7 @@ install:
   # Install binary distribution of scientific python modules
   - test -e ~/miniconda/envs/test/bin/activate || ( rm -rf ~/miniconda/envs/test; conda create --yes -n test python=$TRAVIS_PYTHON_VERSION )
   - source activate test
-  - conda install --yes numpy scipy pip
+  - conda install --yes numpy scipy pip pandas
   # Install all remaining dependencies as per our README
   - pip install -r python-package-requirements.txt
 
