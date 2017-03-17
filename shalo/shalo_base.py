@@ -3,7 +3,7 @@ import numpy as np
 import tensorflow as tf
 
 from time import time
-from utils import LabelBalancer, symbol_embedding
+from utils import LabelBalancer, symbol_embedding, SymbolTable
 
 
 SD = 0.1
@@ -21,7 +21,6 @@ class SHALOModel(object):
     name = 'SHALOModel'
 
     def __init__(self, save_file=None, n_threads=None):
-        # Super constructor
         self.train_fn   = None
         self.loss       = None
         self.prediction = None
@@ -304,19 +303,21 @@ class SHALOModelPreTrain(SHALOModel):
             self.embedding_words, self.embeddings = cPickle.load(f)
 
     def _word_table_init(self, training_sentences):
+        """Get training words and init word table with pre-embedded words"""
         self._get_training_words(training_sentences)
         self.word_dict = SymbolTable()
         for word in self.embedding_words_train:
             self.word_dict.get(word)
 
     def _get_training_words(self, training_sentences):
+        """Get training words and subset of pre-embedded words in train set"""
         unique_words = set(w for s in training_sentences for w in s)
-        training_embedding_idxs, self.embedding_words_train = [], []
+        embedding_idxs_train, self.embedding_words_train = [], []
         for i, word in enumerate(self.embedding_words):
             if word in unique_words:
-                training_embedding_words.append(word)
-                training_embedding_idxs.append(i)
-        idxs = np.ravel(training_embedding_idxs)
+                self.embedding_words_train.append(word)
+                embedding_idxs_train.append(i)
+        idxs = np.ravel(embedding_idxs_train)
         self.embeddings_train = self.embeddings[idxs, :]
 
     def _get_embedding(self):
