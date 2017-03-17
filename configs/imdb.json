@@ -1,8 +1,8 @@
 {
 	"train_data":   "data/imdb_data/train.data",
 	"train_labels": "data/imdb_data/train.labels",
-	"dev_data":     "data/imdb_data/test.data",
-	"dev_labels":   "data/imdb_data/test.labels",
+	"dev_data":     "data/imdb_data/train.data",
+	"dev_labels":   "data/imdb_data/train.labels",
 	"test_data":    "data/imdb_data/test.data",
 	"test_labels":  "data/imdb_data/test.labels",
 	"n": 3,
