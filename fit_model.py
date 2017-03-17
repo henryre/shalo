@@ -5,7 +5,7 @@ import json
 from collections import OrderedDict
 from shalo import *
 from shalo.model_search import ListParameter, RandomSearch
-
+from sklearn.utils import shuffle
 
 MODELS = OrderedDict([
     ('sparselm', SparseLinearModel), ('lstm', LSTM),
@@ -38,7 +38,14 @@ def run(model, config, embedding=None, word_freq=None, n_threads=None):
 	F = model(**model_kwargs)
 	# Load data
 	train_X, train_y = load_data(config['train_data'], config['train_labels'])
-	dev_X, dev_y     = load_data(config['dev_data'], config['dev_labels'])
+
+	# Grab dev set
+	train_X, train_y = shuffle(train_X, train_y)
+	dev_size = len(train_X) / 10
+	dev_X = train_X[dev_size:]
+	train_X = train_X[:dev_size]
+	dev_y = train_y[dev_size:]
+	train_y = train_y[:dev_size]
 
 	# Define search
 	parameters = [
