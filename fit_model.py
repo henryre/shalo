@@ -53,10 +53,6 @@ def run(model, config, embedding=None, word_freq=None, n_threads=None):
 	dev_y = train_y[:dev_size]
 	train_y = train_y[dev_size:]
 
-	print len(dev_X)
-	print len(train_X)
-	exit()
-
 	# Define search
 	parameters = [
 		ListParameter(k, v) for k, v in config['search_parameters'].iteritems()
