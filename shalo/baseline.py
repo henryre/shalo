@@ -2,7 +2,7 @@ import numpy as np
 import scipy.sparse as sparse
 import tensorflow as tf
 
-from shalo_base import SHALOModel, SHALOModelRandInit
+from shalo_base import SHALOModel, SHALOModelPreTrain, SHALOModelRandInit
 from utils import map_words_to_symbols, symbol_embedding, SymbolTable
 
 

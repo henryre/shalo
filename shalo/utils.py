@@ -3,6 +3,9 @@ import tensorflow as tf
 import zlib
 
 
+GRAMSEP = '~~'
+
+
 def scrub(text):
     """Clean text and force utf-8 encoding"""
     text = ''.join(c for c in text.lower() if ord(c) < 128)
@@ -16,26 +19,35 @@ def symbol_embedding(U):
 
 
 def map_words_to_symbols(words, mapper, ngrams=1, min_len=2, token_filter={1}):
+    """Convert sentence to symbols with ngram processing and filtering"""
+    # Scrub and lowercase words
     scrubbed_words = [scrub(word.lower()) for word in words]
+    # Filter words for length
     scrubbed_words = filter(lambda w: len(w) >= min_len, scrubbed_words)
+    # Add ngrams
     tokens, n = [], len(scrubbed_words)
     for i in xrange(n):
         for k in xrange(ngrams):
             if i + k + 1 > n:
                 break
-            tokens.append(mapper('~~'.join(scrubbed_words[i : i+k+1])))
+            tokens.append(mapper(GRAMSEP.join(scrubbed_words[i : i+k+1])))
+    # Filter unwanted tokens            
     tokens = filter(lambda w: w not in token_filter, tokens)
     return tokens
 
 
 def cos_sim(x, y, epsilon=1e-32):
+    """Cosine similarity"""
     return np.dot(x, y) / (epsilon + np.linalg.norm(x) * np.linalg.norm(y))
 
 
 def top_similarity(U, id2token, k, query_vector):
+    """Get @k most similar rows in @U to @query_vector"""
+    # Get similarities
     sims = {}
     for i in xrange(U.shape[0]):
         sims[id2token[i]] = cos_sim(U[i, :], query_vector)
+    # Sort and print
     top = sorted(((v, k) for k, v in sims.iteritems()), reverse=True)[:k]
     cut, title = 100, 'Most similar terms'
     top = [(x, y[:cut] + (len(y) > cut) * '...') for x, y in top]
