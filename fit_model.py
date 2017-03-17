@@ -59,7 +59,7 @@ def run(model, config, embedding=None, word_freq=None, n_threads=None):
 	print df.head(10)
 	# Score on test set
 	test_X, test_y = load_data(config['test_data'], config['test_labels'])
-	S.score(test_X, test_y, b=b, verbose=True)
+	F.score(test_X, test_y, b=b, verbose=True)
 
 
 if __name__ == '__main__':

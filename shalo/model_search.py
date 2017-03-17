@@ -1,5 +1,7 @@
 import numpy as np
 import pandas as pd
+import cPickle
+import datetime
 
 from itertools import product
 
@@ -77,6 +79,7 @@ class GridSearch(object):
           Non-search parameters are set using model_hyperparamters
         """
         run_stats, score_opt, model_k = [], -1.0, 0
+        opt_params = None
         base_model_name = self.model.name
         # Iterate over the param values
         for k, param_vals in enumerate(self.search_space()):
@@ -101,11 +104,26 @@ class GridSearch(object):
             score = self.model.score(dev_data, dev_labels, b=b, verbose=True)
             run_stats.append(list(param_vals) + [score])
             if score > score_opt:
-                self.model.save(model_name)
+                #self.model.save(model_name)
                 opt_model = model_name
                 score_opt = score
+                opt_params = param_vals
+
+        # Store optimal params
+        optimal = {"name":opt_model, "params":param_vals}
+        with open("optimal_params"+str(datetime.datetime.now()), 'wb') as f:
+            cPickle.dump(optimal, f)
+
         # Set optimal parameter in the learner model
-        self.model.load(opt_model)
+        #self.model.load(opt_model)
+        for pn, pv in zip(self.param_names, opt_params):
+                model_hyperparams[pn] = pv
+        self.model.train(
+                self.train_data, self.train_labels,
+                dev_sentence_data=dev_data, dev_labels=dev_labels,
+                **model_hyperparams
+            )
+
         # Return DataFrame of scores
         self.results = pd.DataFrame.from_records(
             run_stats, columns=self.param_names + ['Accuracy']
