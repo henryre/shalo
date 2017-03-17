@@ -6,14 +6,25 @@
 
 ## Implemented models
 
-* `LinearModel`: Linear model over pretrained embeddings
+### Baseline models
+
+* `SparseLM`: Linear model trained over sparse bag-of-words representation
+* `LSTM`: Long short-term memory model
+* `LSTMPreTrain`: LSTM with pretrained embeddings
+
+### Mean word vector models
+
+* `LinearModel`: Linear model over fixed, pretrained embeddings
 * `fastText`: Implementation of [fastText](https://github.com/facebookresearch/fastText) in Tensorflow
 * `fastTextPreTrained`: fastText initialized with pretrained embeddings
-* `TTBB`: [Simple but tough-to-beat-baseline for sentence embeddings](https://openreview.net/pdf?id=SyK00v5xx)
-* `TTBBTune`: `TTBB` with tuned embeddings and gradient-tuned common component/smoothing parameter
-* `TTBBTuneLazy`: TTBB with tuend embeddings and lazily updated common component (bad)
-* `LSTM`: Long short-term memory model
-* `SparseLM`: Linear model trained over sparse bag-of-words representation
+
+### "Tough-to-Beat Baseline" models
+
+* `TTBB`: Implementation of [A Simple but Tough-to-Beat Baseline for Sentence Embeddings](https://openreview.net/pdf?id=SyK00v5xx) in Tensorflow
+* `TTBBTune`: `TTBB` with gradient-tuned embeddings, common component, and smoothing parameter
+* `TTBBTuneExact`: `TTBB` with gradient-tuned embeddings and smoothing parameter, with common component updated exactly
+* `TTBBTuneLazy`: `TTBB` with gradient-tuned embeddings and smoothing parameter, with common component updated once per epoch (does not work)
+
 
 ## Getting started
 
@@ -41,12 +52,3 @@ scripts/get_polarity.sh
 ```
 python shalo_test.py
 ```
-
-## TODO
-
-* **Dan**
- * Add http://nlp.stanford.edu/sentiment/trainDevTestTrees_PTB.zip dataset
-* **Henry**
- * Verify text processing: min length
- * Full gradient step TTBB
- * TTBB ngrams
