@@ -48,10 +48,14 @@ def run(model, config, embedding=None, word_freq=None, n_threads=None):
 	# Grab dev set
 	train_X, train_y = shuffle(train_X, train_y)
 	dev_size = len(train_X) / 10
-	dev_X = train_X[dev_size:]
-	train_X = train_X[:dev_size]
-	dev_y = train_y[dev_size:]
-	train_y = train_y[:dev_size]
+	dev_X = train_X[:dev_size]
+	train_X = train_X[dev_size:]
+	dev_y = train_y[:dev_size]
+	train_y = train_y[dev_size:]
+
+	print len(dev_X)
+	print len(train_X)
+	exit()
 
 	# Define search
 	parameters = [
