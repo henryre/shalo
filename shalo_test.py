@@ -14,9 +14,9 @@ DIM    = 50 if EMB is SENNA else 300
 
 
 MODELS = OrderedDict([
-    # ('sparselm', SparseLinearModel), ('lstmpretrain', LSTMPreTrain),
-    # ('linearmodel', LinearModel), 
-    # ('fasttext', fastText), ('fasttextpretrain', fastTextPreTrain),
+    ('sparselm', SparseLinearModel), ('lstmpretrain', LSTMPreTrain),
+    ('linearmodel', LinearModel), 
+    ('fasttext', fastText), ('fasttextpretrain', fastTextPreTrain),
     ('ttbb', TTBB), ('ttbbtune', TTBBTune),
     ('ttbbtuneexact', TTBBTuneExact), ('ttbbtunelazy', TTBBTuneLazy),
 ])

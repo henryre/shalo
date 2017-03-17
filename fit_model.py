@@ -8,12 +8,18 @@ from shalo.model_search import ListParameter, RandomSearch
 from sklearn.utils import shuffle
 
 MODELS = OrderedDict([
-    ('sparselm', SparseLinearModel), ('lstm', LSTM),
+    ('sparselm', SparseLinearModel), ('lstmpretrain', LSTMPreTrain),
     ('linearmodel', LinearModel), 
     ('fasttext', fastText), ('fasttextpretrain', fastTextPreTrain),
-    ('ttbb', TTBB), ('ttbbtune', TTBBTune), ('ttbbtunelazy', TTBBTuneLazy),
+    ('ttbb', TTBB), ('ttbbtune', TTBBTune),
+    ('ttbbtuneexact', TTBBTuneExact), ('ttbbtunelazy', TTBBTuneLazy),
 ])
 
+NEED_EMBED = [
+    LinearModel, LSTMPreTrain, fastTextPreTrain,
+    TTBB, TTBBTune, TTBBTuneExact, TTBBTuneLazy
+]
+NEED_FREQ  = [TTBB, TTBBTune, TTBBTuneExact, TTBBTuneLazy]
 
 def read_config(fname):
 	with open(fname, 'rb') as f:
@@ -31,9 +37,9 @@ def load_data(data_fname, labels_fname):
 def run(model, config, embedding=None, word_freq=None, n_threads=None):
 	# Define model
 	model_kwargs = {'n_threads': n_threads}
-	if embedding is not None:
+	if embedding is not None and model in NEED_EMBED:
 		model_kwargs['embedding_file'] = embedding
-	if word_freq is not None:
+	if word_freq is not None and model in NEED_FREQ:
 		model_kwargs['word_freq_file'] = word_freq
 	F = model(**model_kwargs)
 	# Load data
