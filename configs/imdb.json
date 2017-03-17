@@ -5,7 +5,7 @@
 	"dev_labels":   "data/imdb_data/test.labels",
 	"test_data":    "data/imdb_data/test.data",
 	"test_labels":  "data/imdb_data/test.labels",
-	"n": 5,
+	"n": 50,
 	"b": 0.5,
 	"fixed_parameters": {
 		"batch_size": 256,
