@@ -303,6 +303,22 @@ class SHALOModelPreTrain(SHALOModel):
         with open(embedding_file, 'rb') as f:
             self.embedding_words, self.embeddings = cPickle.load(f)
 
+    def _word_table_init(self, training_sentences):
+        self._get_training_words(training_sentences)
+        self.word_dict = SymbolTable()
+        for word in self.embedding_words_train:
+            self.word_dict.get(word)
+
+    def _get_training_words(self, training_sentences):
+        unique_words = set(w for s in training_sentences for w in s)
+        training_embedding_idxs, self.embedding_words_train = [], []
+        for i, word in enumerate(self.embedding_words):
+            if word in unique_words:
+                training_embedding_words.append(word)
+                training_embedding_idxs.append(i)
+        idxs = np.ravel(training_embedding_idxs)
+        self.embeddings_train = self.embeddings[idxs, :]
+
     def _get_embedding(self):
         """
         Return embedding tensor (either constant or variable)
@@ -314,9 +330,9 @@ class SHALOModelPreTrain(SHALOModel):
         zero = tf.constant(0.0, dtype=tf.float32, shape=(1, self.d))
         s = self.seed - 1
         unk = tf.Variable(tf.random_normal((1, self.d), stddev=SD, seed=s))
-        pretrain = tf.Variable(self.embeddings, dtype=tf.float32)
+        pretrain = tf.Variable(self.embeddings_train, dtype=tf.float32)
         vecs = [zero, unk, pretrain]
-        n_r = self.word_dict.num_words() - len(self.embedding_words)
+        n_r = self.word_dict.num_words() - len(self.embedding_words_train)
         if n_r > 0:
             r = tf.Variable(tf.random_normal((n_r, self.d), stddev=SD, seed=s))
             vecs.append(r)

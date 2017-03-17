@@ -61,11 +61,9 @@ class fastTextPreTrain(SHALOModelVectorMean, SHALOModelPreTrain):
     name = 'fastTextPreTrain'
 
     def _preprocess_data(self, sentence_data, init=True):
-        # Initialize word table and populate with embeddings
+        # Initialize word table and populate with pre-embedded training words
         if init:
-            self.word_dict = SymbolTable()
-            for word in self.embedding_words:
-                self.word_dict.get(word)
+            self._word_table_init(training_sentences)
         # Process data
         mapper = self.word_dict.get if init else self.word_dict.lookup
         return [

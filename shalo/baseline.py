@@ -98,20 +98,10 @@ def get_rnn_output(output, dim, lengths):
     return h
 
 
-class LSTM(SHALOModelRandInit):
+class LSTMBase(SHALOModel):
     """Simple LSTM for sequence classification"""
 
-    name = "LSTM"
-
-    def _preprocess_data(self, sentence_data, init=True):
-        # Initialize word table and populate with embeddings
-        if init:
-            self.word_dict = SymbolTable()
-        # Process data
-        mapper = self.word_dict.get if init else self.word_dict.lookup
-        return [
-            map_words_to_symbols(s, mapper, 1, 0, {}) for s in sentence_data
-        ]
+    name = "LSTMBase"
 
     def _get_save_dict(self, **kwargs):
         # Will default to saving all global variables
@@ -134,3 +124,33 @@ class LSTM(SHALOModelRandInit):
             )
         # Get potentials
         return get_rnn_output(rnn_out, self.d, self.input_lengths), {}
+
+
+class LSTM(LSTMBase, SHALOModelRandInit):
+
+    name = "LSTM"
+
+    def _preprocess_data(self, sentence_data, init=True):
+        # Initialize word table and populate with embeddings
+        if init:
+            self.word_dict = SymbolTable()
+        # Process data
+        mapper = self.word_dict.get if init else self.word_dict.lookup
+        return [
+            map_words_to_symbols(s, mapper, 1, 0, {}) for s in sentence_data
+        ]
+
+
+class LSTMPreTrain(LSTMBase, SHALOModelPreTrain):
+
+    name = "LSTMPreTrain"
+
+    def _preprocess_data(self, sentence_data, init=True):
+        # Initialize word table and populate with pre-embedded training words
+        if init:
+            self._word_table_init(sentence_data)
+        # Process data
+        mapper = self.word_dict.get if init else self.word_dict.lookup
+        return [
+            map_words_to_symbols(s, mapper, 1, 0, {}) for s in sentence_data
+        ]
