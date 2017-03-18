@@ -53,6 +53,14 @@ def run(model, config, embedding=None, word_freq=None, n_threads=None):
 	dev_y = train_y[:dev_size]
 	train_y = train_y[dev_size:]
 
+	#shrink datasets
+	if len(dev_X) > 1000:
+		dev_X = dev_X[:1000]
+		dev_y = dev_y[:1000]
+	if len(train_X) > 5000:
+		train_X = train_X[:5000]
+		train_y = train_y[:5000]
+
 	# Define search
 	parameters = [
 		ListParameter(k, v) for k, v in config['search_parameters'].iteritems()

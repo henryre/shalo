@@ -138,8 +138,8 @@ class RandomSearch(GridSearch):
         super(RandomSearch, self).__init__(
             model, train_data, train_labels, parameters
         )
-        print "Initialized RandomSearch search of size {0} / {1}".format(
-            self.n, np.product(len(w) for w in GridSearch.search_space(self))
+        print "Initialized RandomSearch of size {0} / {1}".format(
+            self.n, np.product([len(w) for w in GridSearch.search_space(self)])
         )
         
     def search_space(self):
