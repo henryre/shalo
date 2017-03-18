@@ -46,7 +46,7 @@ def run(model, config, embedding=None, word_freq=None, n_threads=None):
 	train_X, train_y = load_data(config['train_data'], config['train_labels'])
 
 	# Grab dev set
-	train_X, train_y = shuffle(train_X, train_y)
+	train_X, train_y = shuffle(train_X, train_y, random_state=1701)
 	dev_size = len(train_X) / 10
 	dev_X = train_X[:dev_size]
 	train_X = train_X[dev_size:]
