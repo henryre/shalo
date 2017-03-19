@@ -1,0 +1,211 @@
+W tensorflow/core/platform/cpu_feature_guard.cc:45] The TensorFlow library wasn't compiled to use SSE3 instructions, but these are available on your machine and could speed up CPU computations.
+W tensorflow/core/platform/cpu_feature_guard.cc:45] The TensorFlow library wasn't compiled to use SSE4.1 instructions, but these are available on your machine and could speed up CPU computations.
+W tensorflow/core/platform/cpu_feature_guard.cc:45] The TensorFlow library wasn't compiled to use SSE4.2 instructions, but these are available on your machine and could speed up CPU computations.
+W tensorflow/core/platform/cpu_feature_guard.cc:45] The TensorFlow library wasn't compiled to use AVX instructions, but these are available on your machine and could speed up CPU computations.
+W tensorflow/core/platform/cpu_feature_guard.cc:45] The TensorFlow library wasn't compiled to use AVX2 instructions, but these are available on your machine and could speed up CPU computations.
+W tensorflow/core/platform/cpu_feature_guard.cc:45] The TensorFlow library wasn't compiled to use FMA instructions, but these are available on your machine and could speed up CPU computations.
+Initialized RandomSearch of size 8 / 1
+================================================================================
+[1] Testing l2_penalty = 0.01, lr = 0.1, loss_function = log, n_epochs = 50
+================================================================================
+[fastTextPreTrain] dim=300 lr=0.1 l2=0.01 ngram=2
+[fastTextPreTrain] Building model
+[fastTextPreTrain] Training model
+[fastTextPreTrain] #examples=5000  #epochs=50  batch size=256
+[fastTextPreTrain] Found dev set for training eval
+[fastTextPreTrain] Epoch 1 (25.93s)	Avg. loss = 0.571607	Dev acc. = 77.90%
+[fastTextPreTrain] Epoch 5 (135.30s)	Avg. loss = 0.000786	Dev acc. = 77.90%
+[fastTextPreTrain] Epoch 10 (274.97s)	Avg. loss = 0.000423	Dev acc. = 77.70%
+[fastTextPreTrain] Epoch 15 (412.01s)	Avg. loss = 0.000355	Dev acc. = 77.60%
+[fastTextPreTrain] Epoch 20 (552.76s)	Avg. loss = 0.000324	Dev acc. = 77.90%
+[fastTextPreTrain] Epoch 25 (690.25s)	Avg. loss = 0.000302	Dev acc. = 78.20%
+[fastTextPreTrain] Epoch 30 (823.32s)	Avg. loss = 0.000285	Dev acc. = 78.20%
+[fastTextPreTrain] Epoch 35 (956.10s)	Avg. loss = 0.000272	Dev acc. = 78.30%
+[fastTextPreTrain] Epoch 40 (1094.57s)	Avg. loss = 0.000260	Dev acc. = 78.10%
+[fastTextPreTrain] Epoch 45 (1236.48s)	Avg. loss = 0.000249	Dev acc. = 78.10%
+[fastTextPreTrain] Epoch 50 (1373.03s)	Avg. loss = 0.000239	Dev acc. = 78.20%
+[fastTextPreTrain] Training done (1373.03s)
+[fastTextPreTrain] Test set unknown token percentage: 0.00%
+[fastTextPreTrain] Accuracy: 78.20%
+================================================================================
+[2] Testing l2_penalty = 0.1, lr = 0.1, loss_function = log, n_epochs = 50
+================================================================================
+[fastTextPreTrain] dim=300 lr=0.1 l2=0.1 ngram=2
+[fastTextPreTrain] Building model
+[fastTextPreTrain] Training model
+[fastTextPreTrain] #examples=5000  #epochs=50  batch size=256
+[fastTextPreTrain] Found dev set for training eval
+[fastTextPreTrain] Epoch 1 (36.39s)	Avg. loss = 0.572293	Dev acc. = 77.80%
+[fastTextPreTrain] Epoch 5 (131.41s)	Avg. loss = 0.002496	Dev acc. = 78.20%
+[fastTextPreTrain] Epoch 10 (261.30s)	Avg. loss = 0.001874	Dev acc. = 78.20%
+[fastTextPreTrain] Epoch 15 (389.76s)	Avg. loss = 0.001671	Dev acc. = 78.10%
+[fastTextPreTrain] Epoch 20 (514.71s)	Avg. loss = 0.001522	Dev acc. = 78.10%
+[fastTextPreTrain] Epoch 25 (634.90s)	Avg. loss = 0.001400	Dev acc. = 77.70%
+[fastTextPreTrain] Epoch 30 (751.36s)	Avg. loss = 0.001296	Dev acc. = 77.50%
+[fastTextPreTrain] Epoch 35 (872.83s)	Avg. loss = 0.001206	Dev acc. = 77.30%
+[fastTextPreTrain] Epoch 40 (988.83s)	Avg. loss = 0.001128	Dev acc. = 77.20%
+[fastTextPreTrain] Epoch 45 (1109.36s)	Avg. loss = 0.001058	Dev acc. = 77.10%
+[fastTextPreTrain] Epoch 50 (1230.99s)	Avg. loss = 0.000997	Dev acc. = 77.20%
+[fastTextPreTrain] Training done (1230.99s)
+[fastTextPreTrain] Test set unknown token percentage: 0.00%
+[fastTextPreTrain] Accuracy: 77.20%
+================================================================================
+[3] Testing l2_penalty = 10.0, lr = 0.001, loss_function = hinge, n_epochs = 50
+================================================================================
+[fastTextPreTrain] dim=300 lr=0.001 l2=10.0 ngram=2
+[fastTextPreTrain] Building model
+[fastTextPreTrain] Training model
+[fastTextPreTrain] #examples=5000  #epochs=50  batch size=256
+[fastTextPreTrain] Found dev set for training eval
+[fastTextPreTrain] Epoch 1 (31.13s)	Avg. loss = 0.050636	Dev acc. = 51.00%
+[fastTextPreTrain] Epoch 5 (124.12s)	Avg. loss = 0.015303	Dev acc. = 51.00%
+[fastTextPreTrain] Epoch 10 (235.68s)	Avg. loss = 0.006016	Dev acc. = 51.00%
+[fastTextPreTrain] Epoch 15 (350.86s)	Avg. loss = 0.004342	Dev acc. = 51.00%
+[fastTextPreTrain] Epoch 20 (465.44s)	Avg. loss = 0.004057	Dev acc. = 51.00%
+[fastTextPreTrain] Epoch 25 (582.35s)	Avg. loss = 0.004005	Dev acc. = 51.00%
+[fastTextPreTrain] Epoch 30 (698.75s)	Avg. loss = 0.003992	Dev acc. = 51.00%
+[fastTextPreTrain] Epoch 35 (820.78s)	Avg. loss = 0.003985	Dev acc. = 51.00%
+[fastTextPreTrain] Epoch 40 (940.43s)	Avg. loss = 0.003973	Dev acc. = 70.00%
+[fastTextPreTrain] Epoch 45 (1060.54s)	Avg. loss = 0.003955	Dev acc. = 63.10%
+[fastTextPreTrain] Epoch 50 (1185.63s)	Avg. loss = 0.003930	Dev acc. = 54.70%
+[fastTextPreTrain] Training done (1185.63s)
+[fastTextPreTrain] Test set unknown token percentage: 0.00%
+[fastTextPreTrain] Accuracy: 54.70%
+================================================================================
+[4] Testing l2_penalty = 0.0001, lr = 0.1, loss_function = hinge, n_epochs = 50
+================================================================================
+[fastTextPreTrain] dim=300 lr=0.1 l2=0.0001 ngram=2
+[fastTextPreTrain] Building model
+[fastTextPreTrain] Training model
+[fastTextPreTrain] #examples=5000  #epochs=50  batch size=256
+[fastTextPreTrain] Found dev set for training eval
+[fastTextPreTrain] Epoch 1 (30.42s)	Avg. loss = 0.002734	Dev acc. = 76.70%
+[fastTextPreTrain] Epoch 5 (141.85s)	Avg. loss = 0.000018	Dev acc. = 76.30%
+[fastTextPreTrain] Epoch 10 (287.10s)	Avg. loss = 0.000012	Dev acc. = 76.20%
+[fastTextPreTrain] Epoch 15 (443.67s)	Avg. loss = 0.000006	Dev acc. = 74.90%
+[fastTextPreTrain] Epoch 20 (581.38s)	Avg. loss = 0.000005	Dev acc. = 75.00%
+[fastTextPreTrain] Epoch 25 (731.15s)	Avg. loss = 0.000012	Dev acc. = 77.00%
+[fastTextPreTrain] Epoch 30 (886.27s)	Avg. loss = 0.000039	Dev acc. = 74.80%
+[fastTextPreTrain] Epoch 35 (1041.05s)	Avg. loss = 0.000216	Dev acc. = 75.70%
+[fastTextPreTrain] Epoch 40 (1195.48s)	Avg. loss = 0.000483	Dev acc. = 71.90%
+[fastTextPreTrain] Epoch 45 (1349.46s)	Avg. loss = 0.000367	Dev acc. = 73.80%
+[fastTextPreTrain] Epoch 50 (1510.61s)	Avg. loss = 0.000441	Dev acc. = 73.40%
+[fastTextPreTrain] Training done (1510.61s)
+[fastTextPreTrain] Test set unknown token percentage: 0.00%
+[fastTextPreTrain] Accuracy: 73.40%
+================================================================================
+[5] Testing l2_penalty = 1e-05, lr = 0.01, loss_function = hinge, n_epochs = 50
+================================================================================
+[fastTextPreTrain] dim=300 lr=0.01 l2=1e-05 ngram=2
+[fastTextPreTrain] Building model
+[fastTextPreTrain] Training model
+[fastTextPreTrain] #examples=5000  #epochs=50  batch size=256
+[fastTextPreTrain] Found dev set for training eval
+[fastTextPreTrain] Epoch 1 (40.34s)	Avg. loss = 0.003421	Dev acc. = 73.40%
+[fastTextPreTrain] Epoch 5 (166.85s)	Avg. loss = 0.000001	Dev acc. = 77.70%
+[fastTextPreTrain] Epoch 10 (327.23s)	Avg. loss = 0.000001	Dev acc. = 77.40%
+[fastTextPreTrain] Epoch 15 (485.06s)	Avg. loss = 0.000001	Dev acc. = 77.40%
+[fastTextPreTrain] Epoch 20 (635.27s)	Avg. loss = 0.000001	Dev acc. = 77.40%
+[fastTextPreTrain] Epoch 25 (783.82s)	Avg. loss = 0.000001	Dev acc. = 77.50%
+[fastTextPreTrain] Epoch 30 (937.04s)	Avg. loss = 0.000002	Dev acc. = 78.20%
+[fastTextPreTrain] Epoch 35 (1099.89s)	Avg. loss = 0.000001	Dev acc. = 78.00%
+[fastTextPreTrain] Epoch 40 (1264.72s)	Avg. loss = 0.000001	Dev acc. = 78.10%
+[fastTextPreTrain] Epoch 45 (1388.29s)	Avg. loss = 0.000002	Dev acc. = 76.30%
+[fastTextPreTrain] Epoch 50 (1521.47s)	Avg. loss = 0.000010	Dev acc. = 74.20%
+[fastTextPreTrain] Training done (1521.47s)
+[fastTextPreTrain] Test set unknown token percentage: 0.00%
+[fastTextPreTrain] Accuracy: 74.20%
+================================================================================
+[6] Testing l2_penalty = 1.0, lr = 0.1, loss_function = hinge, n_epochs = 50
+================================================================================
+[fastTextPreTrain] dim=300 lr=0.1 l2=1.0 ngram=2
+[fastTextPreTrain] Building model
+[fastTextPreTrain] Training model
+[fastTextPreTrain] #examples=5000  #epochs=50  batch size=256
+[fastTextPreTrain] Found dev set for training eval
+[fastTextPreTrain] Epoch 1 (36.69s)	Avg. loss = 0.005149	Dev acc. = 49.00%
+[fastTextPreTrain] Epoch 5 (148.31s)	Avg. loss = 0.001258	Dev acc. = 71.70%
+[fastTextPreTrain] Epoch 10 (281.34s)	Avg. loss = 0.001502	Dev acc. = 68.80%
+[fastTextPreTrain] Epoch 15 (414.48s)	Avg. loss = 0.000889	Dev acc. = 71.20%
+[fastTextPreTrain] Epoch 20 (543.54s)	Avg. loss = 0.003020	Dev acc. = 62.20%
+[fastTextPreTrain] Epoch 25 (677.10s)	Avg. loss = 0.000394	Dev acc. = 75.80%
+[fastTextPreTrain] Epoch 30 (802.70s)	Avg. loss = 0.000722	Dev acc. = 53.60%
+[fastTextPreTrain] Epoch 35 (923.22s)	Avg. loss = 0.000456	Dev acc. = 61.70%
+[fastTextPreTrain] Epoch 40 (1011.59s)	Avg. loss = 0.002453	Dev acc. = 52.50%
+[fastTextPreTrain] Epoch 45 (1107.39s)	Avg. loss = 0.000680	Dev acc. = 53.00%
+[fastTextPreTrain] Epoch 50 (1201.29s)	Avg. loss = 0.001010	Dev acc. = 53.10%
+[fastTextPreTrain] Training done (1201.29s)
+[fastTextPreTrain] Test set unknown token percentage: 0.00%
+[fastTextPreTrain] Accuracy: 53.10%
+================================================================================
+[7] Testing l2_penalty = 1.0, lr = 0.001, loss_function = log, n_epochs = 50
+================================================================================
+[fastTextPreTrain] dim=300 lr=0.001 l2=1.0 ngram=2
+[fastTextPreTrain] Building model
+[fastTextPreTrain] Training model
+[fastTextPreTrain] #examples=5000  #epochs=50  batch size=256
+[fastTextPreTrain] Found dev set for training eval
+[fastTextPreTrain] Epoch 1 (21.81s)	Avg. loss = 0.697985	Dev acc. = 68.30%
+[fastTextPreTrain] Epoch 5 (78.49s)	Avg. loss = 0.502382	Dev acc. = 73.40%
+[fastTextPreTrain] Epoch 10 (154.90s)	Avg. loss = 0.219729	Dev acc. = 77.30%
+[fastTextPreTrain] Epoch 15 (230.20s)	Avg. loss = 0.137753	Dev acc. = 77.70%
+[fastTextPreTrain] Epoch 20 (305.75s)	Avg. loss = 0.112554	Dev acc. = 78.60%
+[fastTextPreTrain] Epoch 25 (381.96s)	Avg. loss = 0.098574	Dev acc. = 78.70%
+[fastTextPreTrain] Epoch 30 (459.31s)	Avg. loss = 0.088274	Dev acc. = 78.80%
+[fastTextPreTrain] Epoch 35 (526.52s)	Avg. loss = 0.080098	Dev acc. = 78.90%
+[fastTextPreTrain] Epoch 40 (596.83s)	Avg. loss = 0.073425	Dev acc. = 78.80%
+[fastTextPreTrain] Epoch 45 (657.34s)	Avg. loss = 0.067864	Dev acc. = 78.70%
+[fastTextPreTrain] Epoch 50 (718.97s)	Avg. loss = 0.063149	Dev acc. = 78.60%
+[fastTextPreTrain] Training done (718.97s)
+[fastTextPreTrain] Test set unknown token percentage: 0.00%
+[fastTextPreTrain] Accuracy: 78.60%
+================================================================================
+[8] Testing l2_penalty = 0.01, lr = 0.005, loss_function = hinge, n_epochs = 50
+================================================================================
+[fastTextPreTrain] dim=300 lr=0.005 l2=0.01 ngram=2
+[fastTextPreTrain] Building model
+[fastTextPreTrain] Training model
+[fastTextPreTrain] #examples=5000  #epochs=50  batch size=256
+[fastTextPreTrain] Found dev set for training eval
+[fastTextPreTrain] Epoch 1 (18.04s)	Avg. loss = 0.003894	Dev acc. = 71.80%
+[fastTextPreTrain] Epoch 5 (67.75s)	Avg. loss = 0.000254	Dev acc. = 76.10%
+[fastTextPreTrain] Epoch 10 (128.38s)	Avg. loss = 0.000155	Dev acc. = 77.80%
+[fastTextPreTrain] Epoch 15 (189.74s)	Avg. loss = 0.000085	Dev acc. = 78.30%
+[fastTextPreTrain] Epoch 20 (250.55s)	Avg. loss = 0.000071	Dev acc. = 78.20%
+[fastTextPreTrain] Epoch 25 (311.61s)	Avg. loss = 0.000060	Dev acc. = 78.90%
+[fastTextPreTrain] Epoch 30 (373.37s)	Avg. loss = 0.000053	Dev acc. = 78.50%
+[fastTextPreTrain] Epoch 35 (433.32s)	Avg. loss = 0.000050	Dev acc. = 79.30%
+[fastTextPreTrain] Epoch 40 (491.23s)	Avg. loss = 0.000044	Dev acc. = 78.70%
+[fastTextPreTrain] Epoch 45 (554.46s)	Avg. loss = 0.000040	Dev acc. = 78.60%
+[fastTextPreTrain] Epoch 50 (617.44s)	Avg. loss = 0.000038	Dev acc. = 78.80%
+[fastTextPreTrain] Training done (617.44s)
+[fastTextPreTrain] Test set unknown token percentage: 0.00%
+[fastTextPreTrain] Accuracy: 78.80%
+[fastTextPreTrain] dim=300 lr=0.005 l2=0.01 ngram=2
+[fastTextPreTrain] Building model
+[fastTextPreTrain] Training model
+[fastTextPreTrain] #examples=5000  #epochs=50  batch size=256
+[fastTextPreTrain] Found dev set for training eval
+[fastTextPreTrain] Epoch 1 (17.58s)	Avg. loss = 0.003894	Dev acc. = 71.80%
+[fastTextPreTrain] Epoch 5 (68.87s)	Avg. loss = 0.000254	Dev acc. = 76.10%
+[fastTextPreTrain] Epoch 10 (132.14s)	Avg. loss = 0.000155	Dev acc. = 77.80%
+[fastTextPreTrain] Epoch 15 (194.85s)	Avg. loss = 0.000085	Dev acc. = 78.30%
+[fastTextPreTrain] Epoch 20 (257.05s)	Avg. loss = 0.000071	Dev acc. = 78.20%
+[fastTextPreTrain] Epoch 25 (318.37s)	Avg. loss = 0.000060	Dev acc. = 78.90%
+[fastTextPreTrain] Epoch 30 (380.71s)	Avg. loss = 0.000053	Dev acc. = 78.50%
+[fastTextPreTrain] Epoch 35 (443.35s)	Avg. loss = 0.000050	Dev acc. = 79.30%
+[fastTextPreTrain] Epoch 40 (498.54s)	Avg. loss = 0.000044	Dev acc. = 78.70%
+[fastTextPreTrain] Epoch 45 (562.23s)	Avg. loss = 0.000040	Dev acc. = 78.60%
+[fastTextPreTrain] Epoch 50 (625.17s)	Avg. loss = 0.000038	Dev acc. = 78.80%
+[fastTextPreTrain] Training done (625.17s)
+   l2_penalty     lr loss_function  n_epochs  Accuracy
+7     0.01000  0.005         hinge        50     0.788
+6     1.00000  0.001           log        50     0.786
+0     0.01000  0.100           log        50     0.782
+1     0.10000  0.100           log        50     0.772
+4     0.00001  0.010         hinge        50     0.742
+3     0.00010  0.100         hinge        50     0.734
+2    10.00000  0.001         hinge        50     0.547
+5     1.00000  0.100         hinge        50     0.531
+[fastTextPreTrain] Test set unknown token percentage: 0.00%
+[fastTextPreTrain] Accuracy: 77.23%

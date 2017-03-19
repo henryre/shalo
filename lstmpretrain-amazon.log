@@ -1,0 +1,88 @@
+W tensorflow/core/platform/cpu_feature_guard.cc:45] The TensorFlow library wasn't compiled to use SSE3 instructions, but these are available on your machine and could speed up CPU computations.
+W tensorflow/core/platform/cpu_feature_guard.cc:45] The TensorFlow library wasn't compiled to use SSE4.1 instructions, but these are available on your machine and could speed up CPU computations.
+W tensorflow/core/platform/cpu_feature_guard.cc:45] The TensorFlow library wasn't compiled to use SSE4.2 instructions, but these are available on your machine and could speed up CPU computations.
+W tensorflow/core/platform/cpu_feature_guard.cc:45] The TensorFlow library wasn't compiled to use AVX instructions, but these are available on your machine and could speed up CPU computations.
+W tensorflow/core/platform/cpu_feature_guard.cc:45] The TensorFlow library wasn't compiled to use AVX2 instructions, but these are available on your machine and could speed up CPU computations.
+W tensorflow/core/platform/cpu_feature_guard.cc:45] The TensorFlow library wasn't compiled to use FMA instructions, but these are available on your machine and could speed up CPU computations.
+Initialized RandomSearch of size 8 / 1
+================================================================================
+[1] Testing l2_penalty = 0.1, lr = 0.005, loss_function = log, n_epochs = 50
+================================================================================
+[LSTMPreTrain] dim=300 lr=0.005 l2=0.1 ngram=2
+[LSTMPreTrain] Building model
+/usr/local/lib/python2.7/dist-packages/tensorflow/python/ops/gradients_impl.py:91: UserWarning: Converting sparse IndexedSlices to a dense Tensor of unknown shape. This may consume a large amount of memory.
+  "Converting sparse IndexedSlices to a dense Tensor of unknown shape. "
+[LSTMPreTrain] Training model
+[LSTMPreTrain] #examples=5000  #epochs=50  batch size=256
+[LSTMPreTrain] Found dev set for training eval
+[LSTMPreTrain] Epoch 1 (517.97s)	Avg. loss = 0.722941	Dev acc. = 60.30%
+[LSTMPreTrain] Epoch 5 (2934.01s)	Avg. loss = 0.110182	Dev acc. = 66.50%
+[LSTMPreTrain] Epoch 10 (6501.29s)	Avg. loss = 0.012878	Dev acc. = 67.50%
+[LSTMPreTrain] Epoch 15 (8392.89s)	Avg. loss = 0.013523	Dev acc. = 68.10%
+[LSTMPreTrain] Epoch 20 (10862.60s)	Avg. loss = 0.001605	Dev acc. = 72.00%
+[LSTMPreTrain] Epoch 25 (13460.23s)	Avg. loss = 0.001447	Dev acc. = 72.00%
+[LSTMPreTrain] Epoch 30 (15479.97s)	Avg. loss = 0.001308	Dev acc. = 72.50%
+[LSTMPreTrain] Epoch 35 (16840.72s)	Avg. loss = 0.001176	Dev acc. = 72.60%
+[LSTMPreTrain] Epoch 40 (17924.67s)	Avg. loss = 0.001053	Dev acc. = 73.30%
+[LSTMPreTrain] Epoch 45 (18957.88s)	Avg. loss = 0.000939	Dev acc. = 73.70%
+[LSTMPreTrain] Epoch 50 (19998.87s)	Avg. loss = 0.000836	Dev acc. = 74.00%
+[LSTMPreTrain] Training done (19998.87s)
+[LSTMPreTrain] Test set unknown token percentage: 3.91%
+[LSTMPreTrain] Accuracy: 74.00%
+================================================================================
+[2] Testing l2_penalty = 0.001, lr = 0.01, loss_function = log, n_epochs = 50
+================================================================================
+[LSTMPreTrain] dim=300 lr=0.01 l2=0.001 ngram=2
+[LSTMPreTrain] Building model
+Traceback (most recent call last):
+  File "fit_model.py", line 96, in <module>
+    run(model, config, args.embedding, args.word_freq, args.n_threads)
+  File "fit_model.py", line 72, in run
+    df = S.fit(dev_X, dev_y, b=b, **fixed_parameters)
+  File "/lfs/raiders7/hdd/daniter/nlp-proj/shalo/shalo/model_search.py", line 101, in fit
+    **model_hyperparams
+  File "/lfs/raiders7/hdd/daniter/nlp-proj/shalo/shalo/shalo_base.py", line 157, in train
+    self._build()
+  File "/lfs/raiders7/hdd/daniter/nlp-proj/shalo/shalo/shalo_base.py", line 80, in _build
+    sentence_feats, save_kwargs = self._embed_sentences()
+  File "/lfs/raiders7/hdd/daniter/nlp-proj/shalo/shalo/baseline.py", line 123, in _embed_sentences
+    initial_state=initial_state, time_major=False               
+  File "/usr/local/lib/python2.7/dist-packages/tensorflow/python/ops/rnn.py", line 546, in dynamic_rnn
+    dtype=dtype)
+  File "/usr/local/lib/python2.7/dist-packages/tensorflow/python/ops/rnn.py", line 713, in _dynamic_rnn_loop
+    swap_memory=swap_memory)
+  File "/usr/local/lib/python2.7/dist-packages/tensorflow/python/ops/control_flow_ops.py", line 2605, in while_loop
+    result = context.BuildLoop(cond, body, loop_vars, shape_invariants)
+  File "/usr/local/lib/python2.7/dist-packages/tensorflow/python/ops/control_flow_ops.py", line 2438, in BuildLoop
+    pred, body, original_loop_vars, loop_vars, shape_invariants)
+  File "/usr/local/lib/python2.7/dist-packages/tensorflow/python/ops/control_flow_ops.py", line 2388, in _BuildLoop
+    body_result = body(*packed_vars_for_body)
+  File "/usr/local/lib/python2.7/dist-packages/tensorflow/python/ops/rnn.py", line 696, in _time_step
+    skip_conditionals=True)
+  File "/usr/local/lib/python2.7/dist-packages/tensorflow/python/ops/rnn.py", line 177, in _rnn_step
+    new_output, new_state = call_cell()
+  File "/usr/local/lib/python2.7/dist-packages/tensorflow/python/ops/rnn.py", line 684, in <lambda>
+    call_cell = lambda: cell(input_t, state)
+  File "/usr/local/lib/python2.7/dist-packages/tensorflow/contrib/rnn/python/ops/core_rnn_cell_impl.py", line 179, in __call__
+    concat = _linear([inputs, h], 4 * self._num_units, True, scope=scope)
+  File "/usr/local/lib/python2.7/dist-packages/tensorflow/contrib/rnn/python/ops/core_rnn_cell_impl.py", line 747, in _linear
+    "weights", [total_arg_size, output_size], dtype=dtype)
+  File "/usr/local/lib/python2.7/dist-packages/tensorflow/python/ops/variable_scope.py", line 988, in get_variable
+    custom_getter=custom_getter)
+  File "/usr/local/lib/python2.7/dist-packages/tensorflow/python/ops/variable_scope.py", line 890, in get_variable
+    custom_getter=custom_getter)
+  File "/usr/local/lib/python2.7/dist-packages/tensorflow/python/ops/variable_scope.py", line 348, in get_variable
+    validate_shape=validate_shape)
+  File "/usr/local/lib/python2.7/dist-packages/tensorflow/python/ops/variable_scope.py", line 333, in _true_getter
+    caching_device=caching_device, validate_shape=validate_shape)
+  File "/usr/local/lib/python2.7/dist-packages/tensorflow/python/ops/variable_scope.py", line 639, in _get_single_variable
+    name, "".join(traceback.format_list(tb))))
+ValueError: Variable LSTM/rnn/basic_lstm_cell/weights already exists, disallowed. Did you mean to set reuse=True in VarScope? Originally defined at:
+
+  File "/usr/local/lib/python2.7/dist-packages/tensorflow/contrib/rnn/python/ops/core_rnn_cell_impl.py", line 747, in _linear
+    "weights", [total_arg_size, output_size], dtype=dtype)
+  File "/usr/local/lib/python2.7/dist-packages/tensorflow/contrib/rnn/python/ops/core_rnn_cell_impl.py", line 179, in __call__
+    concat = _linear([inputs, h], 4 * self._num_units, True, scope=scope)
+  File "/lfs/raiders7/hdd/daniter/nlp-proj/shalo/shalo/baseline.py", line 123, in _embed_sentences
+    initial_state=initial_state, time_major=False
+

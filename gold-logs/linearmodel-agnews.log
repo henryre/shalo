@@ -1,0 +1,211 @@
+W tensorflow/core/platform/cpu_feature_guard.cc:45] The TensorFlow library wasn't compiled to use SSE3 instructions, but these are available on your machine and could speed up CPU computations.
+W tensorflow/core/platform/cpu_feature_guard.cc:45] The TensorFlow library wasn't compiled to use SSE4.1 instructions, but these are available on your machine and could speed up CPU computations.
+W tensorflow/core/platform/cpu_feature_guard.cc:45] The TensorFlow library wasn't compiled to use SSE4.2 instructions, but these are available on your machine and could speed up CPU computations.
+W tensorflow/core/platform/cpu_feature_guard.cc:45] The TensorFlow library wasn't compiled to use AVX instructions, but these are available on your machine and could speed up CPU computations.
+W tensorflow/core/platform/cpu_feature_guard.cc:45] The TensorFlow library wasn't compiled to use AVX2 instructions, but these are available on your machine and could speed up CPU computations.
+W tensorflow/core/platform/cpu_feature_guard.cc:45] The TensorFlow library wasn't compiled to use FMA instructions, but these are available on your machine and could speed up CPU computations.
+Initialized RandomSearch of size 8 / 1
+================================================================================
+[1] Testing l2_penalty = 0.01, lr = 0.05, loss_function = hinge, n_epochs = 50
+================================================================================
+[LinearModel] dim=300 lr=0.05 l2=0.01 ngram=2
+[LinearModel] Building model
+[LinearModel] Training model
+[LinearModel] #examples=5000  #epochs=50  batch size=256
+[LinearModel] Found dev set for training eval
+[LinearModel] Epoch 1 (2.83s)	Avg. loss = 0.003486	Dev acc. = 93.50%
+[LinearModel] Epoch 5 (5.72s)	Avg. loss = 0.003316	Dev acc. = 69.60%
+[LinearModel] Epoch 10 (10.39s)	Avg. loss = 0.003317	Dev acc. = 63.80%
+[LinearModel] Epoch 15 (15.70s)	Avg. loss = 0.003314	Dev acc. = 63.80%
+[LinearModel] Epoch 20 (20.64s)	Avg. loss = 0.003314	Dev acc. = 62.70%
+[LinearModel] Epoch 25 (26.58s)	Avg. loss = 0.003316	Dev acc. = 62.40%
+[LinearModel] Epoch 30 (33.45s)	Avg. loss = 0.003317	Dev acc. = 62.40%
+[LinearModel] Epoch 35 (40.10s)	Avg. loss = 0.003316	Dev acc. = 62.40%
+[LinearModel] Epoch 40 (47.01s)	Avg. loss = 0.003315	Dev acc. = 62.40%
+[LinearModel] Epoch 45 (53.27s)	Avg. loss = 0.003318	Dev acc. = 61.50%
+[LinearModel] Epoch 50 (60.09s)	Avg. loss = 0.003316	Dev acc. = 62.40%
+[LinearModel] Training done (60.10s)
+[LinearModel] Test set unknown token percentage: 0.00%
+[LinearModel] Accuracy: 62.40%
+================================================================================
+[2] Testing l2_penalty = 1.0, lr = 0.005, loss_function = hinge, n_epochs = 50
+================================================================================
+[LinearModel] dim=300 lr=0.005 l2=1.0 ngram=2
+[LinearModel] Building model
+[LinearModel] Training model
+[LinearModel] #examples=5000  #epochs=50  batch size=256
+[LinearModel] Found dev set for training eval
+[LinearModel] Epoch 1 (3.96s)	Avg. loss = 0.006611	Dev acc. = 46.40%
+[LinearModel] Epoch 5 (9.64s)	Avg. loss = 0.003969	Dev acc. = 46.40%
+[LinearModel] Epoch 10 (15.92s)	Avg. loss = 0.003957	Dev acc. = 46.40%
+[LinearModel] Epoch 15 (22.33s)	Avg. loss = 0.003945	Dev acc. = 46.40%
+[LinearModel] Epoch 20 (29.60s)	Avg. loss = 0.003933	Dev acc. = 46.40%
+[LinearModel] Epoch 25 (34.80s)	Avg. loss = 0.003928	Dev acc. = 46.40%
+[LinearModel] Epoch 30 (40.93s)	Avg. loss = 0.003928	Dev acc. = 46.40%
+[LinearModel] Epoch 35 (46.25s)	Avg. loss = 0.003928	Dev acc. = 46.40%
+[LinearModel] Epoch 40 (51.98s)	Avg. loss = 0.003928	Dev acc. = 46.40%
+[LinearModel] Epoch 45 (57.41s)	Avg. loss = 0.003928	Dev acc. = 46.40%
+[LinearModel] Epoch 50 (63.63s)	Avg. loss = 0.003928	Dev acc. = 46.40%
+[LinearModel] Training done (63.63s)
+[LinearModel] Test set unknown token percentage: 0.00%
+[LinearModel] Accuracy: 46.40%
+================================================================================
+[3] Testing l2_penalty = 0.0001, lr = 0.05, loss_function = hinge, n_epochs = 50
+================================================================================
+[LinearModel] dim=300 lr=0.05 l2=0.0001 ngram=2
+[LinearModel] Building model
+[LinearModel] Training model
+[LinearModel] #examples=5000  #epochs=50  batch size=256
+[LinearModel] Found dev set for training eval
+[LinearModel] Epoch 1 (5.69s)	Avg. loss = 0.002632	Dev acc. = 95.70%
+[LinearModel] Epoch 5 (12.55s)	Avg. loss = 0.000663	Dev acc. = 97.00%
+[LinearModel] Epoch 10 (20.27s)	Avg. loss = 0.000601	Dev acc. = 97.00%
+[LinearModel] Epoch 15 (30.89s)	Avg. loss = 0.000589	Dev acc. = 97.20%
+[LinearModel] Epoch 20 (39.12s)	Avg. loss = 0.000576	Dev acc. = 97.20%
+[LinearModel] Epoch 25 (45.55s)	Avg. loss = 0.000578	Dev acc. = 97.20%
+[LinearModel] Epoch 30 (52.39s)	Avg. loss = 0.000574	Dev acc. = 97.20%
+[LinearModel] Epoch 35 (59.47s)	Avg. loss = 0.000571	Dev acc. = 97.40%
+[LinearModel] Epoch 40 (66.50s)	Avg. loss = 0.000578	Dev acc. = 97.30%
+[LinearModel] Epoch 45 (72.90s)	Avg. loss = 0.000573	Dev acc. = 97.30%
+[LinearModel] Epoch 50 (81.11s)	Avg. loss = 0.000569	Dev acc. = 97.10%
+[LinearModel] Training done (81.11s)
+[LinearModel] Test set unknown token percentage: 0.00%
+[LinearModel] Accuracy: 97.10%
+================================================================================
+[4] Testing l2_penalty = 0.01, lr = 0.1, loss_function = log, n_epochs = 50
+================================================================================
+[LinearModel] dim=300 lr=0.1 l2=0.01 ngram=2
+[LinearModel] Building model
+[LinearModel] Training model
+[LinearModel] #examples=5000  #epochs=50  batch size=256
+[LinearModel] Found dev set for training eval
+[LinearModel] Epoch 1 (6.04s)	Avg. loss = 0.479313	Dev acc. = 96.70%
+[LinearModel] Epoch 5 (12.10s)	Avg. loss = 0.191351	Dev acc. = 97.20%
+[LinearModel] Epoch 10 (21.41s)	Avg. loss = 0.179982	Dev acc. = 97.10%
+[LinearModel] Epoch 15 (29.64s)	Avg. loss = 0.177754	Dev acc. = 97.10%
+[LinearModel] Epoch 20 (37.24s)	Avg. loss = 0.177151	Dev acc. = 97.20%
+[LinearModel] Epoch 25 (45.74s)	Avg. loss = 0.176959	Dev acc. = 97.10%
+[LinearModel] Epoch 30 (53.53s)	Avg. loss = 0.176895	Dev acc. = 97.10%
+[LinearModel] Epoch 35 (62.15s)	Avg. loss = 0.176874	Dev acc. = 97.00%
+[LinearModel] Epoch 40 (69.34s)	Avg. loss = 0.176871	Dev acc. = 97.00%
+[LinearModel] Epoch 45 (77.40s)	Avg. loss = 0.176872	Dev acc. = 97.00%
+[LinearModel] Epoch 50 (84.96s)	Avg. loss = 0.176875	Dev acc. = 97.00%
+[LinearModel] Training done (84.96s)
+[LinearModel] Test set unknown token percentage: 0.00%
+[LinearModel] Accuracy: 97.00%
+================================================================================
+[5] Testing l2_penalty = 1.0, lr = 0.01, loss_function = log, n_epochs = 50
+================================================================================
+[LinearModel] dim=300 lr=0.01 l2=1.0 ngram=2
+[LinearModel] Building model
+[LinearModel] Training model
+[LinearModel] #examples=5000  #epochs=50  batch size=256
+[LinearModel] Found dev set for training eval
+[LinearModel] Epoch 1 (6.22s)	Avg. loss = 0.673383	Dev acc. = 77.80%
+[LinearModel] Epoch 5 (14.31s)	Avg. loss = 0.609315	Dev acc. = 95.60%
+[LinearModel] Epoch 10 (75.51s)	Avg. loss = 0.607536	Dev acc. = 95.20%
+[LinearModel] Epoch 15 (174.95s)	Avg. loss = 0.607516	Dev acc. = 95.20%
+[LinearModel] Epoch 20 (266.10s)	Avg. loss = 0.607545	Dev acc. = 95.20%
+[LinearModel] Epoch 25 (276.42s)	Avg. loss = 0.607565	Dev acc. = 95.10%
+[LinearModel] Epoch 30 (281.40s)	Avg. loss = 0.607579	Dev acc. = 95.10%
+[LinearModel] Epoch 35 (317.71s)	Avg. loss = 0.607588	Dev acc. = 95.10%
+[LinearModel] Epoch 40 (405.59s)	Avg. loss = 0.607595	Dev acc. = 95.10%
+[LinearModel] Epoch 45 (484.86s)	Avg. loss = 0.607601	Dev acc. = 95.00%
+[LinearModel] Epoch 50 (572.53s)	Avg. loss = 0.607605	Dev acc. = 95.00%
+[LinearModel] Training done (572.53s)
+[LinearModel] Test set unknown token percentage: 0.00%
+[LinearModel] Accuracy: 95.00%
+================================================================================
+[6] Testing l2_penalty = 0.01, lr = 0.001, loss_function = hinge, n_epochs = 50
+================================================================================
+[LinearModel] dim=300 lr=0.001 l2=0.01 ngram=2
+[LinearModel] Building model
+[LinearModel] Training model
+[LinearModel] #examples=5000  #epochs=50  batch size=256
+[LinearModel] Found dev set for training eval
+[LinearModel] Epoch 1 (66.56s)	Avg. loss = 0.004030	Dev acc. = 46.40%
+[LinearModel] Epoch 5 (145.19s)	Avg. loss = 0.003816	Dev acc. = 46.40%
+[LinearModel] Epoch 10 (243.02s)	Avg. loss = 0.003630	Dev acc. = 46.50%
+[LinearModel] Epoch 15 (342.41s)	Avg. loss = 0.003506	Dev acc. = 46.50%
+[LinearModel] Epoch 20 (439.55s)	Avg. loss = 0.003425	Dev acc. = 46.70%
+[LinearModel] Epoch 25 (534.05s)	Avg. loss = 0.003375	Dev acc. = 49.40%
+[LinearModel] Epoch 30 (634.71s)	Avg. loss = 0.003341	Dev acc. = 56.70%
+[LinearModel] Epoch 35 (727.62s)	Avg. loss = 0.003320	Dev acc. = 63.70%
+[LinearModel] Epoch 40 (818.21s)	Avg. loss = 0.003305	Dev acc. = 68.30%
+[LinearModel] Epoch 45 (914.90s)	Avg. loss = 0.003296	Dev acc. = 74.50%
+[LinearModel] Epoch 50 (1008.36s)	Avg. loss = 0.003290	Dev acc. = 77.70%
+[LinearModel] Training done (1008.36s)
+[LinearModel] Test set unknown token percentage: 0.00%
+[LinearModel] Accuracy: 77.70%
+================================================================================
+[7] Testing l2_penalty = 10.0, lr = 0.005, loss_function = hinge, n_epochs = 50
+================================================================================
+[LinearModel] dim=300 lr=0.005 l2=10.0 ngram=2
+[LinearModel] Building model
+[LinearModel] Training model
+[LinearModel] #examples=5000  #epochs=50  batch size=256
+[LinearModel] Found dev set for training eval
+[LinearModel] Epoch 1 (68.24s)	Avg. loss = 0.030172	Dev acc. = 46.40%
+[LinearModel] Epoch 5 (142.33s)	Avg. loss = 0.003984	Dev acc. = 46.40%
+[LinearModel] Epoch 10 (234.15s)	Avg. loss = 0.003962	Dev acc. = 46.40%
+[LinearModel] Epoch 15 (330.04s)	Avg. loss = 0.003950	Dev acc. = 46.40%
+[LinearModel] Epoch 20 (428.01s)	Avg. loss = 0.003938	Dev acc. = 46.40%
+[LinearModel] Epoch 25 (524.84s)	Avg. loss = 0.003934	Dev acc. = 46.40%
+[LinearModel] Epoch 30 (583.74s)	Avg. loss = 0.003935	Dev acc. = 46.40%
+[LinearModel] Epoch 35 (665.54s)	Avg. loss = 0.003934	Dev acc. = 46.40%
+[LinearModel] Epoch 40 (765.42s)	Avg. loss = 0.003933	Dev acc. = 46.40%
+[LinearModel] Epoch 45 (871.51s)	Avg. loss = 0.003934	Dev acc. = 46.40%
+[LinearModel] Epoch 50 (967.01s)	Avg. loss = 0.003934	Dev acc. = 46.40%
+[LinearModel] Training done (967.01s)
+[LinearModel] Test set unknown token percentage: 0.00%
+[LinearModel] Accuracy: 46.40%
+================================================================================
+[8] Testing l2_penalty = 0.001, lr = 0.05, loss_function = hinge, n_epochs = 50
+================================================================================
+[LinearModel] dim=300 lr=0.05 l2=0.001 ngram=2
+[LinearModel] Building model
+[LinearModel] Training model
+[LinearModel] #examples=5000  #epochs=50  batch size=256
+[LinearModel] Found dev set for training eval
+[LinearModel] Epoch 1 (69.20s)	Avg. loss = 0.002761	Dev acc. = 95.70%
+[LinearModel] Epoch 5 (141.54s)	Avg. loss = 0.001478	Dev acc. = 96.60%
+[LinearModel] Epoch 10 (241.87s)	Avg. loss = 0.001471	Dev acc. = 96.60%
+[LinearModel] Epoch 15 (348.05s)	Avg. loss = 0.001467	Dev acc. = 96.70%
+[LinearModel] Epoch 20 (437.06s)	Avg. loss = 0.001464	Dev acc. = 96.70%
+[LinearModel] Epoch 25 (531.64s)	Avg. loss = 0.001469	Dev acc. = 96.50%
+[LinearModel] Epoch 30 (621.54s)	Avg. loss = 0.001469	Dev acc. = 96.60%
+[LinearModel] Epoch 35 (709.87s)	Avg. loss = 0.001465	Dev acc. = 96.70%
+[LinearModel] Epoch 40 (801.67s)	Avg. loss = 0.001468	Dev acc. = 96.60%
+[LinearModel] Epoch 45 (895.70s)	Avg. loss = 0.001465	Dev acc. = 96.70%
+[LinearModel] Epoch 50 (994.48s)	Avg. loss = 0.001468	Dev acc. = 96.60%
+[LinearModel] Training done (994.48s)
+[LinearModel] Test set unknown token percentage: 0.00%
+[LinearModel] Accuracy: 96.60%
+[LinearModel] dim=300 lr=0.05 l2=0.0001 ngram=2
+[LinearModel] Building model
+[LinearModel] Training model
+[LinearModel] #examples=5000  #epochs=50  batch size=256
+[LinearModel] Found dev set for training eval
+[LinearModel] Epoch 1 (67.54s)	Avg. loss = 0.002632	Dev acc. = 95.70%
+[LinearModel] Epoch 5 (152.64s)	Avg. loss = 0.000663	Dev acc. = 97.00%
+[LinearModel] Epoch 10 (253.56s)	Avg. loss = 0.000601	Dev acc. = 97.00%
+[LinearModel] Epoch 15 (345.46s)	Avg. loss = 0.000589	Dev acc. = 97.20%
+[LinearModel] Epoch 20 (436.34s)	Avg. loss = 0.000576	Dev acc. = 97.20%
+[LinearModel] Epoch 25 (531.90s)	Avg. loss = 0.000578	Dev acc. = 97.20%
+[LinearModel] Epoch 30 (621.59s)	Avg. loss = 0.000574	Dev acc. = 97.20%
+[LinearModel] Epoch 35 (711.86s)	Avg. loss = 0.000571	Dev acc. = 97.40%
+[LinearModel] Epoch 40 (806.69s)	Avg. loss = 0.000578	Dev acc. = 97.30%
+[LinearModel] Epoch 45 (898.81s)	Avg. loss = 0.000573	Dev acc. = 97.30%
+[LinearModel] Epoch 50 (988.91s)	Avg. loss = 0.000569	Dev acc. = 97.10%
+[LinearModel] Training done (988.91s)
+   l2_penalty     lr loss_function  n_epochs  Accuracy
+2      0.0001  0.050         hinge        50     0.971
+3      0.0100  0.100           log        50     0.970
+7      0.0010  0.050         hinge        50     0.966
+4      1.0000  0.010           log        50     0.950
+5      0.0100  0.001         hinge        50     0.777
+0      0.0100  0.050         hinge        50     0.624
+1      1.0000  0.005         hinge        50     0.464
+6     10.0000  0.005         hinge        50     0.464
+[LinearModel] Test set unknown token percentage: 0.00%
+[LinearModel] Accuracy: 97.82%

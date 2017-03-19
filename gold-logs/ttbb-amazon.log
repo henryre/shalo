@@ -1,0 +1,211 @@
+W tensorflow/core/platform/cpu_feature_guard.cc:45] The TensorFlow library wasn't compiled to use SSE3 instructions, but these are available on your machine and could speed up CPU computations.
+W tensorflow/core/platform/cpu_feature_guard.cc:45] The TensorFlow library wasn't compiled to use SSE4.1 instructions, but these are available on your machine and could speed up CPU computations.
+W tensorflow/core/platform/cpu_feature_guard.cc:45] The TensorFlow library wasn't compiled to use SSE4.2 instructions, but these are available on your machine and could speed up CPU computations.
+W tensorflow/core/platform/cpu_feature_guard.cc:45] The TensorFlow library wasn't compiled to use AVX instructions, but these are available on your machine and could speed up CPU computations.
+W tensorflow/core/platform/cpu_feature_guard.cc:45] The TensorFlow library wasn't compiled to use AVX2 instructions, but these are available on your machine and could speed up CPU computations.
+W tensorflow/core/platform/cpu_feature_guard.cc:45] The TensorFlow library wasn't compiled to use FMA instructions, but these are available on your machine and could speed up CPU computations.
+Initialized RandomSearch of size 8 / 1
+================================================================================
+[1] Testing l2_penalty = 0.01, lr = 0.005, loss_function = log, n_epochs = 50
+================================================================================
+[TTBB] dim=300 lr=0.005 l2=0.01 ngram=2
+[TTBB] Building model
+[TTBB] Training model
+[TTBB] #examples=5000  #epochs=50  batch size=256
+[TTBB] Found dev set for training eval
+[TTBB] Epoch 1 (3.91s)	Avg. loss = 0.694675	Dev acc. = 50.50%
+[TTBB] Epoch 5 (10.21s)	Avg. loss = 0.685217	Dev acc. = 71.50%
+[TTBB] Epoch 10 (18.98s)	Avg. loss = 0.676567	Dev acc. = 73.30%
+[TTBB] Epoch 15 (29.21s)	Avg. loss = 0.669062	Dev acc. = 73.30%
+[TTBB] Epoch 20 (39.77s)	Avg. loss = 0.662599	Dev acc. = 73.30%
+[TTBB] Epoch 25 (49.85s)	Avg. loss = 0.657043	Dev acc. = 73.70%
+[TTBB] Epoch 30 (60.42s)	Avg. loss = 0.652267	Dev acc. = 74.10%
+[TTBB] Epoch 35 (70.73s)	Avg. loss = 0.648160	Dev acc. = 74.00%
+[TTBB] Epoch 40 (80.94s)	Avg. loss = 0.644626	Dev acc. = 73.80%
+[TTBB] Epoch 45 (91.04s)	Avg. loss = 0.641583	Dev acc. = 73.80%
+[TTBB] Epoch 50 (100.10s)	Avg. loss = 0.638961	Dev acc. = 74.10%
+[TTBB] Training done (100.10s)
+[TTBB] Test set unknown token percentage: 0.00%
+[TTBB] Accuracy: 74.10%
+================================================================================
+[2] Testing l2_penalty = 0.1, lr = 0.01, loss_function = log, n_epochs = 50
+================================================================================
+[TTBB] dim=300 lr=0.01 l2=0.1 ngram=2
+[TTBB] Building model
+[TTBB] Training model
+[TTBB] #examples=5000  #epochs=50  batch size=256
+[TTBB] Found dev set for training eval
+[TTBB] Epoch 1 (3.98s)	Avg. loss = 0.694499	Dev acc. = 49.30%
+[TTBB] Epoch 5 (11.99s)	Avg. loss = 0.684332	Dev acc. = 70.40%
+[TTBB] Epoch 10 (21.54s)	Avg. loss = 0.681303	Dev acc. = 71.10%
+[TTBB] Epoch 15 (33.03s)	Avg. loss = 0.680485	Dev acc. = 71.60%
+[TTBB] Epoch 20 (45.97s)	Avg. loss = 0.680200	Dev acc. = 71.60%
+[TTBB] Epoch 25 (57.48s)	Avg. loss = 0.680081	Dev acc. = 71.70%
+[TTBB] Epoch 30 (67.39s)	Avg. loss = 0.680027	Dev acc. = 71.50%
+[TTBB] Epoch 35 (78.12s)	Avg. loss = 0.679999	Dev acc. = 71.50%
+[TTBB] Epoch 40 (88.80s)	Avg. loss = 0.679985	Dev acc. = 71.40%
+[TTBB] Epoch 45 (99.69s)	Avg. loss = 0.679978	Dev acc. = 71.50%
+[TTBB] Epoch 50 (112.12s)	Avg. loss = 0.679974	Dev acc. = 71.50%
+[TTBB] Training done (112.12s)
+[TTBB] Test set unknown token percentage: 0.00%
+[TTBB] Accuracy: 71.50%
+================================================================================
+[3] Testing l2_penalty = 10.0, lr = 0.1, loss_function = hinge, n_epochs = 50
+================================================================================
+[TTBB] dim=300 lr=0.1 l2=10.0 ngram=2
+[TTBB] Building model
+[TTBB] Training model
+[TTBB] #examples=5000  #epochs=50  batch size=256
+[TTBB] Found dev set for training eval
+[TTBB] Epoch 1 (6.64s)	Avg. loss = 0.015263	Dev acc. = 50.50%
+[TTBB] Epoch 5 (16.59s)	Avg. loss = 0.003938	Dev acc. = 50.50%
+[TTBB] Epoch 10 (29.48s)	Avg. loss = 0.003939	Dev acc. = 50.50%
+[TTBB] Epoch 15 (42.16s)	Avg. loss = 0.003942	Dev acc. = 50.50%
+[TTBB] Epoch 20 (54.27s)	Avg. loss = 0.003938	Dev acc. = 50.50%
+[TTBB] Epoch 25 (64.85s)	Avg. loss = 0.003942	Dev acc. = 50.50%
+[TTBB] Epoch 30 (75.74s)	Avg. loss = 0.003945	Dev acc. = 50.50%
+[TTBB] Epoch 35 (107.61s)	Avg. loss = 0.003938	Dev acc. = 50.50%
+[TTBB] Epoch 40 (218.50s)	Avg. loss = 0.003945	Dev acc. = 50.50%
+[TTBB] Epoch 45 (323.69s)	Avg. loss = 0.003947	Dev acc. = 50.50%
+[TTBB] Epoch 50 (344.99s)	Avg. loss = 0.003947	Dev acc. = 50.50%
+[TTBB] Training done (344.99s)
+[TTBB] Test set unknown token percentage: 0.00%
+[TTBB] Accuracy: 50.50%
+================================================================================
+[4] Testing l2_penalty = 0.001, lr = 0.001, loss_function = log, n_epochs = 50
+================================================================================
+[TTBB] dim=300 lr=0.001 l2=0.001 ngram=2
+[TTBB] Building model
+[TTBB] Training model
+[TTBB] #examples=5000  #epochs=50  batch size=256
+[TTBB] Found dev set for training eval
+[TTBB] Epoch 1 (50.80s)	Avg. loss = 0.697881	Dev acc. = 49.50%
+[TTBB] Epoch 5 (132.54s)	Avg. loss = 0.691480	Dev acc. = 51.80%
+[TTBB] Epoch 10 (235.67s)	Avg. loss = 0.689469	Dev acc. = 57.10%
+[TTBB] Epoch 15 (343.62s)	Avg. loss = 0.687437	Dev acc. = 62.00%
+[TTBB] Epoch 20 (461.76s)	Avg. loss = 0.685412	Dev acc. = 66.20%
+[TTBB] Epoch 25 (574.49s)	Avg. loss = 0.683404	Dev acc. = 68.60%
+[TTBB] Epoch 30 (689.91s)	Avg. loss = 0.681420	Dev acc. = 70.30%
+[TTBB] Epoch 35 (799.54s)	Avg. loss = 0.679463	Dev acc. = 71.40%
+[TTBB] Epoch 40 (906.47s)	Avg. loss = 0.677534	Dev acc. = 72.10%
+[TTBB] Epoch 45 (1012.30s)	Avg. loss = 0.675634	Dev acc. = 72.70%
+[TTBB] Epoch 50 (1118.04s)	Avg. loss = 0.673763	Dev acc. = 73.20%
+[TTBB] Training done (1118.04s)
+[TTBB] Test set unknown token percentage: 0.00%
+[TTBB] Accuracy: 73.20%
+================================================================================
+[5] Testing l2_penalty = 1e-05, lr = 0.005, loss_function = log, n_epochs = 50
+================================================================================
+[TTBB] dim=300 lr=0.005 l2=1e-05 ngram=2
+[TTBB] Building model
+[TTBB] Training model
+[TTBB] #examples=5000  #epochs=50  batch size=256
+[TTBB] Found dev set for training eval
+[TTBB] Epoch 1 (54.96s)	Avg. loss = 0.694614	Dev acc. = 50.50%
+[TTBB] Epoch 5 (146.20s)	Avg. loss = 0.684944	Dev acc. = 71.40%
+[TTBB] Epoch 10 (253.13s)	Avg. loss = 0.675461	Dev acc. = 73.30%
+[TTBB] Epoch 15 (366.86s)	Avg. loss = 0.666584	Dev acc. = 73.40%
+[TTBB] Epoch 20 (471.69s)	Avg. loss = 0.658318	Dev acc. = 73.20%
+[TTBB] Epoch 25 (590.05s)	Avg. loss = 0.650621	Dev acc. = 73.80%
+[TTBB] Epoch 30 (678.86s)	Avg. loss = 0.643442	Dev acc. = 74.00%
+[TTBB] Epoch 35 (776.13s)	Avg. loss = 0.636737	Dev acc. = 73.60%
+[TTBB] Epoch 40 (885.33s)	Avg. loss = 0.630462	Dev acc. = 73.60%
+[TTBB] Epoch 45 (999.01s)	Avg. loss = 0.624581	Dev acc. = 73.30%
+[TTBB] Epoch 50 (1113.07s)	Avg. loss = 0.619061	Dev acc. = 73.40%
+[TTBB] Training done (1113.07s)
+[TTBB] Test set unknown token percentage: 0.00%
+[TTBB] Accuracy: 73.40%
+================================================================================
+[6] Testing l2_penalty = 0.0001, lr = 0.001, loss_function = hinge, n_epochs = 50
+================================================================================
+[TTBB] dim=300 lr=0.001 l2=0.0001 ngram=2
+[TTBB] Building model
+[TTBB] Training model
+[TTBB] #examples=5000  #epochs=50  batch size=256
+[TTBB] Found dev set for training eval
+[TTBB] Epoch 1 (57.17s)	Avg. loss = 0.004014	Dev acc. = 49.50%
+[TTBB] Epoch 5 (137.92s)	Avg. loss = 0.003988	Dev acc. = 55.70%
+[TTBB] Epoch 10 (249.89s)	Avg. loss = 0.003957	Dev acc. = 50.50%
+[TTBB] Epoch 15 (344.55s)	Avg. loss = 0.003927	Dev acc. = 50.50%
+[TTBB] Epoch 20 (445.47s)	Avg. loss = 0.003896	Dev acc. = 50.50%
+[TTBB] Epoch 25 (552.38s)	Avg. loss = 0.003868	Dev acc. = 50.50%
+[TTBB] Epoch 30 (649.48s)	Avg. loss = 0.003844	Dev acc. = 50.50%
+[TTBB] Epoch 35 (742.50s)	Avg. loss = 0.003831	Dev acc. = 50.50%
+[TTBB] Epoch 40 (843.42s)	Avg. loss = 0.003819	Dev acc. = 50.50%
+[TTBB] Epoch 45 (949.09s)	Avg. loss = 0.003806	Dev acc. = 50.50%
+[TTBB] Epoch 50 (1063.57s)	Avg. loss = 0.003794	Dev acc. = 50.50%
+[TTBB] Training done (1063.57s)
+[TTBB] Test set unknown token percentage: 0.00%
+[TTBB] Accuracy: 50.50%
+================================================================================
+[7] Testing l2_penalty = 0.1, lr = 0.005, loss_function = log, n_epochs = 50
+================================================================================
+[TTBB] dim=300 lr=0.005 l2=0.1 ngram=2
+[TTBB] Building model
+[TTBB] Training model
+[TTBB] #examples=5000  #epochs=50  batch size=256
+[TTBB] Found dev set for training eval
+[TTBB] Epoch 1 (57.47s)	Avg. loss = 0.695205	Dev acc. = 50.50%
+[TTBB] Epoch 5 (138.99s)	Avg. loss = 0.687218	Dev acc. = 70.70%
+[TTBB] Epoch 10 (234.55s)	Avg. loss = 0.683267	Dev acc. = 73.60%
+[TTBB] Epoch 15 (335.31s)	Avg. loss = 0.681453	Dev acc. = 72.90%
+[TTBB] Epoch 20 (430.85s)	Avg. loss = 0.680580	Dev acc. = 73.50%
+[TTBB] Epoch 25 (532.37s)	Avg. loss = 0.680132	Dev acc. = 73.50%
+[TTBB] Epoch 30 (632.14s)	Avg. loss = 0.679887	Dev acc. = 73.70%
+[TTBB] Epoch 35 (728.15s)	Avg. loss = 0.679745	Dev acc. = 73.80%
+[TTBB] Epoch 40 (777.82s)	Avg. loss = 0.679659	Dev acc. = 73.70%
+[TTBB] Epoch 45 (785.52s)	Avg. loss = 0.679604	Dev acc. = 73.70%
+[TTBB] Epoch 50 (792.27s)	Avg. loss = 0.679568	Dev acc. = 73.20%
+[TTBB] Training done (792.27s)
+[TTBB] Test set unknown token percentage: 0.00%
+[TTBB] Accuracy: 73.20%
+================================================================================
+[8] Testing l2_penalty = 0.01, lr = 0.001, loss_function = log, n_epochs = 50
+================================================================================
+[TTBB] dim=300 lr=0.001 l2=0.01 ngram=2
+[TTBB] Building model
+[TTBB] Training model
+[TTBB] #examples=5000  #epochs=50  batch size=256
+[TTBB] Found dev set for training eval
+[TTBB] Epoch 1 (5.57s)	Avg. loss = 0.697931	Dev acc. = 49.50%
+[TTBB] Epoch 5 (13.51s)	Avg. loss = 0.691539	Dev acc. = 51.80%
+[TTBB] Epoch 10 (23.70s)	Avg. loss = 0.689557	Dev acc. = 57.10%
+[TTBB] Epoch 15 (30.22s)	Avg. loss = 0.687579	Dev acc. = 61.90%
+[TTBB] Epoch 20 (36.20s)	Avg. loss = 0.685634	Dev acc. = 66.20%
+[TTBB] Epoch 25 (42.48s)	Avg. loss = 0.683730	Dev acc. = 68.50%
+[TTBB] Epoch 30 (49.99s)	Avg. loss = 0.681874	Dev acc. = 70.00%
+[TTBB] Epoch 35 (57.02s)	Avg. loss = 0.680068	Dev acc. = 71.40%
+[TTBB] Epoch 40 (63.35s)	Avg. loss = 0.678311	Dev acc. = 71.90%
+[TTBB] Epoch 45 (70.25s)	Avg. loss = 0.676604	Dev acc. = 72.80%
+[TTBB] Epoch 50 (77.10s)	Avg. loss = 0.674946	Dev acc. = 73.00%
+[TTBB] Training done (77.10s)
+[TTBB] Test set unknown token percentage: 0.00%
+[TTBB] Accuracy: 73.00%
+[TTBB] dim=300 lr=0.005 l2=0.01 ngram=2
+[TTBB] Building model
+[TTBB] Training model
+[TTBB] #examples=5000  #epochs=50  batch size=256
+[TTBB] Found dev set for training eval
+[TTBB] Epoch 1 (4.27s)	Avg. loss = 0.694675	Dev acc. = 50.50%
+[TTBB] Epoch 5 (14.88s)	Avg. loss = 0.685217	Dev acc. = 71.50%
+[TTBB] Epoch 10 (54.20s)	Avg. loss = 0.676567	Dev acc. = 73.30%
+[TTBB] Epoch 15 (67.34s)	Avg. loss = 0.669062	Dev acc. = 73.30%
+[TTBB] Epoch 20 (79.30s)	Avg. loss = 0.662599	Dev acc. = 73.30%
+[TTBB] Epoch 25 (91.64s)	Avg. loss = 0.657043	Dev acc. = 73.70%
+[TTBB] Epoch 30 (102.05s)	Avg. loss = 0.652267	Dev acc. = 74.10%
+[TTBB] Epoch 35 (108.09s)	Avg. loss = 0.648160	Dev acc. = 74.00%
+[TTBB] Epoch 40 (114.15s)	Avg. loss = 0.644626	Dev acc. = 73.80%
+[TTBB] Epoch 45 (121.58s)	Avg. loss = 0.641583	Dev acc. = 73.80%
+[TTBB] Epoch 50 (127.33s)	Avg. loss = 0.638961	Dev acc. = 74.10%
+[TTBB] Training done (127.33s)
+   l2_penalty     lr loss_function  n_epochs  Accuracy
+0     0.01000  0.005           log        50     0.741
+4     0.00001  0.005           log        50     0.734
+3     0.00100  0.001           log        50     0.732
+6     0.10000  0.005           log        50     0.732
+7     0.01000  0.001           log        50     0.730
+1     0.10000  0.010           log        50     0.715
+2    10.00000  0.100         hinge        50     0.505
+5     0.00010  0.001         hinge        50     0.505
+[TTBB] Test set unknown token percentage: 0.00%
+[TTBB] Accuracy: 73.70%

@@ -1,0 +1,211 @@
+W tensorflow/core/platform/cpu_feature_guard.cc:45] The TensorFlow library wasn't compiled to use SSE3 instructions, but these are available on your machine and could speed up CPU computations.
+W tensorflow/core/platform/cpu_feature_guard.cc:45] The TensorFlow library wasn't compiled to use SSE4.1 instructions, but these are available on your machine and could speed up CPU computations.
+W tensorflow/core/platform/cpu_feature_guard.cc:45] The TensorFlow library wasn't compiled to use SSE4.2 instructions, but these are available on your machine and could speed up CPU computations.
+W tensorflow/core/platform/cpu_feature_guard.cc:45] The TensorFlow library wasn't compiled to use AVX instructions, but these are available on your machine and could speed up CPU computations.
+W tensorflow/core/platform/cpu_feature_guard.cc:45] The TensorFlow library wasn't compiled to use AVX2 instructions, but these are available on your machine and could speed up CPU computations.
+W tensorflow/core/platform/cpu_feature_guard.cc:45] The TensorFlow library wasn't compiled to use FMA instructions, but these are available on your machine and could speed up CPU computations.
+Initialized RandomSearch of size 8 / 1
+================================================================================
+[1] Testing l2_penalty = 0.001, lr = 0.001, loss_function = log, n_epochs = 50
+================================================================================
+[SparseLinearModel] dim=300 lr=0.001 l2=0.001 ngram=2
+[SparseLinearModel] Building model
+[SparseLinearModel] Training model
+[SparseLinearModel] #examples=5000  #epochs=50  batch size=256
+[SparseLinearModel] Found dev set for training eval
+[SparseLinearModel] Epoch 1 (5.33s)	Avg. loss = 0.633225	Dev acc. = 93.50%
+[SparseLinearModel] Epoch 5 (24.41s)	Avg. loss = 0.235160	Dev acc. = 96.90%
+[SparseLinearModel] Epoch 10 (48.49s)	Avg. loss = 0.112148	Dev acc. = 97.40%
+[SparseLinearModel] Epoch 15 (72.54s)	Avg. loss = 0.067532	Dev acc. = 97.70%
+[SparseLinearModel] Epoch 20 (98.79s)	Avg. loss = 0.045913	Dev acc. = 98.10%
+[SparseLinearModel] Epoch 25 (125.55s)	Avg. loss = 0.033681	Dev acc. = 98.10%
+[SparseLinearModel] Epoch 30 (151.91s)	Avg. loss = 0.026042	Dev acc. = 98.10%
+[SparseLinearModel] Epoch 35 (178.37s)	Avg. loss = 0.020933	Dev acc. = 98.10%
+[SparseLinearModel] Epoch 40 (204.60s)	Avg. loss = 0.017339	Dev acc. = 98.10%
+[SparseLinearModel] Epoch 45 (231.67s)	Avg. loss = 0.014712	Dev acc. = 98.10%
+[SparseLinearModel] Epoch 50 (258.75s)	Avg. loss = 0.012733	Dev acc. = 98.10%
+[SparseLinearModel] Training done (258.75s)
+[SparseLinearModel] Test set unknown token percentage: 0.00%
+[SparseLinearModel] Accuracy: 98.10%
+================================================================================
+[2] Testing l2_penalty = 0.01, lr = 0.001, loss_function = hinge, n_epochs = 50
+================================================================================
+[SparseLinearModel] dim=300 lr=0.001 l2=0.01 ngram=2
+[SparseLinearModel] Building model
+[SparseLinearModel] Training model
+[SparseLinearModel] #examples=5000  #epochs=50  batch size=256
+[SparseLinearModel] Found dev set for training eval
+[SparseLinearModel] Epoch 1 (6.71s)	Avg. loss = 0.003611	Dev acc. = 93.70%
+[SparseLinearModel] Epoch 5 (28.82s)	Avg. loss = 0.000764	Dev acc. = 97.30%
+[SparseLinearModel] Epoch 10 (56.01s)	Avg. loss = 0.000536	Dev acc. = 97.70%
+[SparseLinearModel] Epoch 15 (83.01s)	Avg. loss = 0.000502	Dev acc. = 97.70%
+[SparseLinearModel] Epoch 20 (110.54s)	Avg. loss = 0.000465	Dev acc. = 97.90%
+[SparseLinearModel] Epoch 25 (137.79s)	Avg. loss = 0.000451	Dev acc. = 97.80%
+[SparseLinearModel] Epoch 30 (165.52s)	Avg. loss = 0.000446	Dev acc. = 97.80%
+[SparseLinearModel] Epoch 35 (192.92s)	Avg. loss = 0.000443	Dev acc. = 97.70%
+[SparseLinearModel] Epoch 40 (220.57s)	Avg. loss = 0.000444	Dev acc. = 97.70%
+[SparseLinearModel] Epoch 45 (248.26s)	Avg. loss = 0.000439	Dev acc. = 97.90%
+[SparseLinearModel] Epoch 50 (275.86s)	Avg. loss = 0.000436	Dev acc. = 97.90%
+[SparseLinearModel] Training done (275.86s)
+[SparseLinearModel] Test set unknown token percentage: 0.00%
+[SparseLinearModel] Accuracy: 97.90%
+================================================================================
+[3] Testing l2_penalty = 1e-05, lr = 0.005, loss_function = hinge, n_epochs = 50
+================================================================================
+[SparseLinearModel] dim=300 lr=0.005 l2=1e-05 ngram=2
+[SparseLinearModel] Building model
+[SparseLinearModel] Training model
+[SparseLinearModel] #examples=5000  #epochs=50  batch size=256
+[SparseLinearModel] Found dev set for training eval
+[SparseLinearModel] Epoch 1 (6.78s)	Avg. loss = 0.001978	Dev acc. = 96.80%
+[SparseLinearModel] Epoch 5 (29.22s)	Avg. loss = 0.000003	Dev acc. = 97.80%
+[SparseLinearModel] Epoch 10 (57.31s)	Avg. loss = 0.000002	Dev acc. = 97.80%
+[SparseLinearModel] Epoch 15 (85.60s)	Avg. loss = 0.000002	Dev acc. = 97.80%
+[SparseLinearModel] Epoch 20 (113.14s)	Avg. loss = 0.000002	Dev acc. = 97.80%
+[SparseLinearModel] Epoch 25 (141.07s)	Avg. loss = 0.000002	Dev acc. = 97.80%
+[SparseLinearModel] Epoch 30 (168.53s)	Avg. loss = 0.000002	Dev acc. = 97.80%
+[SparseLinearModel] Epoch 35 (196.45s)	Avg. loss = 0.000002	Dev acc. = 97.90%
+[SparseLinearModel] Epoch 40 (225.67s)	Avg. loss = 0.000002	Dev acc. = 97.80%
+[SparseLinearModel] Epoch 45 (254.91s)	Avg. loss = 0.000002	Dev acc. = 97.50%
+[SparseLinearModel] Epoch 50 (283.70s)	Avg. loss = 0.000002	Dev acc. = 97.80%
+[SparseLinearModel] Training done (283.70s)
+[SparseLinearModel] Test set unknown token percentage: 0.00%
+[SparseLinearModel] Accuracy: 97.80%
+================================================================================
+[4] Testing l2_penalty = 0.001, lr = 0.05, loss_function = hinge, n_epochs = 50
+================================================================================
+[SparseLinearModel] dim=300 lr=0.05 l2=0.001 ngram=2
+[SparseLinearModel] Building model
+[SparseLinearModel] Training model
+[SparseLinearModel] #examples=5000  #epochs=50  batch size=256
+[SparseLinearModel] Found dev set for training eval
+[SparseLinearModel] Epoch 1 (6.80s)	Avg. loss = 0.002043	Dev acc. = 98.00%
+[SparseLinearModel] Epoch 5 (29.71s)	Avg. loss = 0.001230	Dev acc. = 97.50%
+[SparseLinearModel] Epoch 10 (57.89s)	Avg. loss = 0.001381	Dev acc. = 97.10%
+[SparseLinearModel] Epoch 15 (85.68s)	Avg. loss = 0.001235	Dev acc. = 96.80%
+[SparseLinearModel] Epoch 20 (112.96s)	Avg. loss = 0.001446	Dev acc. = 97.10%
+[SparseLinearModel] Epoch 25 (139.59s)	Avg. loss = 0.001366	Dev acc. = 96.40%
+[SparseLinearModel] Epoch 30 (166.09s)	Avg. loss = 0.001342	Dev acc. = 97.10%
+[SparseLinearModel] Epoch 35 (193.07s)	Avg. loss = 0.001414	Dev acc. = 97.30%
+[SparseLinearModel] Epoch 40 (218.96s)	Avg. loss = 0.001319	Dev acc. = 97.20%
+[SparseLinearModel] Epoch 45 (244.99s)	Avg. loss = 0.001379	Dev acc. = 96.90%
+[SparseLinearModel] Epoch 50 (271.73s)	Avg. loss = 0.001407	Dev acc. = 96.20%
+[SparseLinearModel] Training done (271.73s)
+[SparseLinearModel] Test set unknown token percentage: 0.00%
+[SparseLinearModel] Accuracy: 96.20%
+================================================================================
+[5] Testing l2_penalty = 0.0001, lr = 0.01, loss_function = hinge, n_epochs = 50
+================================================================================
+[SparseLinearModel] dim=300 lr=0.01 l2=0.0001 ngram=2
+[SparseLinearModel] Building model
+[SparseLinearModel] Training model
+[SparseLinearModel] #examples=5000  #epochs=50  batch size=256
+[SparseLinearModel] Found dev set for training eval
+[SparseLinearModel] Epoch 1 (6.58s)	Avg. loss = 0.001342	Dev acc. = 97.50%
+[SparseLinearModel] Epoch 5 (27.47s)	Avg. loss = 0.000051	Dev acc. = 97.90%
+[SparseLinearModel] Epoch 10 (53.67s)	Avg. loss = 0.000034	Dev acc. = 98.30%
+[SparseLinearModel] Epoch 15 (79.10s)	Avg. loss = 0.000028	Dev acc. = 98.00%
+[SparseLinearModel] Epoch 20 (105.78s)	Avg. loss = 0.000052	Dev acc. = 98.20%
+[SparseLinearModel] Epoch 25 (131.85s)	Avg. loss = 0.000056	Dev acc. = 97.70%
+[SparseLinearModel] Epoch 30 (157.69s)	Avg. loss = 0.000051	Dev acc. = 97.80%
+[SparseLinearModel] Epoch 35 (184.08s)	Avg. loss = 0.000055	Dev acc. = 98.20%
+[SparseLinearModel] Epoch 40 (209.88s)	Avg. loss = 0.000051	Dev acc. = 97.80%
+[SparseLinearModel] Epoch 45 (235.35s)	Avg. loss = 0.000060	Dev acc. = 98.10%
+[SparseLinearModel] Epoch 50 (261.03s)	Avg. loss = 0.000066	Dev acc. = 97.60%
+[SparseLinearModel] Training done (261.03s)
+[SparseLinearModel] Test set unknown token percentage: 0.00%
+[SparseLinearModel] Accuracy: 97.60%
+================================================================================
+[6] Testing l2_penalty = 0.001, lr = 0.005, loss_function = hinge, n_epochs = 50
+================================================================================
+[SparseLinearModel] dim=300 lr=0.005 l2=0.001 ngram=2
+[SparseLinearModel] Building model
+[SparseLinearModel] Training model
+[SparseLinearModel] #examples=5000  #epochs=50  batch size=256
+[SparseLinearModel] Found dev set for training eval
+[SparseLinearModel] Epoch 1 (5.93s)	Avg. loss = 0.002025	Dev acc. = 97.10%
+[SparseLinearModel] Epoch 5 (26.61s)	Avg. loss = 0.000131	Dev acc. = 97.60%
+[SparseLinearModel] Epoch 10 (52.50s)	Avg. loss = 0.000128	Dev acc. = 98.00%
+[SparseLinearModel] Epoch 15 (77.58s)	Avg. loss = 0.000144	Dev acc. = 98.10%
+[SparseLinearModel] Epoch 20 (103.37s)	Avg. loss = 0.000130	Dev acc. = 97.90%
+[SparseLinearModel] Epoch 25 (129.30s)	Avg. loss = 0.000151	Dev acc. = 98.10%
+[SparseLinearModel] Epoch 30 (154.85s)	Avg. loss = 0.000149	Dev acc. = 97.50%
+[SparseLinearModel] Epoch 35 (180.45s)	Avg. loss = 0.000135	Dev acc. = 97.80%
+[SparseLinearModel] Epoch 40 (206.69s)	Avg. loss = 0.000153	Dev acc. = 97.80%
+[SparseLinearModel] Epoch 45 (231.89s)	Avg. loss = 0.000141	Dev acc. = 97.70%
+[SparseLinearModel] Epoch 50 (257.11s)	Avg. loss = 0.000148	Dev acc. = 97.40%
+[SparseLinearModel] Training done (257.11s)
+[SparseLinearModel] Test set unknown token percentage: 0.00%
+[SparseLinearModel] Accuracy: 97.40%
+================================================================================
+[7] Testing l2_penalty = 0.0001, lr = 0.005, loss_function = hinge, n_epochs = 50
+================================================================================
+[SparseLinearModel] dim=300 lr=0.005 l2=0.0001 ngram=2
+[SparseLinearModel] Building model
+[SparseLinearModel] Training model
+[SparseLinearModel] #examples=5000  #epochs=50  batch size=256
+[SparseLinearModel] Found dev set for training eval
+[SparseLinearModel] Epoch 1 (6.14s)	Avg. loss = 0.001984	Dev acc. = 97.10%
+[SparseLinearModel] Epoch 5 (27.55s)	Avg. loss = 0.000023	Dev acc. = 97.80%
+[SparseLinearModel] Epoch 10 (53.42s)	Avg. loss = 0.000019	Dev acc. = 97.90%
+[SparseLinearModel] Epoch 15 (79.35s)	Avg. loss = 0.000017	Dev acc. = 97.90%
+[SparseLinearModel] Epoch 20 (105.35s)	Avg. loss = 0.000019	Dev acc. = 97.80%
+[SparseLinearModel] Epoch 25 (130.66s)	Avg. loss = 0.000023	Dev acc. = 98.00%
+[SparseLinearModel] Epoch 30 (154.25s)	Avg. loss = 0.000026	Dev acc. = 98.10%
+[SparseLinearModel] Epoch 35 (178.61s)	Avg. loss = 0.000028	Dev acc. = 98.20%
+[SparseLinearModel] Epoch 40 (202.85s)	Avg. loss = 0.000027	Dev acc. = 98.30%
+[SparseLinearModel] Epoch 45 (227.37s)	Avg. loss = 0.000026	Dev acc. = 98.20%
+[SparseLinearModel] Epoch 50 (252.40s)	Avg. loss = 0.000025	Dev acc. = 98.40%
+[SparseLinearModel] Training done (252.40s)
+[SparseLinearModel] Test set unknown token percentage: 0.00%
+[SparseLinearModel] Accuracy: 98.40%
+================================================================================
+[8] Testing l2_penalty = 0.01, lr = 0.001, loss_function = log, n_epochs = 50
+================================================================================
+[SparseLinearModel] dim=300 lr=0.001 l2=0.01 ngram=2
+[SparseLinearModel] Building model
+[SparseLinearModel] Training model
+[SparseLinearModel] #examples=5000  #epochs=50  batch size=256
+[SparseLinearModel] Found dev set for training eval
+[SparseLinearModel] Epoch 1 (5.64s)	Avg. loss = 0.633352	Dev acc. = 93.60%
+[SparseLinearModel] Epoch 5 (25.59s)	Avg. loss = 0.236366	Dev acc. = 96.90%
+[SparseLinearModel] Epoch 10 (49.66s)	Avg. loss = 0.115256	Dev acc. = 97.40%
+[SparseLinearModel] Epoch 15 (73.84s)	Avg. loss = 0.072321	Dev acc. = 97.60%
+[SparseLinearModel] Epoch 20 (97.88s)	Avg. loss = 0.052135	Dev acc. = 98.00%
+[SparseLinearModel] Epoch 25 (121.90s)	Avg. loss = 0.041121	Dev acc. = 98.10%
+[SparseLinearModel] Epoch 30 (146.43s)	Avg. loss = 0.034518	Dev acc. = 98.10%
+[SparseLinearModel] Epoch 35 (170.81s)	Avg. loss = 0.030287	Dev acc. = 98.10%
+[SparseLinearModel] Epoch 40 (194.87s)	Avg. loss = 0.027435	Dev acc. = 98.10%
+[SparseLinearModel] Epoch 45 (218.65s)	Avg. loss = 0.025430	Dev acc. = 98.10%
+[SparseLinearModel] Epoch 50 (242.85s)	Avg. loss = 0.023965	Dev acc. = 98.10%
+[SparseLinearModel] Training done (242.85s)
+[SparseLinearModel] Test set unknown token percentage: 0.00%
+[SparseLinearModel] Accuracy: 98.10%
+[SparseLinearModel] dim=300 lr=0.005 l2=0.0001 ngram=2
+[SparseLinearModel] Building model
+[SparseLinearModel] Training model
+[SparseLinearModel] #examples=5000  #epochs=50  batch size=256
+[SparseLinearModel] Found dev set for training eval
+[SparseLinearModel] Epoch 1 (5.46s)	Avg. loss = 0.001984	Dev acc. = 97.10%
+[SparseLinearModel] Epoch 5 (24.43s)	Avg. loss = 0.000023	Dev acc. = 97.80%
+[SparseLinearModel] Epoch 10 (47.28s)	Avg. loss = 0.000019	Dev acc. = 97.90%
+[SparseLinearModel] Epoch 15 (70.59s)	Avg. loss = 0.000017	Dev acc. = 97.90%
+[SparseLinearModel] Epoch 20 (93.31s)	Avg. loss = 0.000019	Dev acc. = 97.80%
+[SparseLinearModel] Epoch 25 (116.56s)	Avg. loss = 0.000023	Dev acc. = 98.00%
+[SparseLinearModel] Epoch 30 (142.32s)	Avg. loss = 0.000026	Dev acc. = 98.10%
+[SparseLinearModel] Epoch 35 (181.59s)	Avg. loss = 0.000028	Dev acc. = 98.20%
+[SparseLinearModel] Epoch 40 (221.24s)	Avg. loss = 0.000027	Dev acc. = 98.30%
+[SparseLinearModel] Epoch 45 (257.67s)	Avg. loss = 0.000026	Dev acc. = 98.20%
+[SparseLinearModel] Epoch 50 (290.13s)	Avg. loss = 0.000025	Dev acc. = 98.40%
+[SparseLinearModel] Training done (290.13s)
+   l2_penalty     lr loss_function  n_epochs  Accuracy
+6     0.00010  0.005         hinge        50     0.984
+0     0.00100  0.001           log        50     0.981
+7     0.01000  0.001           log        50     0.981
+1     0.01000  0.001         hinge        50     0.979
+2     0.00001  0.005         hinge        50     0.978
+4     0.00010  0.010         hinge        50     0.976
+5     0.00100  0.005         hinge        50     0.974
+3     0.00100  0.050         hinge        50     0.962
+[SparseLinearModel] Test set unknown token percentage: 0.00%
+[SparseLinearModel] Accuracy: 97.47%

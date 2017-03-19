@@ -1,0 +1,23 @@
+{
+	"train_data":   "data/amazon_data/train.data",
+	"train_labels": "data/amazon_data/train.labels",
+	"dev_data":     "data/amazon_data/train.data",
+	"dev_labels":   "data/amazon_data/train.labels",
+	"test_data":    "data/amazon_data/test.data",
+	"test_labels":  "data/amazon_data/test.labels",
+	"n": 8,
+	"b": 0.5,
+	"fixed_parameters": {
+		"batch_size": 256,
+		"max_sentence_length": 120,
+		"ngrams": 2,
+		"seed": 1701,
+		"dim": 300
+	},
+	"search_parameters": {
+	  "loss_function": ["log"],
+		"n_epochs":   [50],
+		"lr":         [ 0.005, 0.01 ],
+		"l2_penalty": [ 0.001,  0.1 ] 
+	}
+}
