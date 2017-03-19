@@ -58,7 +58,7 @@ class TTBB(SHALOModelFixed):
                 min_freq = min(self.word_freq.get(w, 0.0) for w in split_grams)
                 self.marginals[idx] = min_freq
         # Get initial smoother value
-        self.a = self.train_kwargs.get('a', 0.01)
+        self.a = self.train_kwargs.get('a', -3.0)
         return tokens
 
     def _compute_train_common_component(self, init=False):
@@ -71,7 +71,7 @@ class TTBB(SHALOModelFixed):
         })
         return self.ccx
 
-    def _get_a(self):
+    def _get_a_exp(self):
         return tf.constant(self.a, dtype=tf.float32)
 
     def _get_common_component(self):
@@ -85,7 +85,7 @@ class TTBB(SHALOModelFixed):
         word_feats      = tf.nn.embedding_lookup(word_embeddings, self.input)
         # Get marginal estimates and scaling term
         batch_size = tf.shape(word_feats)[0]
-        a = self._get_a()
+        a = tf.pow(10.0, self._get_a_exp())
         p = tf.constant(self.marginals, dtype=tf.float32, name='marginals')
         q = tf.reshape(
             a / (a + tf.nn.embedding_lookup(p, self.input)),
@@ -121,12 +121,12 @@ class TTBBTune(SHALOModelPreTrain, TTBB):
 
     def _epoch_post_process(self, t, debug=False):
         # Explore common component in debug mode
-        if debug and ((t+1) % 5 == 0):
+        if debug:
             U, a, ccx = self.session.run([self.U, self.a_var, self.ccx_var])
             print a
             top_similarity(U, self.word_dict.reverse(), 15, ccx)
 
-    def _get_a(self):
+    def _get_a_exp(self):
         self.a_var = tf.Variable(self.a, dtype=tf.float32)
         return self.a_var
 
