@@ -6,206 +6,206 @@ W tensorflow/core/platform/cpu_feature_guard.cc:45] The TensorFlow library wasn'
 W tensorflow/core/platform/cpu_feature_guard.cc:45] The TensorFlow library wasn't compiled to use FMA instructions, but these are available on your machine and could speed up CPU computations.
 Initialized RandomSearch of size 8 / 1
 ================================================================================
-[1] Testing l2_penalty = 1.0, lr = 0.1, loss_function = log, n_epochs = 50
+[1] Testing l2_penalty = 0.01, lr = 0.01, loss_function = hinge, n_epochs = 50
 ================================================================================
-[TTBBTune] dim=300 lr=0.1 l2=1.0 ngram=2
+[TTBBTune] dim=300 lr=0.01 l2=0.01 ngram=2
 [TTBBTune] Building model
 [TTBBTune] Training model
 [TTBBTune] #examples=5000  #epochs=50  batch size=256
 [TTBBTune] Found dev set for training eval
-[TTBBTune] Epoch 1 (34.37s)	Avg. loss = 0.714940	Dev acc. = 73.40%
-[TTBBTune] Epoch 5 (151.61s)	Avg. loss = 201.548912	Dev acc. = 26.10%
-[TTBBTune] Epoch 10 (297.51s)	Avg. loss = 1048.231877	Dev acc. = 73.60%
-[TTBBTune] Epoch 15 (440.96s)	Avg. loss = 0.114149	Dev acc. = 76.90%
-[TTBBTune] Epoch 20 (585.04s)	Avg. loss = 0.108925	Dev acc. = 77.10%
-[TTBBTune] Epoch 25 (724.78s)	Avg. loss = 0.108007	Dev acc. = 77.10%
-[TTBBTune] Epoch 30 (861.78s)	Avg. loss = 0.106972	Dev acc. = 77.10%
-[TTBBTune] Epoch 35 (994.14s)	Avg. loss = 0.105828	Dev acc. = 77.10%
-[TTBBTune] Epoch 40 (1136.32s)	Avg. loss = 0.104579	Dev acc. = 77.10%
-[TTBBTune] Epoch 45 (1273.05s)	Avg. loss = 0.103229	Dev acc. = 77.10%
-[TTBBTune] Epoch 50 (1411.60s)	Avg. loss = 0.101783	Dev acc. = 77.10%
-[TTBBTune] Training done (1411.60s)
+[TTBBTune] Epoch 1 (146.98s)	Avg. loss = 0.003724	Dev acc. = 75.00%
+[TTBBTune] Epoch 5 (543.01s)	Avg. loss = 0.000157	Dev acc. = 77.30%
+[TTBBTune] Epoch 10 (1033.77s)	Avg. loss = 0.000099	Dev acc. = 77.60%
+[TTBBTune] Epoch 15 (1528.07s)	Avg. loss = 0.000013	Dev acc. = 75.20%
+[TTBBTune] Epoch 20 (2029.94s)	Avg. loss = 0.000001	Dev acc. = 77.00%
+[TTBBTune] Epoch 25 (2539.35s)	Avg. loss = 0.000002	Dev acc. = 76.50%
+[TTBBTune] Epoch 30 (3035.13s)	Avg. loss = 0.000008	Dev acc. = 76.30%
+[TTBBTune] Epoch 35 (3491.85s)	Avg. loss = 0.000002	Dev acc. = 76.10%
+[TTBBTune] Epoch 40 (3759.62s)	Avg. loss = 0.000001	Dev acc. = 77.50%
+[TTBBTune] Epoch 45 (4113.17s)	Avg. loss = 0.000002	Dev acc. = 76.90%
+[TTBBTune] Epoch 50 (4481.30s)	Avg. loss = 0.000002	Dev acc. = 77.00%
+[TTBBTune] Training done (4481.30s)
 [TTBBTune] Test set unknown token percentage: 0.00%
-[TTBBTune] Accuracy: 77.10%
+[TTBBTune] Accuracy: 77.00%
 ================================================================================
-[2] Testing l2_penalty = 1e-05, lr = 0.001, loss_function = hinge, n_epochs = 50
+[2] Testing l2_penalty = 1e-05, lr = 0.01, loss_function = log, n_epochs = 50
 ================================================================================
-[TTBBTune] dim=300 lr=0.001 l2=1e-05 ngram=2
+[TTBBTune] dim=300 lr=0.01 l2=1e-05 ngram=2
 [TTBBTune] Building model
 [TTBBTune] Training model
 [TTBBTune] #examples=5000  #epochs=50  batch size=256
 [TTBBTune] Found dev set for training eval
-[TTBBTune] Epoch 1 (36.24s)	Avg. loss = 0.003981	Dev acc. = 50.70%
-[TTBBTune] Epoch 5 (145.70s)	Avg. loss = 0.001782	Dev acc. = 73.80%
-[TTBBTune] Epoch 10 (287.91s)	Avg. loss = 0.000040	Dev acc. = 78.40%
-[TTBBTune] Epoch 15 (426.57s)	Avg. loss = 0.000000	Dev acc. = 78.10%
-[TTBBTune] Epoch 20 (569.52s)	Avg. loss = 0.000000	Dev acc. = 78.00%
-[TTBBTune] Epoch 25 (708.17s)	Avg. loss = 0.000000	Dev acc. = 78.00%
-[TTBBTune] Epoch 30 (841.36s)	Avg. loss = 0.000000	Dev acc. = 78.00%
-[TTBBTune] Epoch 35 (976.83s)	Avg. loss = 0.000000	Dev acc. = 78.00%
-[TTBBTune] Epoch 40 (1115.83s)	Avg. loss = 0.000000	Dev acc. = 78.00%
-[TTBBTune] Epoch 45 (1247.49s)	Avg. loss = 0.000000	Dev acc. = 78.00%
-[TTBBTune] Epoch 50 (1387.66s)	Avg. loss = 0.000000	Dev acc. = 78.00%
-[TTBBTune] Training done (1387.66s)
+[TTBBTune] Epoch 1 (94.42s)	Avg. loss = 0.644284	Dev acc. = 76.00%
+[TTBBTune] Epoch 5 (394.41s)	Avg. loss = 0.003268	Dev acc. = 78.20%
+[TTBBTune] Epoch 10 (778.88s)	Avg. loss = 0.000526	Dev acc. = 79.10%
+[TTBBTune] Epoch 15 (1144.75s)	Avg. loss = 0.000317	Dev acc. = 79.00%
+[TTBBTune] Epoch 20 (1510.72s)	Avg. loss = 0.000212	Dev acc. = 78.90%
+[TTBBTune] Epoch 25 (1868.54s)	Avg. loss = 0.000153	Dev acc. = 79.10%
+[TTBBTune] Epoch 30 (2286.80s)	Avg. loss = 0.000115	Dev acc. = 79.30%
+[TTBBTune] Epoch 35 (2624.93s)	Avg. loss = 0.000090	Dev acc. = 79.20%
+[TTBBTune] Epoch 40 (2868.32s)	Avg. loss = 0.000073	Dev acc. = 79.00%
+[TTBBTune] Epoch 45 (3136.58s)	Avg. loss = 0.000060	Dev acc. = 79.00%
+[TTBBTune] Epoch 50 (3424.47s)	Avg. loss = 0.000051	Dev acc. = 79.10%
+[TTBBTune] Training done (3424.47s)
 [TTBBTune] Test set unknown token percentage: 0.00%
-[TTBBTune] Accuracy: 78.00%
+[TTBBTune] Accuracy: 79.10%
 ================================================================================
-[3] Testing l2_penalty = 0.001, lr = 0.01, loss_function = log, n_epochs = 50
+[3] Testing l2_penalty = 0.001, lr = 0.001, loss_function = log, n_epochs = 50
 ================================================================================
-[TTBBTune] dim=300 lr=0.01 l2=0.001 ngram=2
+[TTBBTune] dim=300 lr=0.001 l2=0.001 ngram=2
 [TTBBTune] Building model
 [TTBBTune] Training model
 [TTBBTune] #examples=5000  #epochs=50  batch size=256
 [TTBBTune] Found dev set for training eval
-[TTBBTune] Epoch 1 (36.14s)	Avg. loss = 0.641231	Dev acc. = 75.10%
-[TTBBTune] Epoch 5 (146.60s)	Avg. loss = 0.001837	Dev acc. = 78.80%
-[TTBBTune] Epoch 10 (281.76s)	Avg. loss = 0.000852	Dev acc. = 78.60%
-[TTBBTune] Epoch 15 (416.21s)	Avg. loss = 0.000586	Dev acc. = 78.60%
-[TTBBTune] Epoch 20 (555.27s)	Avg. loss = 0.000473	Dev acc. = 78.40%
-[TTBBTune] Epoch 25 (698.72s)	Avg. loss = 0.000415	Dev acc. = 78.30%
-[TTBBTune] Epoch 30 (845.18s)	Avg. loss = 0.000382	Dev acc. = 78.50%
-[TTBBTune] Epoch 35 (984.31s)	Avg. loss = 0.000362	Dev acc. = 78.50%
-[TTBBTune] Epoch 40 (1138.53s)	Avg. loss = 0.000348	Dev acc. = 78.60%
-[TTBBTune] Epoch 45 (1312.07s)	Avg. loss = 0.000337	Dev acc. = 78.60%
-[TTBBTune] Epoch 50 (1478.76s)	Avg. loss = 0.000329	Dev acc. = 78.70%
-[TTBBTune] Training done (1478.76s)
+[TTBBTune] Epoch 1 (122.41s)	Avg. loss = 0.692245	Dev acc. = 51.30%
+[TTBBTune] Epoch 5 (516.80s)	Avg. loss = 0.478640	Dev acc. = 74.00%
+[TTBBTune] Epoch 10 (1026.62s)	Avg. loss = 0.016229	Dev acc. = 79.70%
+[TTBBTune] Epoch 15 (1544.76s)	Avg. loss = 0.001203	Dev acc. = 79.80%
+[TTBBTune] Epoch 20 (2087.23s)	Avg. loss = 0.000530	Dev acc. = 79.30%
+[TTBBTune] Epoch 25 (2642.31s)	Avg. loss = 0.000318	Dev acc. = 79.20%
+[TTBBTune] Epoch 30 (3184.94s)	Avg. loss = 0.000222	Dev acc. = 79.30%
+[TTBBTune] Epoch 35 (3737.57s)	Avg. loss = 0.000170	Dev acc. = 79.20%
+[TTBBTune] Epoch 40 (4209.15s)	Avg. loss = 0.000139	Dev acc. = 79.10%
+[TTBBTune] Epoch 45 (4483.00s)	Avg. loss = 0.000118	Dev acc. = 79.00%
+[TTBBTune] Epoch 50 (4816.07s)	Avg. loss = 0.000104	Dev acc. = 78.90%
+[TTBBTune] Training done (4816.07s)
 [TTBBTune] Test set unknown token percentage: 0.00%
-[TTBBTune] Accuracy: 78.70%
+[TTBBTune] Accuracy: 78.90%
 ================================================================================
-[4] Testing l2_penalty = 0.001, lr = 0.1, loss_function = log, n_epochs = 50
+[4] Testing l2_penalty = 1e-05, lr = 0.01, loss_function = log, n_epochs = 50
+================================================================================
+[TTBBTune] dim=300 lr=0.01 l2=1e-05 ngram=2
+[TTBBTune] Building model
+[TTBBTune] Training model
+[TTBBTune] #examples=5000  #epochs=50  batch size=256
+[TTBBTune] Found dev set for training eval
+[TTBBTune] Epoch 1 (81.63s)	Avg. loss = 0.644284	Dev acc. = 76.00%
+[TTBBTune] Epoch 5 (354.78s)	Avg. loss = 0.003268	Dev acc. = 78.20%
+[TTBBTune] Epoch 10 (710.65s)	Avg. loss = 0.000526	Dev acc. = 79.10%
+[TTBBTune] Epoch 15 (1053.50s)	Avg. loss = 0.000317	Dev acc. = 79.00%
+[TTBBTune] Epoch 20 (1403.96s)	Avg. loss = 0.000212	Dev acc. = 78.90%
+[TTBBTune] Epoch 25 (1774.04s)	Avg. loss = 0.000153	Dev acc. = 79.10%
+[TTBBTune] Epoch 30 (1886.83s)	Avg. loss = 0.000115	Dev acc. = 79.30%
+[TTBBTune] Epoch 35 (2005.80s)	Avg. loss = 0.000090	Dev acc. = 79.20%
+[TTBBTune] Epoch 40 (2130.37s)	Avg. loss = 0.000073	Dev acc. = 79.00%
+[TTBBTune] Epoch 45 (2258.18s)	Avg. loss = 0.000060	Dev acc. = 79.00%
+[TTBBTune] Epoch 50 (2392.59s)	Avg. loss = 0.000051	Dev acc. = 79.10%
+[TTBBTune] Training done (2392.59s)
+[TTBBTune] Test set unknown token percentage: 0.00%
+[TTBBTune] Accuracy: 79.10%
+================================================================================
+[5] Testing l2_penalty = 0.01, lr = 0.05, loss_function = hinge, n_epochs = 50
+================================================================================
+[TTBBTune] dim=300 lr=0.05 l2=0.01 ngram=2
+[TTBBTune] Building model
+[TTBBTune] Training model
+[TTBBTune] #examples=5000  #epochs=50  batch size=256
+[TTBBTune] Found dev set for training eval
+[TTBBTune] Epoch 1 (34.96s)	Avg. loss = 0.002932	Dev acc. = 75.80%
+[TTBBTune] Epoch 5 (152.53s)	Avg. loss = 0.000027	Dev acc. = 77.20%
+[TTBBTune] Epoch 10 (304.32s)	Avg. loss = 0.000003	Dev acc. = 77.80%
+[TTBBTune] Epoch 15 (454.95s)	Avg. loss = 0.000002	Dev acc. = 76.80%
+[TTBBTune] Epoch 20 (642.71s)	Avg. loss = 0.000001	Dev acc. = 76.90%
+[TTBBTune] Epoch 25 (779.02s)	Avg. loss = 0.000001	Dev acc. = 76.30%
+[TTBBTune] Epoch 30 (945.36s)	Avg. loss = 0.000004	Dev acc. = 76.70%
+[TTBBTune] Epoch 35 (1119.47s)	Avg. loss = 0.000002	Dev acc. = 76.10%
+[TTBBTune] Epoch 40 (1350.36s)	Avg. loss = 0.000005	Dev acc. = 75.80%
+[TTBBTune] Epoch 45 (1628.26s)	Avg. loss = 0.000002	Dev acc. = 75.90%
+[TTBBTune] Epoch 50 (1891.22s)	Avg. loss = 0.000006	Dev acc. = 76.20%
+[TTBBTune] Training done (1891.22s)
+[TTBBTune] Test set unknown token percentage: 0.00%
+[TTBBTune] Accuracy: 76.20%
+================================================================================
+[6] Testing l2_penalty = 0.001, lr = 0.1, loss_function = hinge, n_epochs = 50
 ================================================================================
 [TTBBTune] dim=300 lr=0.1 l2=0.001 ngram=2
 [TTBBTune] Building model
 [TTBBTune] Training model
 [TTBBTune] #examples=5000  #epochs=50  batch size=256
 [TTBBTune] Found dev set for training eval
-[TTBBTune] Epoch 1 (42.07s)	Avg. loss = 0.789930	Dev acc. = 68.80%
-[TTBBTune] Epoch 5 (177.63s)	Avg. loss = 29.383851	Dev acc. = 61.20%
-[TTBBTune] Epoch 10 (342.86s)	Avg. loss = 0.020639	Dev acc. = 75.30%
-[TTBBTune] Epoch 15 (507.05s)	Avg. loss = 0.000102	Dev acc. = 75.80%
-[TTBBTune] Epoch 20 (668.49s)	Avg. loss = 0.000102	Dev acc. = 75.80%
-[TTBBTune] Epoch 25 (839.33s)	Avg. loss = 0.000102	Dev acc. = 75.80%
-[TTBBTune] Epoch 30 (1005.34s)	Avg. loss = 0.000102	Dev acc. = 75.80%
-[TTBBTune] Epoch 35 (1171.39s)	Avg. loss = 0.000102	Dev acc. = 75.80%
-[TTBBTune] Epoch 40 (1337.12s)	Avg. loss = 0.000102	Dev acc. = 75.80%
-[TTBBTune] Epoch 45 (1503.17s)	Avg. loss = 0.000102	Dev acc. = 75.80%
-[TTBBTune] Epoch 50 (1670.29s)	Avg. loss = 0.000102	Dev acc. = 75.80%
-[TTBBTune] Training done (1670.29s)
+[TTBBTune] Epoch 1 (83.40s)	Avg. loss = 0.002814	Dev acc. = 76.80%
+[TTBBTune] Epoch 5 (335.21s)	Avg. loss = 0.000024	Dev acc. = 79.00%
+[TTBBTune] Epoch 10 (638.45s)	Avg. loss = 0.078000	Dev acc. = 44.70%
+[TTBBTune] Epoch 15 (787.25s)	Avg. loss = 0.051421	Dev acc. = 51.60%
+[TTBBTune] Epoch 20 (919.96s)	Avg. loss = 0.493306	Dev acc. = 57.10%
+[TTBBTune] Epoch 25 (1063.08s)	Avg. loss = 0.000818	Dev acc. = 58.30%
+[TTBBTune] Epoch 30 (1211.79s)	Avg. loss = 0.000687	Dev acc. = 58.60%
+[TTBBTune] Epoch 35 (1361.96s)	Avg. loss = 0.000603	Dev acc. = 58.50%
+[TTBBTune] Epoch 40 (1495.48s)	Avg. loss = 0.000571	Dev acc. = 58.60%
+[TTBBTune] Epoch 45 (1601.42s)	Avg. loss = 0.000524	Dev acc. = 58.70%
+[TTBBTune] Epoch 50 (1713.11s)	Avg. loss = 0.000509	Dev acc. = 58.50%
+[TTBBTune] Training done (1713.12s)
 [TTBBTune] Test set unknown token percentage: 0.00%
-[TTBBTune] Accuracy: 75.80%
+[TTBBTune] Accuracy: 58.50%
 ================================================================================
-[5] Testing l2_penalty = 0.0001, lr = 0.01, loss_function = hinge, n_epochs = 50
-================================================================================
-[TTBBTune] dim=300 lr=0.01 l2=0.0001 ngram=2
-[TTBBTune] Building model
-[TTBBTune] Training model
-[TTBBTune] #examples=5000  #epochs=50  batch size=256
-[TTBBTune] Found dev set for training eval
-[TTBBTune] Epoch 1 (42.55s)	Avg. loss = 0.003488	Dev acc. = 74.00%
-[TTBBTune] Epoch 5 (176.63s)	Avg. loss = 0.000016	Dev acc. = 77.30%
-[TTBBTune] Epoch 10 (345.05s)	Avg. loss = 0.000009	Dev acc. = 77.70%
-[TTBBTune] Epoch 15 (515.65s)	Avg. loss = 0.000007	Dev acc. = 77.90%
-[TTBBTune] Epoch 20 (654.02s)	Avg. loss = 0.000006	Dev acc. = 78.40%
-[TTBBTune] Epoch 25 (792.57s)	Avg. loss = 0.000005	Dev acc. = 77.50%
-[TTBBTune] Epoch 30 (925.78s)	Avg. loss = 0.000006	Dev acc. = 77.10%
-[TTBBTune] Epoch 35 (1068.97s)	Avg. loss = 0.000005	Dev acc. = 76.80%
-[TTBBTune] Epoch 40 (1215.20s)	Avg. loss = 0.000006	Dev acc. = 76.40%
-[TTBBTune] Epoch 45 (1354.28s)	Avg. loss = 0.000007	Dev acc. = 76.60%
-[TTBBTune] Epoch 50 (1496.47s)	Avg. loss = 0.000006	Dev acc. = 76.40%
-[TTBBTune] Training done (1496.47s)
-[TTBBTune] Test set unknown token percentage: 0.00%
-[TTBBTune] Accuracy: 76.40%
-================================================================================
-[6] Testing l2_penalty = 1.0, lr = 0.05, loss_function = hinge, n_epochs = 50
-================================================================================
-[TTBBTune] dim=300 lr=0.05 l2=1.0 ngram=2
-[TTBBTune] Building model
-[TTBBTune] Training model
-[TTBBTune] #examples=5000  #epochs=50  batch size=256
-[TTBBTune] Found dev set for training eval
-[TTBBTune] Epoch 1 (38.65s)	Avg. loss = 0.004446	Dev acc. = 75.30%
-[TTBBTune] Epoch 5 (154.57s)	Avg. loss = 0.004237	Dev acc. = 75.70%
-[TTBBTune] Epoch 10 (257.38s)	Avg. loss = 0.000058	Dev acc. = 77.00%
-[TTBBTune] Epoch 15 (358.84s)	Avg. loss = 0.034553	Dev acc. = 76.50%
-[TTBBTune] Epoch 20 (464.77s)	Avg. loss = 0.000019	Dev acc. = 78.10%
-[TTBBTune] Epoch 25 (541.13s)	Avg. loss = 0.000002	Dev acc. = 78.20%
-[TTBBTune] Epoch 30 (620.07s)	Avg. loss = 0.000002	Dev acc. = 78.10%
-[TTBBTune] Epoch 35 (702.81s)	Avg. loss = 0.000002	Dev acc. = 78.20%
-[TTBBTune] Epoch 40 (787.15s)	Avg. loss = 0.000003	Dev acc. = 77.80%
-[TTBBTune] Epoch 45 (871.08s)	Avg. loss = 0.000029	Dev acc. = 77.50%
-[TTBBTune] Epoch 50 (955.40s)	Avg. loss = 0.000038	Dev acc. = 77.20%
-[TTBBTune] Training done (955.40s)
-[TTBBTune] Test set unknown token percentage: 0.00%
-[TTBBTune] Accuracy: 77.20%
-================================================================================
-[7] Testing l2_penalty = 1.0, lr = 0.001, loss_function = log, n_epochs = 50
+[7] Testing l2_penalty = 1.0, lr = 0.001, loss_function = hinge, n_epochs = 50
 ================================================================================
 [TTBBTune] dim=300 lr=0.001 l2=1.0 ngram=2
 [TTBBTune] Building model
 [TTBBTune] Training model
 [TTBBTune] #examples=5000  #epochs=50  batch size=256
 [TTBBTune] Found dev set for training eval
-[TTBBTune] Epoch 1 (24.48s)	Avg. loss = 0.697987	Dev acc. = 69.10%
-[TTBBTune] Epoch 5 (89.11s)	Avg. loss = 0.498989	Dev acc. = 75.00%
-[TTBBTune] Epoch 10 (151.54s)	Avg. loss = 0.099601	Dev acc. = 78.80%
-[TTBBTune] Epoch 15 (215.68s)	Avg. loss = 0.037848	Dev acc. = 79.00%
-[TTBBTune] Epoch 20 (274.84s)	Avg. loss = 0.027116	Dev acc. = 78.70%
-[TTBBTune] Epoch 25 (340.33s)	Avg. loss = 0.019120	Dev acc. = 78.70%
-[TTBBTune] Epoch 30 (405.32s)	Avg. loss = 0.013348	Dev acc. = 78.80%
-[TTBBTune] Epoch 35 (470.23s)	Avg. loss = 0.009328	Dev acc. = 78.90%
-[TTBBTune] Epoch 40 (534.35s)	Avg. loss = 0.006603	Dev acc. = 78.70%
-[TTBBTune] Epoch 45 (599.14s)	Avg. loss = 0.004787	Dev acc. = 78.30%
-[TTBBTune] Epoch 50 (663.97s)	Avg. loss = 0.003584	Dev acc. = 78.20%
-[TTBBTune] Training done (663.97s)
+[TTBBTune] Epoch 1 (23.05s)	Avg. loss = 0.008638	Dev acc. = 50.80%
+[TTBBTune] Epoch 5 (86.22s)	Avg. loss = 0.004813	Dev acc. = 60.40%
+[TTBBTune] Epoch 10 (143.23s)	Avg. loss = 0.000498	Dev acc. = 78.10%
+[TTBBTune] Epoch 15 (196.74s)	Avg. loss = 0.000162	Dev acc. = 78.20%
+[TTBBTune] Epoch 20 (244.66s)	Avg. loss = 0.000108	Dev acc. = 77.70%
+[TTBBTune] Epoch 25 (302.22s)	Avg. loss = 0.000079	Dev acc. = 77.90%
+[TTBBTune] Epoch 30 (363.53s)	Avg. loss = 0.000046	Dev acc. = 78.10%
+[TTBBTune] Epoch 35 (424.43s)	Avg. loss = 0.000052	Dev acc. = 78.30%
+[TTBBTune] Epoch 40 (486.38s)	Avg. loss = 0.000031	Dev acc. = 77.50%
+[TTBBTune] Epoch 45 (548.94s)	Avg. loss = 0.000026	Dev acc. = 78.30%
+[TTBBTune] Epoch 50 (611.45s)	Avg. loss = 0.000025	Dev acc. = 78.10%
+[TTBBTune] Training done (611.45s)
 [TTBBTune] Test set unknown token percentage: 0.00%
-[TTBBTune] Accuracy: 78.20%
+[TTBBTune] Accuracy: 78.10%
 ================================================================================
-[8] Testing l2_penalty = 1e-05, lr = 0.05, loss_function = hinge, n_epochs = 50
+[8] Testing l2_penalty = 1.0, lr = 0.01, loss_function = log, n_epochs = 50
 ================================================================================
-[TTBBTune] dim=300 lr=0.05 l2=1e-05 ngram=2
+[TTBBTune] dim=300 lr=0.01 l2=1.0 ngram=2
 [TTBBTune] Building model
 [TTBBTune] Training model
 [TTBBTune] #examples=5000  #epochs=50  batch size=256
 [TTBBTune] Found dev set for training eval
-[TTBBTune] Epoch 1 (19.27s)	Avg. loss = 0.003146	Dev acc. = 78.40%
-[TTBBTune] Epoch 5 (72.74s)	Avg. loss = 0.000251	Dev acc. = 75.80%
-[TTBBTune] Epoch 10 (137.20s)	Avg. loss = 0.000000	Dev acc. = 76.20%
-[TTBBTune] Epoch 15 (196.89s)	Avg. loss = 0.000000	Dev acc. = 76.30%
-[TTBBTune] Epoch 20 (263.67s)	Avg. loss = 0.000000	Dev acc. = 76.30%
-[TTBBTune] Epoch 25 (329.31s)	Avg. loss = 0.000000	Dev acc. = 76.30%
-[TTBBTune] Epoch 30 (394.52s)	Avg. loss = 0.000000	Dev acc. = 76.30%
-[TTBBTune] Epoch 35 (460.68s)	Avg. loss = 0.000000	Dev acc. = 76.30%
-[TTBBTune] Epoch 40 (526.48s)	Avg. loss = 0.000000	Dev acc. = 76.30%
-[TTBBTune] Epoch 45 (591.72s)	Avg. loss = 0.000000	Dev acc. = 76.30%
-[TTBBTune] Epoch 50 (656.51s)	Avg. loss = 0.000000	Dev acc. = 76.30%
-[TTBBTune] Training done (656.51s)
+[TTBBTune] Epoch 1 (18.69s)	Avg. loss = 0.664640	Dev acc. = 76.10%
+[TTBBTune] Epoch 5 (72.85s)	Avg. loss = 0.095514	Dev acc. = 77.10%
+[TTBBTune] Epoch 10 (144.81s)	Avg. loss = 0.043635	Dev acc. = 78.70%
+[TTBBTune] Epoch 15 (216.88s)	Avg. loss = 0.034039	Dev acc. = 78.00%
+[TTBBTune] Epoch 20 (277.92s)	Avg. loss = 0.028240	Dev acc. = 77.70%
+[TTBBTune] Epoch 25 (356.10s)	Avg. loss = 0.024295	Dev acc. = 77.40%
+[TTBBTune] Epoch 30 (438.30s)	Avg. loss = 0.021410	Dev acc. = 77.40%
+[TTBBTune] Epoch 35 (520.86s)	Avg. loss = 0.019192	Dev acc. = 77.70%
+[TTBBTune] Epoch 40 (603.06s)	Avg. loss = 0.017425	Dev acc. = 77.50%
+[TTBBTune] Epoch 45 (685.26s)	Avg. loss = 0.015977	Dev acc. = 77.30%
+[TTBBTune] Epoch 50 (767.17s)	Avg. loss = 0.014765	Dev acc. = 77.00%
+[TTBBTune] Training done (767.17s)
 [TTBBTune] Test set unknown token percentage: 0.00%
-[TTBBTune] Accuracy: 76.30%
-[TTBBTune] dim=300 lr=0.01 l2=0.001 ngram=2
+[TTBBTune] Accuracy: 77.00%
+[TTBBTune] dim=300 lr=0.01 l2=1e-05 ngram=2
 [TTBBTune] Building model
 [TTBBTune] Training model
 [TTBBTune] #examples=5000  #epochs=50  batch size=256
 [TTBBTune] Found dev set for training eval
-[TTBBTune] Epoch 1 (18.33s)	Avg. loss = 0.641231	Dev acc. = 75.10%
-[TTBBTune] Epoch 5 (72.50s)	Avg. loss = 0.001837	Dev acc. = 78.80%
-[TTBBTune] Epoch 10 (137.55s)	Avg. loss = 0.000852	Dev acc. = 78.60%
-[TTBBTune] Epoch 15 (183.28s)	Avg. loss = 0.000586	Dev acc. = 78.60%
-[TTBBTune] Epoch 20 (224.55s)	Avg. loss = 0.000473	Dev acc. = 78.40%
-[TTBBTune] Epoch 25 (265.83s)	Avg. loss = 0.000415	Dev acc. = 78.30%
-[TTBBTune] Epoch 30 (308.38s)	Avg. loss = 0.000382	Dev acc. = 78.50%
-[TTBBTune] Epoch 35 (351.96s)	Avg. loss = 0.000362	Dev acc. = 78.50%
-[TTBBTune] Epoch 40 (396.34s)	Avg. loss = 0.000348	Dev acc. = 78.60%
-[TTBBTune] Epoch 45 (441.21s)	Avg. loss = 0.000337	Dev acc. = 78.60%
-[TTBBTune] Epoch 50 (486.59s)	Avg. loss = 0.000329	Dev acc. = 78.70%
-[TTBBTune] Training done (486.59s)
+[TTBBTune] Epoch 1 (24.66s)	Avg. loss = 0.644284	Dev acc. = 76.00%
+[TTBBTune] Epoch 5 (94.89s)	Avg. loss = 0.003268	Dev acc. = 78.20%
+[TTBBTune] Epoch 10 (179.03s)	Avg. loss = 0.000526	Dev acc. = 79.10%
+[TTBBTune] Epoch 15 (263.88s)	Avg. loss = 0.000317	Dev acc. = 79.00%
+[TTBBTune] Epoch 20 (336.39s)	Avg. loss = 0.000212	Dev acc. = 78.90%
+[TTBBTune] Epoch 25 (425.09s)	Avg. loss = 0.000153	Dev acc. = 79.10%
+[TTBBTune] Epoch 30 (516.38s)	Avg. loss = 0.000115	Dev acc. = 79.30%
+[TTBBTune] Epoch 35 (606.81s)	Avg. loss = 0.000090	Dev acc. = 79.20%
+[TTBBTune] Epoch 40 (697.49s)	Avg. loss = 0.000073	Dev acc. = 79.00%
+[TTBBTune] Epoch 45 (788.54s)	Avg. loss = 0.000060	Dev acc. = 79.00%
+[TTBBTune] Epoch 50 (879.87s)	Avg. loss = 0.000051	Dev acc. = 79.10%
+[TTBBTune] Training done (879.87s)
    l2_penalty     lr loss_function  n_epochs  Accuracy
-2     0.00100  0.010           log        50     0.787
-6     1.00000  0.001           log        50     0.782
-1     0.00001  0.001         hinge        50     0.780
-5     1.00000  0.050         hinge        50     0.772
-0     1.00000  0.100           log        50     0.771
-4     0.00010  0.010         hinge        50     0.764
-7     0.00001  0.050         hinge        50     0.763
-3     0.00100  0.100           log        50     0.758
+1     0.00001  0.010           log        50     0.791
+3     0.00001  0.010           log        50     0.791
+2     0.00100  0.001           log        50     0.789
+6     1.00000  0.001         hinge        50     0.781
+0     0.01000  0.010         hinge        50     0.770
+7     1.00000  0.010           log        50     0.770
+4     0.01000  0.050         hinge        50     0.762
+5     0.00100  0.100         hinge        50     0.585
 [TTBBTune] Test set unknown token percentage: 0.00%
-[TTBBTune] Accuracy: 76.93%
+[TTBBTune] Accuracy: 76.92%
