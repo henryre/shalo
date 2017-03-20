@@ -1,0 +1,23 @@
+{
+	"train_data":   "data/agnews_data/train.data",
+	"train_labels": "data/agnews_data/train.labels",
+	"dev_data":     "data/agnews_data/train.data",
+	"dev_labels":   "data/agnews_data/train.labels",
+	"test_data":    "data/agnews_data/test.data",
+	"test_labels":  "data/agnews_data/test.labels",
+	"n": 1,
+	"b": 0.5,
+	"fixed_parameters": {
+		"batch_size": 256,
+		"max_sentence_length": 120,
+		"ngrams": 2,
+		"seed": 1701,
+		"dim": 300
+	},
+	"search_parameters": {
+		"loss_function": ["hinge"],
+		"n_epochs":   [50],
+		"lr":         [0.005],
+		"l2_penalty": [0.0001] 
+	}
+}
