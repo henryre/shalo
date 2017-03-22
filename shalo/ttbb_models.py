@@ -2,8 +2,7 @@ import cPickle
 import numpy as np
 import tensorflow as tf
 
-from shalo_base import SD, SHALOModel, SHALOModelFixed, SHALOModelPreTrain
-from sklearn.decomposition import PCA
+from shalo_base import SD, SHALOModelFixed, SHALOModelPreTrain
 from utils import (
     GRAMSEP, map_words_to_symbols, symbol_embedding, SymbolTable, top_similarity
 )
