@@ -16,14 +16,13 @@
 
 * `LinearModel`: Linear model over fixed, pretrained embeddings
 * `fastText`: Implementation of [fastText](https://github.com/facebookresearch/fastText) in Tensorflow
-* `fastTextPreTrained`: fastText initialized with pretrained embeddings
+* `fastTextPreTrain`: fastText initialized with pretrained embeddings
 
 ### "Tough-to-Beat Baseline" models
 
 * `TTBB`: Implementation of [A Simple but Tough-to-Beat Baseline for Sentence Embeddings](https://openreview.net/pdf?id=SyK00v5xx) in Tensorflow
 * `TTBBTune`: `TTBB` with gradient-tuned embeddings, common component, and smoothing parameter
 * `TTBBTuneExact`: `TTBB` with gradient-tuned embeddings and smoothing parameter, with common component updated exactly
-* `TTBBTuneLazy`: `TTBB` with gradient-tuned embeddings and smoothing parameter, with common component updated once per epoch (does not work)
 
 
 ## Getting started
