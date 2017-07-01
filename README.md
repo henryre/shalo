@@ -37,12 +37,8 @@ pip install --requirement python-package-requirements.txt
 
 ```
 
-chmod +x scripts/get_senna.sh
 scripts/get_senna.sh
-chmod +x scripts/get_word_freq.sh
 scripts/get_word_freq.sh
-chmod +x scripts/get_polarity.sh
-scripts/get_polarity.sh
 
 ```
 
@@ -51,3 +47,8 @@ scripts/get_polarity.sh
 ```
 python shalo_test.py
 ```
+
+## Notes
+
+Test data is derived from [Pang and Lee (2005)](http://www.cs.cornell.edu/people/pabo/movie-review-data/).
+

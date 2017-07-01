@@ -87,12 +87,6 @@ ENV/
 # Rope project settings
 .ropeproject
 
-# Data
-data
-
-# Utils
-shalo/clean
-
 # TF
 *.index
 *.meta
